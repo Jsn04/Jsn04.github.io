@@ -101,6 +101,13 @@
     padding-right: 4rem;
   }
 
+  .hero-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 5rem;
+    align-items: center;
+  }
+
   .hero-eyebrow {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.72rem;
@@ -112,7 +119,7 @@
 
   .hero-name {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 6vw, 5rem);
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
     font-weight: 700;
     color: var(--ink);
     line-height: 1.05;
@@ -127,11 +134,33 @@
   }
 
   .hero-bio {
-    font-size: 1.05rem;
+    font-size: 1.02rem;
     color: var(--ink-light);
-    max-width: 720px;
+    max-width: 600px;
     line-height: 1.7;
     margin-bottom: 2rem;
+  }
+
+  .hero-photo-wrap {
+    position: relative;
+  }
+  .hero-photo-wrap img {
+    width: 100%;
+    border-radius: 6px;
+    display: block;
+    object-fit: cover;
+    max-height: 480px;
+    object-position: center top;
+    box-shadow: 0 8px 32px rgba(26,22,18,0.18);
+  }
+  .hero-photo-caption {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--ink-light);
+    letter-spacing: 0.06em;
+    margin-top: 0.6rem;
+    text-align: center;
+    opacity: 0.7;
   }
 
   .hero-chips {
@@ -505,6 +534,8 @@
   .dot-award { background: #C4A35A; }
 
   @media (max-width: 768px) {
+    .hero-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero-photo-wrap { order: -1; max-width: 260px; margin: 0 auto; }
     .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
     .recognition-grid { grid-template-columns: 1fr; }
     .papers-grid { grid-template-columns: 1fr; }
@@ -535,23 +566,31 @@
 
 <!-- HERO -->
 <section id="hero">
-  <p class="hero-eyebrow">Software Engineer · Researcher · Athlete</p>
-  <h1 class="hero-name">Jinesh Nanal</h1>
-  <div class="hero-rule"></div>
-  <p class="hero-bio">
-    I build AI systems that work in the real world — not just in notebooks. Currently running AthleteIQ, a deployed injury-risk platform used by real coaches across India, while publishing research on secure and reliable ML. Team India inline skating athlete, 9× national champion.
-  </p>
-  <div class="hero-chips">
-    <span class="chip chip-green">4 IEEE Papers</span>
-    <span class="chip chip-terracotta">595 Athletes · Live Platform</span>
-    <span class="chip chip-outline">NVIDIA · Quadro</span>
-    <span class="chip chip-outline">GRE 329 · Quant 168</span>
-    <span class="chip chip-outline">9× National Champion</span>
-  </div>
-  <div class="hero-cta">
-    <a href="athleteiq.html" class="btn btn-primary">AthleteIQ Product →</a>
-    <a href="https://github.com/Jsn04" class="btn btn-outline" target="_blank" rel="noopener">GitHub</a>
-    <a href="#contact" class="btn btn-outline">Contact</a>
+  <div class="hero-layout">
+    <div class="hero-text">
+      <p class="hero-eyebrow">Software Engineer · Researcher · Athlete</p>
+      <h1 class="hero-name">Jinesh Nanal</h1>
+      <div class="hero-rule"></div>
+      <p class="hero-bio">
+        I build AI systems that work in the real world — not just in notebooks. Currently running AthleteIQ, a deployed injury-risk platform used by real coaches across India, while publishing research on secure and reliable ML. Team India inline skating athlete, 9× national champion.
+      </p>
+      <div class="hero-chips">
+        <span class="chip chip-green">4 Research Papers</span>
+        <span class="chip chip-terracotta">595+ Athletes · Live</span>
+        <span class="chip chip-outline">NVIDIA · Quadro</span>
+        <span class="chip chip-outline">GRE 329 · Quant 168</span>
+        <span class="chip chip-outline">9× National Champion</span>
+      </div>
+      <div class="hero-cta">
+        <a href="athleteiq.html" class="btn btn-primary">AthleteIQ Product →</a>
+        <a href="https://github.com/Jsn04" class="btn btn-outline" target="_blank" rel="noopener">GitHub</a>
+        <a href="#contact" class="btn btn-outline">Contact</a>
+      </div>
+    </div>
+    <div class="hero-photo-wrap">
+      <img src="jinesh.png" alt="Jinesh Nanal — Shiv Chhatrapati Award">
+      <p class="hero-photo-caption">Shiv Chhatrapati Award · Maharashtra's highest sports honour</p>
+    </div>
   </div>
 </section>
 
