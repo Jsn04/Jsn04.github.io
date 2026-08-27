@@ -29,6 +29,7 @@
     color: var(--ink);
     font-family: 'Inter', sans-serif;
     font-weight: 400;
+    font-size: 17px;
     line-height: 1.6;
   }
 
@@ -69,7 +70,7 @@
   .nav-links a:hover { color: var(--green); }
 
   /* SECTIONS */
-  section { max-width: 1200px; margin: 0 auto; padding: 5rem 4rem; }
+  section { max-width: 1200px; margin: 0 auto; padding: 3.5rem 4rem; }
   section + section { border-top: 1px solid var(--rule); }
 
   .section-label {
@@ -86,14 +87,14 @@
     font-size: 2rem;
     font-weight: 600;
     color: var(--green);
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     line-height: 1.2;
   }
 
   /* HERO */
   #hero {
-    padding-top: 7rem;
-    padding-bottom: 5rem;
+    padding-top: 5rem;
+    padding-bottom: 3.5rem;
     max-width: 1200px;
     margin: 0 auto;
     padding-left: 4rem;
@@ -197,7 +198,7 @@
   #athleteiq-feature .inner {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 4rem 4rem;
+    padding: 3rem 4rem;
   }
   .aiq-label {
     font-family: 'JetBrains Mono', monospace;
@@ -269,12 +270,12 @@
   .btn-aiq-ghost:hover { background: #4A7C3F; color: #EAF2E3; }
 
   /* EXPERIENCE */
-  .exp-list { display: flex; flex-direction: column; gap: 2.5rem; }
+  .exp-list { display: flex; flex-direction: column; gap: 2rem; }
   .exp-item {
     display: grid;
     grid-template-columns: 200px 1fr;
     gap: 3rem;
-    padding-bottom: 2.5rem;
+    padding-bottom: 2rem;
     border-bottom: 1px solid var(--rule);
   }
   .exp-item:last-child { border-bottom: none; }
@@ -402,7 +403,7 @@
   #contact .inner {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 4rem 4rem;
+    padding: 3rem 4rem;
   }
   .contact-title {
     font-family: 'Playfair Display', serif;
@@ -443,18 +444,57 @@
     letter-spacing: 0.08em;
   }
 
+  /* NEWS */
+  .news-list { display: flex; flex-direction: column; }
+  .news-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 2rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid rgba(200,184,154,0.4);
+    align-items: baseline;
+  }
+  .news-item:last-child { border-bottom: none; }
+  .news-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--terracotta);
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    padding-top: 0.1rem;
+  }
+  .news-text {
+    font-size: 0.92rem;
+    color: var(--ink-light);
+    line-height: 1.55;
+  }
+  .news-text strong { color: var(--ink); font-weight: 600; }
+  .news-dot {
+    display: inline-block;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    position: relative; top: -1px;
+  }
+  .dot-accept { background: #2A4A1E; }
+  .dot-submit { background: var(--terracotta); }
+  .dot-work { background: #7A8C6E; }
+  .dot-award { background: #C4A35A; }
+
   @media (max-width: 768px) {
     .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
     .recognition-grid { grid-template-columns: 1fr; }
     .papers-grid { grid-template-columns: 1fr; }
     .aiq-metrics { grid-template-columns: repeat(2, auto); gap: 2rem; }
+    .news-item { grid-template-columns: 80px 1fr; gap: 1rem; }
     .hero-name { font-size: 2.6rem; }
     nav { padding: 0 1.5rem; }
-    .nav-links { gap: 1rem; }
-    section { padding: 3.5rem 1.5rem; }
-    #athleteiq-feature .inner { padding: 3rem 1.5rem; }
-    #contact .inner { padding: 3rem 1.5rem; }
-    #hero { padding-left: 1.5rem; padding-right: 1.5rem; padding-top: 4rem; }
+    .nav-links { gap: 1rem; font-size: 0.75rem; }
+    section { padding: 2.5rem 1.5rem; }
+    #athleteiq-feature .inner { padding: 2.5rem 1.5rem; }
+    #contact .inner { padding: 2.5rem 1.5rem; }
+    #hero { padding-left: 1.5rem; padding-right: 1.5rem; padding-top: 3.5rem; padding-bottom: 2.5rem; }
   }
 </style>
 </head>
@@ -463,6 +503,7 @@
 <nav>
   <a class="nav-brand" href="/">JINESH NANAL</a>
   <ul class="nav-links">
+    <li><a href="#news">News</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#research">Research</a></li>
     <li><a href="#recognition">Recognition</a></li>
@@ -489,6 +530,65 @@
     <a href="athleteiq.html" class="btn btn-primary">AthleteIQ Product →</a>
     <a href="https://github.com/Jsn04" class="btn btn-outline" target="_blank" rel="noopener">GitHub</a>
     <a href="#contact" class="btn btn-outline">Contact</a>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section id="news" style="border-top: 1px solid var(--rule);">
+  <p class="section-label">Activity</p>
+  <h2>News</h2>
+  <div class="news-list">
+
+    <div class="news-item">
+      <span class="news-date">Aug 2026</span>
+      <span class="news-text"><span class="news-dot dot-submit"></span><strong>AISec @ ACM CCS 2026</strong> — submitted paper on cross-corpus robustness of prompt-injection detectors. Models trained on one corpus collapse on others; proposes a distributional robustness frame.</span>
+    </div>
+
+    <div class="news-item">
+      <span class="news-date">Aug 2026</span>
+      <span class="news-text"><span class="news-dot dot-submit"></span><strong>IEEE BigData 2026</strong> — submitted FraudBench paper: an honest fraud-detection benchmark under temporal drift and delayed labels. GNNs lose edge to XGBoost under realistic evaluation.</span>
+    </div>
+
+    <div class="news-item">
+      <span class="news-date">Aug 2026</span>
+      <span class="news-text"><span class="news-dot dot-work"></span>Started as <strong>AI Engineer at Gruve AI</strong> — US-based AI startup building production LLM systems for enterprise clients.</span>
+    </div>
+
+    <div class="news-item">
+      <span class="news-date">Jul 2026</span>
+      <span class="news-text"><span class="news-dot dot-submit"></span><strong>IEEE DELCON 2026</strong> — submitted paper on a reversible PII-redacting LLM proxy built end-to-end for India's DPDP Act 2023 compliance.</span>
+    </div>
+
+    <div class="news-item">
+      <span class="news-date">Jun 2026</span>
+      <span class="news-text"><span class="news-dot dot-accept"></span><strong>Paper accepted — IEEE MAI 2026</strong> · Springer Lecture Notes in Electrical Engineering. Drowsiness prediction using facial landmark detection. First first-author acceptance.</span>
+    </div>
+
+    <div class="news-item">
+      <span class="news-date">Jun 2026</span>
+      <span class="news-text"><span class="news-dot dot-work"></span><strong>AthleteIQ</strong> — XGBoost injury-risk ML model deployed to production alongside the heuristic composite engine. Running live for real athletes.</span>
+    </div>
+
+    <div class="news-item">
+      <span class="news-date">Jan 2026</span>
+      <span class="news-text"><span class="news-dot dot-work"></span>Founded <strong>AthleteIQ</strong> — solo-built a full-stack AI injury-risk platform. Now live across Indian sports academies with 20+ coaches and ~370 registered athletes.</span>
+    </div>
+
+    <div class="news-item">
+      <span class="news-date">Jul 2025</span>
+      <span class="news-text"><span class="news-dot dot-work"></span>Joined <strong>NVIDIA (Quadro team)</strong> as AI/ML Intern — worked on distribution-shift detection for production inference pipelines.</span>
+    </div>
+
+    <div class="news-item">
+      <span class="news-date">2024</span>
+      <span class="news-text"><span class="news-dot dot-award"></span><strong>World Games 2024</strong> — Silver &amp; Bronze medals representing Team India in inline skating. World ranked 6th / 7th.</span>
+    </div>
+
+    <div class="news-item">
+      <span class="news-date">2024</span>
+      <span class="news-text"><span class="news-dot dot-award"></span><strong>RenAIssance Hackathon</strong> — 3rd place out of 150+ teams.</span>
+    </div>
+
   </div>
 </section>
 
