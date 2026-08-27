@@ -356,9 +356,9 @@
   .proj-card:hover { box-shadow: 0 8px 32px rgba(26,22,18,0.12); transform: translateY(-2px); }
   .proj-img {
     width: 100%;
-    height: 200px;
+    height: 240px;
     overflow: hidden;
-    background: var(--tag-bg);
+    background: #1A1E2A;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -366,8 +366,7 @@
   .proj-img img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: top;
+    object-fit: contain;
     display: block;
   }
   .proj-body { padding: 1.35rem; flex: 1; display: flex; flex-direction: column; }
@@ -989,7 +988,7 @@
     <!-- Driver Drowsiness -->
     <div class="proj-card">
       <div class="proj-img">
-        <img src="projects/drowsiness.png" alt="Driver Drowsiness Detection — GitHub repo">
+        <img src="projects/drowsiness.png" alt="Driver Drowsiness Detection — GitHub repo" style="object-fit:cover;object-position:top;">
       </div>
       <div class="proj-body">
         <div class="proj-name">Driver Drowsiness Detection</div>
