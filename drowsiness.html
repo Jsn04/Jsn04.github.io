@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Driver Drowsiness Detection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #F5F0E8;
+    --ink: #1A1612;
+    --ink-light: #4A3F35;
+    --green: #2A4A1E;
+    --green-dark: #1B2E13;
+    --green-mid: #3A6328;
+    --terracotta: #C4622D;
+    --rule: #C8B89A;
+    --card-bg: #EDE8DE;
+    --tag-bg: #D9D2C3;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 18px; }
+  body { background: var(--parchment); color: var(--ink); font-family: 'Inter', sans-serif; font-size: 1rem; line-height: 1.65; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--parchment); border-bottom: 1px solid var(--rule);
+    padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between; height: 56px;
+  }
+  .nav-brand { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--green); font-weight: 500; text-decoration: none; letter-spacing: 0.08em; }
+  .nav-back { font-size: 0.82rem; color: var(--ink-light); text-decoration: none; letter-spacing: 0.03em; }
+  .nav-back:hover { color: var(--green); }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2.5rem; }
+
+  .hero { padding: 4rem 0 3rem; border-bottom: 1px solid var(--rule); }
+  .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em; color: var(--terracotta); text-transform: uppercase; margin-bottom: 0.9rem; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 700; color: var(--ink); line-height: 1.15; margin-bottom: 0.5rem; }
+  .hero-rule { width: 60px; height: 3px; background: var(--green); margin: 1.25rem 0; }
+  .hero-desc { font-size: 1rem; color: var(--ink-light); max-width: 740px; line-height: 1.7; margin-bottom: 2rem; }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+  .chip { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; padding: 0.3rem 0.7rem; border-radius: 2px; letter-spacing: 0.04em; font-weight: 500; }
+  .chip-green { background: var(--green-dark); color: #C8D8B8; }
+  .chip-outline { border: 1px solid var(--rule); color: var(--ink-light); }
+  .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn { display: inline-block; padding: 0.65rem 1.4rem; font-size: 0.85rem; font-weight: 600; text-decoration: none; border-radius: 2px; transition: all 0.2s; letter-spacing: 0.03em; }
+  .btn-primary { background: var(--green); color: #EAF2E3; }
+  .btn-primary:hover { background: var(--green-mid); }
+  .btn-outline { border: 1.5px solid var(--green); color: var(--green); }
+  .btn-outline:hover { background: var(--green); color: #EAF2E3; }
+
+  .section { padding: 3rem 0; border-bottom: 1px solid var(--rule); }
+  .section:last-child { border-bottom: none; }
+  .section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.15em; color: var(--terracotta); text-transform: uppercase; margin-bottom: 0.6rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 600; color: var(--green); margin-bottom: 1.25rem; }
+  .body-text { font-size: 0.95rem; color: var(--ink-light); line-height: 1.7; margin-bottom: 1rem; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem; }
+  .info-card { background: var(--card-bg); padding: 1.4rem; border-left: 3px solid var(--rule); }
+  .info-card.green { border-color: var(--green); }
+  .info-card.terra { border-color: var(--terracotta); }
+  .card-label { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 0.5rem; }
+  .info-card.green .card-label { color: var(--green); }
+  .card-title { font-weight: 600; font-size: 0.95rem; color: var(--ink); margin-bottom: 0.5rem; }
+  .card-body { font-size: 0.85rem; color: var(--ink-light); line-height: 1.65; }
+
+  .result-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--rule); border-radius: 3px; overflow: hidden; margin-top: 1.5rem; }
+  .result-tile { background: var(--card-bg); padding: 1.25rem; text-align: center; }
+  .result-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--green); line-height: 1; margin-bottom: 0.35rem; }
+  .result-label { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--ink-light); letter-spacing: 0.06em; }
+
+  .pipeline-steps { display: flex; flex-direction: column; gap: 1px; margin-top: 1.5rem; border-radius: 3px; overflow: hidden; }
+  .pipeline-step { display: grid; grid-template-columns: 36px 1fr; gap: 1rem; padding: 1rem 1.25rem; background: var(--card-bg); align-items: start; }
+  .step-num { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--terracotta); font-weight: 600; }
+  .step-content-title { font-weight: 600; font-size: 0.9rem; color: var(--ink); margin-bottom: 0.3rem; }
+  .step-content-desc { font-size: 0.85rem; color: var(--ink-light); line-height: 1.6; }
+
+  .paper-block { background: var(--card-bg); border-left: 3px solid var(--green); padding: 1.5rem; margin-top: 1.5rem; border-radius: 0 3px 3px 0; }
+  .paper-venue { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; color: var(--terracotta); margin-bottom: 0.5rem; }
+  .paper-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 600; color: var(--ink); margin-bottom: 0.6rem; line-height: 1.4; }
+  .paper-desc { font-size: 0.88rem; color: var(--ink-light); line-height: 1.65; }
+
+  .page-footer { padding: 2rem 0; border-top: 1px solid var(--rule); }
+  .footer-link { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--ink-light); text-decoration: none; letter-spacing: 0.04em; }
+  .footer-link:hover { color: var(--green); }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 1.25rem; }
+    .container { padding: 0 1.25rem; }
+    .two-col { grid-template-columns: 1fr; }
+    .result-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="/">JINESH NANAL</a>
+  <a class="nav-back" href="/">← Back to portfolio</a>
+</nav>
+
+<div class="container">
+
+  <div class="hero">
+    <p class="hero-eyebrow">Project · Computer Vision · IEEE MAI 2026</p>
+    <h1 class="hero-title">Driver Drowsiness Detection</h1>
+    <div class="hero-rule"></div>
+    <p class="hero-desc">Cross-dataset evaluation of CNN and CNN-LSTM models for visual driver drowsiness detection. The core research question: can models trained on one dataset actually generalise to another? The answer, under subject-disjoint splits that prevent identity leakage, is not as clean as within-dataset numbers suggest. This work validated that finding and proposed a stricter evaluation protocol for the field.</p>
+    <div class="chip-row">
+      <span class="chip chip-green">Accepted · IEEE MAI 2026 · Springer LNEE</span>
+      <span class="chip chip-outline">CNN · CNN-LSTM · OpenCV</span>
+      <span class="chip chip-outline">Python · PyTorch · dlib</span>
+      <span class="chip chip-outline">Cross-Dataset Evaluation</span>
+    </div>
+    <div class="btn-row">
+      <a href="https://www.researchgate.net/publication/413662371_Subject-Disjoint_Cross-Dataset_Evaluation_of_CNN_and_CNN-LSTM_Models_for_Visual_Driver_Drowsiness_Detection" class="btn btn-primary" target="_blank" rel="noopener">Full Paper (ResearchGate) ↗</a>
+      <a href="https://github.com/Jsn04/Dl_project" class="btn btn-outline" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+
+  <!-- THE PROBLEM -->
+  <div class="section">
+    <p class="section-label">Motivation</p>
+    <h2 class="section-title">The Evaluation Problem</h2>
+    <p class="body-text">Most drowsiness detection papers report accuracy on within-dataset splits. The problem: the same driver appears in both train and test. The model can learn identity cues — the shape of a specific person's face, blinking pattern — instead of learning generalised drowsiness indicators. This inflates reported performance significantly.</p>
+    <p class="body-text">Subject-disjoint evaluation is the stricter test: train and test splits contain different people entirely. This forces the model to learn features that transfer across individuals. The accuracy gap between in-subject and cross-subject evaluation is the real measure of whether a model is practically useful.</p>
+    <div class="two-col">
+      <div class="info-card green">
+        <div class="card-label">Standard eval (weak)</div>
+        <div class="card-title">Within-dataset split</div>
+        <p class="card-body">Same subjects in train and test. Model can learn identity cues. Reports high accuracy but doesn't demonstrate generalisation. Most published numbers are this.</p>
+      </div>
+      <div class="info-card terra">
+        <div class="card-label">This paper's eval (strict)</div>
+        <div class="card-title">Subject-disjoint split</div>
+        <p class="card-body">Different subjects in train and test. Identity leakage is impossible. Accuracy drops — but it reflects real-world deployment performance more honestly.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIPELINE -->
+  <div class="section">
+    <p class="section-label">Method</p>
+    <h2 class="section-title">Detection Pipeline</h2>
+    <div class="pipeline-steps">
+      <div class="pipeline-step">
+        <div class="step-num">01</div>
+        <div>
+          <div class="step-content-title">Face + landmark detection</div>
+          <p class="step-content-desc">dlib 68-point facial landmark detector localises eye regions frame-by-frame. Eye Aspect Ratio (EAR) computed from the landmark coordinates as a baseline signal.</p>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">02</div>
+        <div>
+          <div class="step-content-title">Eye region extraction</div>
+          <p class="step-content-desc">Cropped and normalised eye patches extracted per frame. Consistent sizing and contrast normalisation applied before feeding into the neural models.</p>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">03</div>
+        <div>
+          <div class="step-content-title">CNN — spatial features</div>
+          <p class="step-content-desc">Convolutional network trained on the eye patch to detect closed/drowsy states from a single frame. Strong at per-frame classification, blind to temporal patterns.</p>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">04</div>
+        <div>
+          <div class="step-content-title">CNN-LSTM — temporal modelling</div>
+          <p class="step-content-desc">CNN feature extractor feeds an LSTM layer that models blink patterns and gradual eyelid closure over a window of frames. Captures the temporal signature of drowsiness that single-frame models miss.</p>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">05</div>
+        <div>
+          <div class="step-content-title">Cross-dataset evaluation</div>
+          <p class="step-content-desc">Both models trained on one dataset (with subject-disjoint train/val), tested on a second dataset with entirely different subjects and recording conditions. Performance delta quantifies the generalisation gap.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="section">
+    <p class="section-label">Results</p>
+    <h2 class="section-title">Key Findings</h2>
+    <p class="body-text">CNN-LSTM consistently outperformed the pure CNN under cross-subject and cross-dataset conditions, confirming that temporal modelling captures generalisation-relevant features that spatial-only models do not. The accuracy gap between in-subject and cross-subject evaluation was substantial — validating the core concern about published benchmarks.</p>
+    <div class="result-grid">
+      <div class="result-tile">
+        <div class="result-num">2</div>
+        <div class="result-label">Datasets evaluated</div>
+      </div>
+      <div class="result-tile">
+        <div class="result-num">2</div>
+        <div class="result-label">Architectures compared</div>
+      </div>
+      <div class="result-tile">
+        <div class="result-num">CNN-LSTM</div>
+        <div class="result-label">Better cross-domain model</div>
+      </div>
+      <div class="result-tile">
+        <div class="result-num">S-D</div>
+        <div class="result-label">Subject-disjoint splits used</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAPER -->
+  <div class="section">
+    <p class="section-label">Publication</p>
+    <h2 class="section-title">Paper</h2>
+    <div class="paper-block">
+      <div class="paper-venue">IEEE MAI 2026 · Springer Lecture Notes in Electrical Engineering</div>
+      <div class="paper-title">Subject-Disjoint Cross-Dataset Evaluation of CNN and CNN-LSTM Models for Visual Driver Drowsiness Detection</div>
+      <p class="paper-desc">First first-author acceptance. Proposes subject-disjoint cross-dataset evaluation as the correct protocol for measuring real-world generalisability of drowsiness detection systems. Demonstrates that CNN-LSTM temporal models are more robust under this stricter regime.</p>
+    </div>
+    <div class="btn-row" style="margin-top:1.5rem;">
+      <a href="https://www.researchgate.net/publication/413662371_Subject-Disjoint_Cross-Dataset_Evaluation_of_CNN_and_CNN-LSTM_Models_for_Visual_Driver_Drowsiness_Detection" class="btn btn-primary" target="_blank" rel="noopener">Read full paper ↗</a>
+      <a href="https://github.com/Jsn04/Dl_project" class="btn btn-outline" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="/" class="btn btn-outline">← Portfolio</a>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <a href="/" class="footer-link">jsn04.github.io</a>
+  </div>
+
+</div>
+</body>
+</html>

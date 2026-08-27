@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillMatch v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #F5F0E8;
+    --ink: #1A1612;
+    --ink-light: #4A3F35;
+    --green: #2A4A1E;
+    --green-dark: #1B2E13;
+    --green-mid: #3A6328;
+    --terracotta: #C4622D;
+    --rule: #C8B89A;
+    --card-bg: #EDE8DE;
+    --tag-bg: #D9D2C3;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 18px; }
+  body { background: var(--parchment); color: var(--ink); font-family: 'Inter', sans-serif; font-size: 1rem; line-height: 1.65; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--parchment); border-bottom: 1px solid var(--rule);
+    padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between; height: 56px;
+  }
+  .nav-brand { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--green); font-weight: 500; text-decoration: none; letter-spacing: 0.08em; }
+  .nav-back { font-size: 0.82rem; color: var(--ink-light); text-decoration: none; letter-spacing: 0.03em; display: flex; align-items: center; gap: 0.4rem; }
+  .nav-back:hover { color: var(--green); }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2.5rem; }
+
+  /* HERO */
+  .hero { padding: 4rem 0 3rem; border-bottom: 1px solid var(--rule); }
+  .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em; color: var(--terracotta); text-transform: uppercase; margin-bottom: 0.9rem; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 700; color: var(--ink); line-height: 1.1; margin-bottom: 0.5rem; }
+  .hero-sub { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--ink-light); font-style: italic; margin-bottom: 1.5rem; }
+  .hero-desc { font-size: 1rem; color: var(--ink-light); max-width: 740px; line-height: 1.7; margin-bottom: 2rem; }
+  .hero-rule { width: 60px; height: 3px; background: var(--green); margin-bottom: 2rem; }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+  .chip { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; padding: 0.3rem 0.7rem; border-radius: 2px; letter-spacing: 0.04em; font-weight: 500; }
+  .chip-green { background: var(--green-dark); color: #C8D8B8; }
+  .chip-outline { border: 1px solid var(--rule); color: var(--ink-light); }
+  .chip-status { background: #5A3A1A; color: #E8C88A; }
+  .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn { display: inline-block; padding: 0.65rem 1.4rem; font-size: 0.85rem; font-weight: 600; text-decoration: none; border-radius: 2px; transition: all 0.2s; letter-spacing: 0.03em; }
+  .btn-primary { background: var(--green); color: #EAF2E3; }
+  .btn-primary:hover { background: var(--green-mid); }
+  .btn-outline { border: 1.5px solid var(--green); color: var(--green); }
+  .btn-outline:hover { background: var(--green); color: #EAF2E3; }
+  .btn-dim { border: 1.5px solid var(--rule); color: var(--ink-light); cursor: default; opacity: 0.65; }
+
+  /* SECTIONS */
+  .section { padding: 3rem 0; border-bottom: 1px solid var(--rule); }
+  .section:last-child { border-bottom: none; }
+  .section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.15em; color: var(--terracotta); text-transform: uppercase; margin-bottom: 0.6rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 600; color: var(--green); margin-bottom: 1.25rem; }
+  .body-text { font-size: 0.95rem; color: var(--ink-light); line-height: 1.7; margin-bottom: 1rem; }
+  .body-text:last-child { margin-bottom: 0; }
+
+  /* THREE USERS */
+  .user-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 1.5rem; }
+  .user-card { background: var(--card-bg); padding: 1.4rem; border-top: 3px solid var(--rule); }
+  .user-card.manager { border-color: var(--green); }
+  .user-card.company  { border-color: var(--terracotta); }
+  .user-card.engineer { border-color: #7A8C6E; }
+  .user-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
+  .user-desc { font-size: 0.85rem; color: var(--ink-light); line-height: 1.6; }
+
+  /* MATCHING ENGINE VISUAL */
+  .engine-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem; }
+  .engine-card { background: var(--card-bg); padding: 1.5rem; border-left: 3px solid var(--rule); }
+  .engine-card.internal { border-color: var(--green); }
+  .engine-card.external { border-color: var(--terracotta); }
+  .engine-name { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em; color: var(--terracotta); text-transform: uppercase; margin-bottom: 0.6rem; }
+  .engine-card.internal .engine-name { color: var(--green); }
+  .engine-title { font-weight: 600; font-size: 0.95rem; color: var(--ink); margin-bottom: 0.6rem; }
+  .engine-desc { font-size: 0.85rem; color: var(--ink-light); line-height: 1.6; }
+
+  /* SCORE BAR */
+  .score-row { margin-top: 1.25rem; }
+  .score-item { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
+  .score-label { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--ink-light); width: 160px; flex-shrink: 0; }
+  .score-bar-wrap { flex: 1; height: 6px; background: var(--rule); border-radius: 3px; overflow: hidden; }
+  .score-bar { height: 100%; border-radius: 3px; background: var(--green); }
+  .score-val { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--terracotta); width: 30px; text-align: right; }
+
+  /* AI LAYER */
+  .ai-layers { display: flex; flex-direction: column; gap: 1px; margin-top: 1.5rem; border-radius: 4px; overflow: hidden; }
+  .ai-layer { display: grid; grid-template-columns: 28px 140px 1fr; gap: 1rem; align-items: start; padding: 1rem 1.25rem; background: var(--card-bg); }
+  .ai-layer-num { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--terracotta); font-weight: 600; padding-top: 2px; }
+  .ai-layer-name { font-weight: 600; font-size: 0.9rem; color: var(--ink); padding-top: 1px; }
+  .ai-layer-desc { font-size: 0.85rem; color: var(--ink-light); line-height: 1.6; }
+
+  /* TECH STACK TABLE */
+  .stack-table { width: 100%; border-collapse: collapse; margin-top: 1.25rem; font-size: 0.88rem; }
+  .stack-table th { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--terracotta); text-align: left; padding: 0.6rem 1rem; border-bottom: 2px solid var(--rule); }
+  .stack-table td { padding: 0.7rem 1rem; border-bottom: 1px solid rgba(200,184,154,0.4); color: var(--ink-light); vertical-align: top; }
+  .stack-table td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--ink); font-weight: 500; white-space: nowrap; }
+  .stack-table tr:last-child td { border-bottom: none; }
+
+  /* SECURITY */
+  .security-list { list-style: none; margin-top: 1.25rem; }
+  .security-list li { font-size: 0.88rem; color: var(--ink-light); line-height: 1.6; padding: 0.6rem 0 0.6rem 1.2rem; border-bottom: 1px solid rgba(200,184,154,0.35); position: relative; }
+  .security-list li::before { content: "→"; position: absolute; left: 0; color: var(--green); font-weight: 600; }
+  .security-list li:last-child { border-bottom: none; }
+  .security-list strong { color: var(--ink); font-weight: 600; }
+
+  /* ARCHITECTURE DIAGRAM */
+  .arch-wrap { margin-top: 1.5rem; background: var(--card-bg); border-radius: 4px; padding: 2rem; overflow-x: auto; }
+
+  /* STATUS BOX */
+  .status-box { background: var(--card-bg); border-left: 3px solid #C4A35A; padding: 1.25rem 1.5rem; margin-top: 1.5rem; border-radius: 0 3px 3px 0; }
+  .status-box-title { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: #C4A35A; margin-bottom: 0.6rem; }
+  .status-box p { font-size: 0.88rem; color: var(--ink-light); line-height: 1.65; }
+
+  /* FOOTER */
+  .page-footer { padding: 2rem 0; border-top: 1px solid var(--rule); }
+  .footer-link { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--ink-light); text-decoration: none; letter-spacing: 0.04em; }
+  .footer-link:hover { color: var(--green); }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 1.25rem; }
+    .container { padding: 0 1.25rem; }
+    .user-grid { grid-template-columns: 1fr; }
+    .engine-layout { grid-template-columns: 1fr; }
+    .ai-layer { grid-template-columns: 28px 1fr; }
+    .ai-layer-desc { grid-column: 2 / 3; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="/">JINESH NANAL</a>
+  <a class="nav-back" href="/">← Back to portfolio</a>
+</nav>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-eyebrow">Project · Hiring Intelligence</p>
+    <h1 class="hero-title">SkillMatch v2</h1>
+    <p class="hero-sub">A matching layer across your own bench and the open market, ranked by fit — not keywords.</p>
+    <div class="hero-rule"></div>
+    <p class="hero-desc">SkillMatch started as an internal staffing tool: describe a project, get your own engineers ranked by fit. v2 extends it into a two-sided hiring marketplace — same matching engine, same explainable scores, but now open to external engineers and companies too. The differentiator is the bridge: when your bench can't cover a project, one click sends the same search to the external pool. No job board has that because no job board also owns your bench.</p>
+    <div class="chip-row">
+      <span class="chip chip-green">Two-sided Marketplace</span>
+      <span class="chip chip-green">Semantic Skill Matching</span>
+      <span class="chip chip-outline">React · FastAPI · PostgreSQL</span>
+      <span class="chip chip-outline">k-NN · fastembed · Docker</span>
+      <span class="chip chip-status">Private Build · Not Deployed</span>
+    </div>
+    <div class="btn-row">
+      <span class="btn btn-dim">Code withheld · private startup build</span>
+    </div>
+  </div>
+
+  <!-- USERS -->
+  <div class="section">
+    <p class="section-label">Design</p>
+    <h2 class="section-title">Three User Types, One Engine</h2>
+    <p class="body-text">The three actors each have separate portals, scoped tokens, and role-guarded endpoints. They share a single matching engine and the same mutual-connect loop.</p>
+    <div class="user-grid">
+      <div class="user-card manager">
+        <div class="user-name">Internal Manager</div>
+        <p class="user-desc">Staffs their company's bench to projects via k-NN. When the bench falls short, bridges to the external pool with one click — same search, different pool.</p>
+      </div>
+      <div class="user-card company">
+        <div class="user-name">External Company</div>
+        <p class="user-desc">Posts openings, receives ranked engineer profiles with explainable match scores. Expresses interest; contact only unlocks when both sides match.</p>
+      </div>
+      <div class="user-card engineer">
+        <div class="user-name">Engineer</div>
+        <p class="user-desc">Builds a candidate profile with skills and resume. Matched to open roles, sees a ranked inbox of companies, connects only on mutual interest.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MATCHING ENGINES -->
+  <div class="section">
+    <p class="section-label">Core Algorithm</p>
+    <h2 class="section-title">Two Matching Engines</h2>
+    <p class="body-text">Internal and external hiring are fundamentally different problems. The two engines reflect that — but they share the same scoring function so a match always means the same thing on both sides.</p>
+    <div class="engine-layout">
+      <div class="engine-card internal">
+        <div class="engine-name">Internal · recommender.py</div>
+        <div class="engine-title">k-NN over 5 numeric levels</div>
+        <p class="engine-desc">Managers rate engineers on seniority, domain, communication, timezone, and bandwidth. Euclidean distance = exact fit for immediate placement (excludes fully-booked). Cosine = potential fit for scouting (keeps them, shows availability). Filtered by discipline and vertical.</p>
+      </div>
+      <div class="engine-card external">
+        <div class="engine-name">External · openings.py score()</div>
+        <div class="engine-title">Weighted sum out of 100 — explainable</div>
+        <p class="engine-desc">External strangers' self-ratings are worthless, so the external engine judges by real candidate evidence. Runs both directions from the same function — a company ranking engineers and an engineer ranking openings never disagree on what a good match is.</p>
+        <div class="score-row">
+          <div class="score-item"><span class="score-label">Skills overlap</span><div class="score-bar-wrap"><div class="score-bar" style="width:50%"></div></div><span class="score-val">50</span></div>
+          <div class="score-item"><span class="score-label">Discipline</span><div class="score-bar-wrap"><div class="score-bar" style="width:15%"></div></div><span class="score-val">15</span></div>
+          <div class="score-item"><span class="score-label">Years experience</span><div class="score-bar-wrap"><div class="score-bar" style="width:15%"></div></div><span class="score-val">15</span></div>
+          <div class="score-item"><span class="score-label">Engagement type</span><div class="score-bar-wrap"><div class="score-bar" style="width:10%"></div></div><span class="score-val">10</span></div>
+          <div class="score-item"><span class="score-label">Remote + Industry</span><div class="score-bar-wrap"><div class="score-bar" style="width:10%"></div></div><span class="score-val">10</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI LAYER -->
+  <div class="section">
+    <p class="section-label">ML</p>
+    <h2 class="section-title">Semantic Skill Matching</h2>
+    <p class="body-text">The original scorer used exact string matching — React ≠ React.js, Postgres ≠ PostgreSQL, k8s ≠ Kubernetes. A perfect candidate could rank near the bottom on spelling alone. <code style="font-family:monospace;font-size:0.85em;background:var(--card-bg);padding:0.1em 0.4em;border-radius:2px;">matching_ai.py</code> fixes this in three layers, most-reliable-first.</p>
+    <div class="ai-layers">
+      <div class="ai-layer">
+        <div class="ai-layer-num">1</div>
+        <div class="ai-layer-name">Alias map</div>
+        <div class="ai-layer-desc">Curated common synonyms: react.js→react, k8s→kubernetes, postgres→postgresql. Deterministic, always right, handles most real-world cases with zero inference cost.</div>
+      </div>
+      <div class="ai-layer">
+        <div class="ai-layer-num">2</div>
+        <div class="ai-layer-name">Exclusivity groups</div>
+        <div class="ai-layer-desc">The false-friend guard. A general embedding model rates MySQL/MongoDB, React/Angular, AWS/Azure as "similar" — they're alternatives, not the same skill. Two members of the same exclusivity group (databases, clouds, frontend frameworks, languages) never match, regardless of embedding similarity.</div>
+      </div>
+      <div class="ai-layer">
+        <div class="ai-layer-num">3</div>
+        <div class="ai-layer-name">Embedding model</div>
+        <div class="ai-layer-desc">BAAI/bge-small-en-v1.5 via fastembed (ONNX, local, no external API). Safety net for the long tail above a tuned 0.80 similarity threshold. Model baked into the Docker image — runs fully offline, no candidate data leaves the box. Validated at 42/42 on a labeled set (23 synonyms that must match, 19 false-friends that must not).</div>
+      </div>
+    </div>
+    <p class="body-text" style="margin-top:1.25rem;">Real before/after: an engineer who wrote "Postgres/AWS/k8s" jumped 83%→100% on a role asking for "PostgreSQL/AWS/Kubernetes". Engineers who already matched exactly were unchanged — matches never get worse. Behind a kill-switch: <code style="font-family:monospace;font-size:0.85em;background:var(--card-bg);padding:0.1em 0.3em;border-radius:2px;">SEMANTIC_MATCHING=off</code> falls back to exact matching instantly.</p>
+  </div>
+
+  <!-- ARCHITECTURE -->
+  <div class="section">
+    <p class="section-label">Architecture</p>
+    <h2 class="section-title">System Overview</h2>
+    <div class="arch-wrap">
+      <svg viewBox="0 0 820 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:820px;display:block;margin:0 auto;">
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#C8B89A"/></marker>
+          <marker id="arr-g" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2A4A1E"/></marker>
+        </defs>
+        <!-- Frontend box -->
+        <rect x="20" y="100" width="130" height="120" rx="3" fill="#2A4A1E" opacity="0.12" stroke="#2A4A1E" stroke-width="1.5"/>
+        <text x="85" y="130" text-anchor="middle" font-family="monospace" font-size="10" fill="#2A4A1E" font-weight="bold">FRONTEND</text>
+        <text x="85" y="148" text-anchor="middle" font-family="monospace" font-size="9" fill="#4A3F35">React 18 (Vite)</text>
+        <text x="85" y="163" text-anchor="middle" font-family="monospace" font-size="9" fill="#4A3F35">CompanyPortal</text>
+        <text x="85" y="178" text-anchor="middle" font-family="monospace" font-size="9" fill="#4A3F35">EngineerPortal</text>
+        <text x="85" y="193" text-anchor="middle" font-family="monospace" font-size="9" fill="#4A3F35">InternalApp</text>
+        <text x="85" y="208" text-anchor="middle" font-family="monospace" font-size="9" fill="#4A3F35">:5173</text>
+        <!-- Arrow F→B -->
+        <line x1="150" y1="160" x2="200" y2="160" stroke="#C8B89A" stroke-width="1.5" marker-end="url(#arr)"/>
+        <text x="175" y="152" text-anchor="middle" font-family="monospace" font-size="8" fill="#C8B89A">REST</text>
+        <!-- Backend box -->
+        <rect x="200" y="60" width="160" height="200" rx="3" fill="#C4622D" opacity="0.1" stroke="#C4622D" stroke-width="1.5"/>
+        <text x="280" y="88" text-anchor="middle" font-family="monospace" font-size="10" fill="#C4622D" font-weight="bold">BACKEND</text>
+        <text x="280" y="106" text-anchor="middle" font-family="monospace" font-size="9" fill="#4A3F35">FastAPI + Uvicorn</text>
+        <text x="280" y="125" text-anchor="middle" font-family="monospace" font-size="8" fill="#4A3F35">auth · marketplace</text>
+        <text x="280" y="140" text-anchor="middle" font-family="monospace" font-size="8" fill="#4A3F35">recommender · openings</text>
+        <text x="280" y="155" text-anchor="middle" font-family="monospace" font-size="8" fill="#4A3F35">matching_ai · interests</text>
+        <text x="280" y="170" text-anchor="middle" font-family="monospace" font-size="8" fill="#4A3F35">bridge · chat</text>
+        <text x="280" y="185" text-anchor="middle" font-family="monospace" font-size="8" fill="#4A3F35">notifications</text>
+        <text x="280" y="245" text-anchor="middle" font-family="monospace" font-size="9" fill="#4A3F35">:8000</text>
+        <!-- Arrow B→DB -->
+        <line x1="360" y1="160" x2="410" y2="160" stroke="#C8B89A" stroke-width="1.5" marker-end="url(#arr)"/>
+        <!-- DB box -->
+        <rect x="410" y="100" width="120" height="120" rx="3" fill="#2A4A1E" opacity="0.12" stroke="#2A4A1E" stroke-width="1.5"/>
+        <text x="470" y="130" text-anchor="middle" font-family="monospace" font-size="10" fill="#2A4A1E" font-weight="bold">DATABASE</text>
+        <text x="470" y="148" text-anchor="middle" font-family="monospace" font-size="9" fill="#4A3F35">PostgreSQL 15</text>
+        <text x="470" y="163" text-anchor="middle" font-family="monospace" font-size="9" fill="#4A3F35">11 tables</text>
+        <text x="470" y="178" text-anchor="middle" font-family="monospace" font-size="9" fill="#4A3F35">ThreadedPool</text>
+        <text x="470" y="208" text-anchor="middle" font-family="monospace" font-size="9" fill="#4A3F35">:5432</text>
+        <!-- AI model box -->
+        <rect x="200" y="290" width="160" height="22" rx="2" fill="#4A3F35" opacity="0.15"/>
+        <text x="280" y="305" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#4A3F35">bge-small-en-v1.5 · fastembed (ONNX, local)</text>
+        <!-- Arrow B→AI -->
+        <line x1="280" y1="260" x2="280" y2="290" stroke="#C8B89A" stroke-width="1" stroke-dasharray="4,2" marker-end="url(#arr)"/>
+        <!-- Docker label -->
+        <rect x="555" y="100" width="120" height="120" rx="3" fill="none" stroke="#C8B89A" stroke-width="1" stroke-dasharray="5,3"/>
+        <text x="615" y="120" text-anchor="middle" font-family="monospace" font-size="9" fill="#C8B89A">Docker Compose</text>
+        <text x="615" y="138" text-anchor="middle" font-family="monospace" font-size="8" fill="#C8B89A">skillmatch-net</text>
+        <text x="615" y="158" text-anchor="middle" font-family="monospace" font-size="8" fill="#4A3F35">frontend</text>
+        <text x="615" y="173" text-anchor="middle" font-family="monospace" font-size="8" fill="#4A3F35">backend</text>
+        <text x="615" y="188" text-anchor="middle" font-family="monospace" font-size="8" fill="#4A3F35">db</text>
+        <text x="615" y="208" text-anchor="middle" font-family="monospace" font-size="8" fill="#C8B89A">3 containers</text>
+        <!-- Mutual match loop -->
+        <path d="M 85 220 Q 85 270 280 270 Q 475 270 470 220" fill="none" stroke="#2A4A1E" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#arr-g)"/>
+        <text x="280" y="285" text-anchor="middle" font-family="monospace" font-size="8" fill="#2A4A1E">mutual match → contact unlocks</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- TECH STACK -->
+  <div class="section">
+    <p class="section-label">Stack</p>
+    <h2 class="section-title">Tech Stack</h2>
+    <table class="stack-table">
+      <thead><tr><th>Layer</th><th>Technology</th></tr></thead>
+      <tbody>
+        <tr><td>Frontend</td><td>React 18 (Vite), plain CSS — no component library</td></tr>
+        <tr><td>Backend</td><td>Python, FastAPI, Uvicorn</td></tr>
+        <tr><td>Database</td><td>PostgreSQL 15, ThreadedConnectionPool, db_cursor() context manager</td></tr>
+        <tr><td>Auth</td><td>JWT (PyJWT), PBKDF2 + per-user salt, constant-time comparison, role-scoped tokens</td></tr>
+        <tr><td>Internal matching</td><td>scikit-learn k-NN (Euclidean + Cosine), NumPy</td></tr>
+        <tr><td>AI / Semantic skills</td><td>fastembed · BAAI/bge-small-en-v1.5 (ONNX, fully local, no external API)</td></tr>
+        <tr><td>File upload</td><td>python-multipart (resume upload)</td></tr>
+        <tr><td>Infra</td><td>Docker + Docker Compose, custom bridge network, 3 containers</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECURITY -->
+  <div class="section">
+    <p class="section-label">Security</p>
+    <h2 class="section-title">Security Model</h2>
+    <ul class="security-list">
+      <li><strong>Hard role separation:</strong> engineer token → company endpoint = 403; company token → engineer endpoint = 403; internal-manager token → any marketplace endpoint = 403. Enforced by <code style="font-family:monospace;font-size:0.85em;">require_company</code> / <code style="font-family:monospace;font-size:0.85em;">require_engineer</code> / <code style="font-family:monospace;font-size:0.85em;">current_user</code> guards. Verified end-to-end.</li>
+      <li><strong>Contact locked until mutual:</strong> before both sides express interest, a company sees the engineer's profile but email = "" and the resume endpoint returns 403. Cross-company isolation verified — Company B cannot see Company A's unlocked contacts.</li>
+      <li><strong>Bridge org security:</strong> a manager's org gets a company identity auto-provisioned on first post, derived from their email domain. Login-disabled (sentinel password hash) and never attached to a pre-existing company account — prevents anyone hijacking an org's openings by registering first.</li>
+      <li><strong>Passwords:</strong> PBKDF2 + per-user salt, constant-time comparison. CORS locked to configured origins. SECRET_KEY refuses to boot outside dev if unset.</li>
+    </ul>
+  </div>
+
+  <!-- STATUS -->
+  <div class="section">
+    <p class="section-label">Status</p>
+    <h2 class="section-title">Current State</h2>
+    <div class="status-box">
+      <div class="status-box-title">Honest Assessment</div>
+      <p>Backend is thoroughly tested — every flow driven through the API: matching, interest, connect, bridge, chat, notifications, all security gates. This part is genuinely verified.</p>
+      <p style="margin-top:0.75rem;">Frontend is built to production standard (error handling, toasts, skeletons), but much of it is eyeball-unverified. Recent screenshots confirmed chat, notifications, and the company openings screen look right; the rest compiles and the API responds correctly.</p>
+      <p style="margin-top:0.75rem;">Not built yet: monetization, learned ranking from outcomes (needs interaction data), resume parsing (the next planned AI piece — extract skills from the uploaded PDF so engineers don't hand-type and the matcher has evidence).</p>
+    </div>
+    <div class="btn-row" style="margin-top:1.5rem;">
+      <a href="/" class="btn btn-outline">← Back to portfolio</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="page-footer">
+    <a href="/" class="footer-link">jsn04.github.io</a>
+  </div>
+
+</div>
+</body>
+</html>
