@@ -6,355 +6,398 @@
 <title>AthleteIQ — AI Injury Risk Platform</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --parchment: #F5F0E8;
-    --ink: #1A1612;
-    --ink-light: #4A3F35;
-    --green: #2A4A1E;
-    --green-dark: #1B2E13;
-    --green-mid: #3A6328;
-    --terracotta: #C4622D;
-    --rule: #C8B89A;
-    --card-bg: #EDE8DE;
-    --tag-bg: #D9D2C3;
+    --bg: #111827;
+    --bg-deep: #0B1120;
+    --card: #1F2937;
+    --card-hover: #263244;
+    --border: #374151;
+    --border-light: #4B5563;
+    --indigo: #6366F1;
+    --indigo-dark: #4F46E5;
+    --indigo-glow: rgba(99,102,241,0.15);
+    --text: #F9FAFB;
+    --text-muted: #9CA3AF;
+    --text-dim: #6B7280;
+    --green: #22C55E;
+    --red: #EF4444;
+    --yellow: #F59E0B;
+    --supabase: #3ECF8E;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--parchment); color: var(--ink); font-family: 'Inter', sans-serif; font-weight: 400; line-height: 1.6; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+  }
 
   /* NAV */
   nav {
     position: sticky; top: 0; z-index: 100;
-    background: var(--green-dark);
-    border-bottom: 1px solid #2A4A1E;
+    background: rgba(17,24,39,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
     padding: 0 4rem;
-    display: flex; align-items: center; justify-content: space-between; height: 56px;
+    display: flex; align-items: center; justify-content: space-between; height: 58px;
   }
   .nav-left { display: flex; align-items: center; gap: 1.5rem; }
   .nav-back {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    color: #7FAD6B;
-    text-decoration: none;
-    letter-spacing: 0.06em;
+    font-size: 0.72rem; color: var(--text-dim);
+    text-decoration: none; letter-spacing: 0.06em;
     transition: color 0.2s;
   }
-  .nav-back:hover { color: #C8D8B8; }
+  .nav-back:hover { color: var(--text-muted); }
+  .nav-divider { color: var(--border); }
   .nav-brand {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #EAF2E3;
+    font-size: 0.95rem; font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
   }
-  .nav-right { display: flex; gap: 0.75rem; }
+  .nav-brand span { color: var(--indigo); }
+  .nav-right { display: flex; align-items: center; gap: 0.75rem; }
+  .live-badge {
+    display: flex; align-items: center; gap: 0.4rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.1em;
+    color: var(--green); padding: 0.3rem 0.6rem;
+    border: 1px solid rgba(34,197,94,0.3);
+    border-radius: 4px; background: rgba(34,197,94,0.07);
+  }
+  .dot-live {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green); animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
   .nav-btn {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    padding: 0.35rem 0.8rem;
-    border-radius: 2px;
-    text-decoration: none;
-    letter-spacing: 0.06em;
-    transition: all 0.2s;
+    font-size: 0.8rem; font-weight: 600;
+    padding: 0.45rem 1rem; border-radius: 6px;
+    text-decoration: none; transition: all 0.2s; letter-spacing: 0.01em;
   }
-  .nav-btn-solid { background: #4A7C3F; color: #EAF2E3; }
-  .nav-btn-solid:hover { background: #5A9450; }
-  .nav-btn-ghost { border: 1px solid #4A7C3F; color: #9AB88A; }
-  .nav-btn-ghost:hover { background: #4A7C3F; color: #EAF2E3; }
-
-  /* SECTIONS */
-  .section { max-width: 1200px; margin: 0 auto; padding: 5rem 4rem; }
-  .section + .section { border-top: 1px solid var(--rule); }
-  .section-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    color: var(--terracotta);
-    text-transform: uppercase;
-    margin-bottom: 0.75rem;
-  }
-  h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--green);
-    margin-bottom: 2rem;
-  }
+  .btn-indigo { background: var(--indigo); color: white; }
+  .btn-indigo:hover { background: var(--indigo-dark); }
+  .btn-ghost { border: 1px solid var(--border); color: var(--text-muted); }
+  .btn-ghost:hover { border-color: var(--border-light); color: var(--text); }
 
   /* HERO */
-  .hero-wrap {
-    background: var(--green-dark);
-    padding: 5rem 0 4rem;
+  .hero {
+    background: linear-gradient(160deg, #0B1120 0%, #111827 50%, #131C30 100%);
+    padding: 6rem 4rem 5rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
   }
-  .hero-inner { max-width: 1200px; margin: 0 auto; padding: 0 4rem; }
-  .hero-badge {
+  .hero::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 1200px; margin: 0 auto; position: relative; }
+  .hero-tag {
     display: inline-flex; align-items: center; gap: 0.5rem;
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.7rem; letter-spacing: 0.12em;
-    color: #7FAD6B; margin-bottom: 1.25rem;
-  }
-  .live-dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: #6FBF4A; animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
+    color: var(--indigo); margin-bottom: 1.5rem;
+    text-transform: uppercase;
   }
   .hero-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 700;
-    color: #EAF2E3;
-    line-height: 1.08;
-    margin-bottom: 1rem;
+    font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+    font-weight: 800; letter-spacing: -0.03em;
+    line-height: 1.08; margin-bottom: 1.25rem;
+    color: var(--text);
   }
+  .hero-title .accent { color: var(--indigo); }
   .hero-sub {
-    font-size: 1rem;
-    color: #9AB88A;
-    max-width: 700px;
-    line-height: 1.7;
-    margin-bottom: 2rem;
+    font-size: 1rem; color: var(--text-muted);
+    max-width: 640px; line-height: 1.7; margin-bottom: 2.5rem;
   }
   .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn {
-    display: inline-block; padding: 0.7rem 1.4rem;
-    font-size: 0.85rem; font-weight: 600;
-    text-decoration: none; border-radius: 2px;
-    letter-spacing: 0.03em; transition: all 0.2s;
+  .btn-lg {
+    display: inline-block; padding: 0.8rem 1.75rem;
+    font-size: 0.88rem; font-weight: 700; text-decoration: none;
+    border-radius: 8px; transition: all 0.2s; letter-spacing: 0.01em;
   }
-  .btn-solid { background: #4A7C3F; color: #EAF2E3; }
-  .btn-solid:hover { background: #5A9450; }
-  .btn-ghost { border: 1px solid #4A7C3F; color: #9AB88A; background: transparent; }
-  .btn-ghost:hover { background: #4A7C3F; color: #EAF2E3; }
+  .btn-lg-indigo { background: var(--indigo); color: white; }
+  .btn-lg-indigo:hover { background: var(--indigo-dark); transform: translateY(-1px); }
+  .btn-lg-ghost { border: 1px solid var(--border-light); color: var(--text-muted); }
+  .btn-lg-ghost:hover { border-color: var(--indigo); color: var(--indigo); }
 
   /* PROOF STRIP */
   .proof-strip {
-    background: var(--green);
+    background: var(--bg-deep);
+    border-bottom: 1px solid var(--border);
     padding: 0;
   }
   .proof-inner {
-    max-width: 1200px; margin: 0 auto; padding: 2.5rem 4rem;
-    display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem;
+    max-width: 1200px; margin: 0 auto;
+    padding: 2rem 4rem;
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 0;
   }
-  .proof-item { text-align: center; }
+  .proof-item {
+    text-align: center;
+    padding: 1.25rem 1rem;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .proof-item:last-child { border-right: none; }
   .proof-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem; font-weight: 700;
-    color: #EAF2E3; line-height: 1; margin-bottom: 0.3rem;
+    font-size: 2.2rem; font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--text); line-height: 1; margin-bottom: 0.3rem;
   }
+  .proof-num.loading { color: var(--border-light); }
+  .proof-num.indigo { color: var(--indigo); }
   .proof-label {
     font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.1em;
+    color: var(--text-dim); text-transform: uppercase;
+  }
+  .supabase-row {
+    max-width: 1200px; margin: 0 auto;
+    padding: 0.6rem 4rem;
+    display: flex; align-items: center; gap: 0.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .supabase-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: 'JetBrains Mono', monospace;
     font-size: 0.65rem; letter-spacing: 0.08em;
-    color: #7FAD6B;
+    color: var(--supabase);
+  }
+  .supabase-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--supabase); animation: pulse 2.5s infinite; }
+  .supabase-note { font-size: 0.72rem; color: var(--text-dim); }
+
+  /* SECTIONS */
+  .section {
+    max-width: 1200px; margin: 0 auto;
+    padding: 5rem 4rem;
+  }
+  .section-divider { border-top: 1px solid var(--border); }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem; letter-spacing: 0.15em;
+    color: var(--indigo); text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  h2 {
+    font-size: 1.9rem; font-weight: 800;
+    letter-spacing: -0.03em; color: var(--text);
+    margin-bottom: 2rem;
   }
 
   /* VIDEO */
   .video-wrap {
-    background: #0D1A0A;
-    border-radius: 4px;
+    background: #000;
+    border-radius: 12px;
     overflow: hidden;
     aspect-ratio: 16/9;
-    margin-bottom: 1rem;
-    position: relative;
+    border: 1px solid var(--border);
+    margin-bottom: 0.75rem;
   }
   .video-wrap video { width: 100%; height: 100%; object-fit: contain; }
+  .video-note { font-size: 0.78rem; color: var(--text-dim); }
 
   /* SCREENSHOTS */
   .screens-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-    gap: 1.5rem;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
   }
   .screen-frame {
-    background: var(--card-bg);
-    border-radius: 4px;
-    overflow: hidden;
-    border: 1px solid var(--rule);
+    background: var(--card);
+    border-radius: 10px; overflow: hidden;
+    border: 1px solid var(--border);
   }
   .screen-bar {
-    background: #2A2220;
+    background: #0B1120;
     padding: 0.5rem 0.75rem;
     display: flex; align-items: center; gap: 0.4rem;
   }
-  .dot { width: 9px; height: 9px; border-radius: 50%; }
-  .dot-r { background: #FF5F56; }
-  .dot-y { background: #FFBD2E; }
-  .dot-g { background: #27C93F; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-r { background: #FF5F56; } .dot-y { background: #FFBD2E; } .dot-g { background: #27C93F; }
   .screen-frame img { width: 100%; display: block; }
   .screen-label {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.68rem; color: var(--ink-light);
-    padding: 0.6rem 0.75rem;
-    letter-spacing: 0.05em;
+    font-size: 0.65rem; color: var(--text-dim);
+    padding: 0.6rem 0.75rem; letter-spacing: 0.05em;
   }
 
   /* HOW IT WORKS */
-  .how-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem;
-  }
+  .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
   .how-card {
-    background: var(--card-bg);
-    padding: 1.5rem;
-    border-top: 3px solid var(--green);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.75rem;
+    position: relative; overflow: hidden;
+  }
+  .how-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--indigo);
   }
   .how-num {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem; color: var(--terracotta);
-    letter-spacing: 0.1em; margin-bottom: 0.5rem;
+    font-size: 0.65rem; color: var(--indigo);
+    letter-spacing: 0.12em; margin-bottom: 0.75rem;
+    text-transform: uppercase;
   }
   .how-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem; font-weight: 600;
-    color: var(--green); margin-bottom: 0.5rem;
+    font-size: 1rem; font-weight: 700;
+    color: var(--text); margin-bottom: 0.6rem;
+    letter-spacing: -0.01em;
   }
   .how-desc {
-    font-size: 0.83rem; color: var(--ink-light);
-    line-height: 1.6; margin-bottom: 0.75rem;
+    font-size: 0.83rem; color: var(--text-muted);
+    line-height: 1.6; margin-bottom: 1rem;
   }
   .formula {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.72rem;
-    background: var(--green-dark);
-    color: #9AB88A;
-    padding: 0.5rem 0.75rem;
-    border-radius: 2px;
+    background: rgba(99,102,241,0.1);
+    border: 1px solid rgba(99,102,241,0.25);
+    color: #A5B4FC;
+    padding: 0.6rem 0.8rem; border-radius: 6px;
   }
 
   /* CASE STUDY */
-  .case-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
+  .case-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
   .case-card {
-    padding: 1.5rem;
-    border-radius: 4px;
-    border: 1px solid var(--rule);
+    border-radius: 12px; padding: 2rem;
+    border: 1px solid;
   }
-  .case-red { background: #2A0D0A; border-color: #7A1F1A; }
-  .case-green { background: #0A2A10; border-color: #1F7A2E; }
+  .case-red { background: rgba(239,68,68,0.06); border-color: rgba(239,68,68,0.3); }
+  .case-green { background: rgba(34,197,94,0.06); border-color: rgba(34,197,94,0.3); }
   .case-score {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem; font-weight: 700;
-    line-height: 1; margin-bottom: 0.5rem;
+    font-size: 3.5rem; font-weight: 800;
+    letter-spacing: -0.05em; line-height: 1; margin-bottom: 0.35rem;
   }
-  .case-score-red { color: #E85D50; }
-  .case-score-green { color: #50E880; }
-  .case-label {
+  .case-score-red { color: var(--red); }
+  .case-score-green { color: var(--green); }
+  .case-zone {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.68rem; letter-spacing: 0.08em;
-    margin-bottom: 0.75rem;
+    font-size: 0.65rem; letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 1rem;
   }
-  .case-label-red { color: #E85D50; }
-  .case-label-green { color: #50E880; }
-  .case-detail {
-    font-size: 0.8rem; line-height: 1.55;
-  }
-  .case-detail-red { color: #C8A09A; }
-  .case-detail-green { color: #9ACAA8; }
+  .zone-red { color: var(--red); }
+  .zone-green { color: var(--green); }
+  .case-detail { font-size: 0.83rem; line-height: 1.6; }
+  .case-detail-red { color: #FCA5A5; }
+  .case-detail-green { color: #86EFAC; }
 
   /* STACK TABLE */
+  .stack-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
   .stack-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
   .stack-table th {
     text-align: left; font-family: 'JetBrains Mono', monospace;
-    font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--terracotta); padding: 0 1rem 0.75rem 0;
-    border-bottom: 2px solid var(--rule);
+    font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-dim); padding: 1rem 1.25rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(0,0,0,0.2);
   }
   .stack-table td {
-    padding: 0.65rem 1rem 0.65rem 0;
-    border-bottom: 1px solid rgba(200,184,154,0.4);
-    color: var(--ink-light);
+    padding: 0.85rem 1.25rem;
+    border-bottom: 1px solid rgba(55,65,81,0.5);
+    color: var(--text-muted); vertical-align: top;
   }
+  .stack-table tr:last-child td { border-bottom: none; }
   .stack-table td:first-child {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem; color: var(--green);
-    white-space: nowrap;
+    font-size: 0.75rem; color: var(--indigo); white-space: nowrap;
+    width: 140px;
   }
   .stack-tag {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.68rem; padding: 0.2rem 0.5rem;
-    background: var(--tag-bg); color: var(--ink-light);
-    border-radius: 1px; margin-right: 0.4rem;
-    display: inline-block;
+    font-size: 0.66rem; padding: 0.2rem 0.5rem;
+    background: var(--indigo-glow); border: 1px solid rgba(99,102,241,0.25);
+    color: #A5B4FC; border-radius: 4px;
+    margin-right: 0.4rem; display: inline-block; margin-bottom: 0.2rem;
   }
 
   /* PAPER CITATION */
   .citation-block {
-    background: var(--card-bg);
-    border-left: 3px solid var(--green);
-    padding: 1.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--indigo);
+    border-radius: 8px; padding: 1.75rem;
   }
   .citation-badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem; letter-spacing: 0.1em;
-    background: var(--green-dark); color: #C8D8B8;
-    padding: 0.2rem 0.5rem; border-radius: 1px;
-    margin-bottom: 0.75rem; display: inline-block;
+    font-size: 0.62rem; letter-spacing: 0.1em;
+    background: var(--indigo-glow); border: 1px solid rgba(99,102,241,0.3);
+    color: #A5B4FC; padding: 0.25rem 0.6rem;
+    border-radius: 4px; margin-bottom: 0.75rem; display: inline-block;
   }
   .citation-title {
-    font-family: 'Playfair Display', serif;
     font-size: 1rem; font-weight: 600;
-    color: var(--ink); margin-bottom: 0.4rem;
-    line-height: 1.4;
+    color: var(--text); margin-bottom: 0.4rem; line-height: 1.4;
   }
   .citation-meta {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem; color: var(--ink-light);
+    font-size: 0.7rem; color: var(--text-dim);
   }
 
   /* FOOTER */
   .page-footer {
-    background: var(--ink);
-    text-align: center;
-    padding: 2rem;
+    background: var(--bg-deep);
+    border-top: 1px solid var(--border);
+    text-align: center; padding: 2rem;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.68rem;
-    color: #4A3F35;
-    letter-spacing: 0.08em;
+    font-size: 0.65rem; color: var(--text-dim); letter-spacing: 0.08em;
   }
-  .page-footer a { color: #9A8E82; text-decoration: none; }
-  .page-footer a:hover { color: var(--parchment); }
+  .page-footer a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+  .page-footer a:hover { color: var(--indigo); }
 
   @media (max-width: 768px) {
-    .proof-inner { grid-template-columns: repeat(2, 1fr); padding: 2rem 1.5rem; }
+    nav { padding: 0 1.25rem; }
+    .nav-back, .nav-divider { display: none; }
+    .hero { padding: 4rem 1.25rem 3rem; }
+    .proof-inner { grid-template-columns: repeat(3, 1fr); padding: 0.5rem 1.25rem; }
+    .proof-item:nth-child(3) { border-right: none; }
+    .supabase-row { padding: 0.5rem 1.25rem; }
+    .section { padding: 3.5rem 1.25rem; }
+    .screens-grid { grid-template-columns: 1fr; }
+    .how-grid { grid-template-columns: 1fr; }
     .case-grid { grid-template-columns: 1fr; }
-    nav { padding: 0 1.5rem; }
-    .hero-inner { padding: 0 1.5rem; }
-    .section { padding: 3.5rem 1.5rem; }
-    .hero-wrap { padding: 3.5rem 0 3rem; }
   }
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
   <div class="nav-left">
     <a href="index.html" class="nav-back">← Portfolio</a>
-    <span class="nav-brand">AthleteIQ</span>
+    <span class="nav-divider">|</span>
+    <span class="nav-brand">Athlete<span>IQ</span></span>
   </div>
   <div class="nav-right">
-    <a href="https://athlete-iq-dun.vercel.app" class="nav-btn nav-btn-solid" target="_blank" rel="noopener">Live app ↗</a>
-    <a href="https://github.com/Jsn04/AthleteIQ" class="nav-btn nav-btn-ghost" target="_blank" rel="noopener">GitHub ↗</a>
+    <div class="live-badge"><span class="dot-live"></span>LIVE</div>
+    <a href="https://athlete-iq-dun.vercel.app" class="nav-btn btn-indigo" target="_blank" rel="noopener">Open App ↗</a>
+    <a href="https://github.com/Jsn04/AthleteIQ" class="nav-btn btn-ghost" target="_blank" rel="noopener">GitHub</a>
   </div>
 </nav>
 
 <!-- HERO -->
-<div class="hero-wrap">
+<div class="hero">
   <div class="hero-inner">
-    <div class="hero-badge">
-      <span class="live-dot"></span>
-      DEPLOYED · PRODUCTION · INDIA
+    <div class="hero-tag">
+      <span class="dot-live" style="width:7px;height:7px;"></span>
+      Deployed · Production · India
     </div>
-    <h1 class="hero-title">AI Injury Risk<br>Monitoring — Live</h1>
-    <p class="hero-sub">A full-stack platform that gives coaches a composite readiness score for every athlete, every session. Built entirely solo. No wearables. No hardware. Running in real academies today.</p>
+    <h1 class="hero-title">
+      AI Injury Risk<br>Monitoring — <span class="accent">Live</span>
+    </h1>
+    <p class="hero-sub">
+      A full-stack platform that gives every coach a composite readiness score for every athlete, every session. Built entirely solo. No wearables. No hardware. Running in real academies today.
+    </p>
     <div class="hero-cta">
-      <a href="https://athlete-iq-dun.vercel.app" class="btn btn-solid" target="_blank" rel="noopener">Open live app ↗</a>
-      <a href="https://github.com/Jsn04/AthleteIQ" class="btn btn-ghost" target="_blank" rel="noopener">View source ↗</a>
+      <a href="https://athlete-iq-dun.vercel.app" class="btn-lg btn-lg-indigo" target="_blank" rel="noopener">Open live app ↗</a>
+      <a href="https://github.com/Jsn04/AthleteIQ" class="btn-lg btn-lg-ghost" target="_blank" rel="noopener">View source ↗</a>
     </div>
   </div>
 </div>
@@ -363,11 +406,11 @@
 <div class="proof-strip">
   <div class="proof-inner">
     <div class="proof-item">
-      <div class="proof-num" id="p-academies">—</div>
+      <div class="proof-num indigo" id="p-academies"><span class="loading-spinner">…</span></div>
       <div class="proof-label">Academies</div>
     </div>
     <div class="proof-item">
-      <div class="proof-num" id="p-athletes">—</div>
+      <div class="proof-num indigo" id="p-athletes"><span class="loading-spinner">…</span></div>
       <div class="proof-label">Athletes</div>
     </div>
     <div class="proof-item">
@@ -383,6 +426,10 @@
       <div class="proof-label">Hardware needed</div>
     </div>
   </div>
+  <div class="supabase-row">
+    <span class="supabase-badge"><span class="supabase-dot"></span>LIVE FROM SUPABASE</span>
+    <span class="supabase-note" id="fetch-status">— fetching live database counts…</span>
+  </div>
 </div>
 
 <!-- VIDEO -->
@@ -392,14 +439,13 @@
   <div class="video-wrap">
     <video controls preload="metadata">
       <source src="https://github.com/Jsn04/Jsn04.github.io/releases/download/v1.0-demo/athleteiq-web.mp4" type="video/mp4">
-      Your browser does not support the video tag.
     </video>
   </div>
-  <p style="font-size:0.8rem;color:var(--ink-light);">Screen recording of the coach dashboard — real data, real athletes.</p>
+  <p class="video-note">Screen recording of the live coach dashboard — real data, real athletes.</p>
 </div>
 
 <!-- SCREENSHOTS -->
-<div class="section" style="padding-top:0;border-top:none;">
+<div class="section section-divider" style="padding-top:4rem;">
   <p class="section-label">Screenshots</p>
   <h2>Inside the Platform</h2>
   <div class="screens-grid">
@@ -414,7 +460,7 @@
       <div class="screen-bar">
         <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
       </div>
-      <img src="athleteiq/athlete-view.png" alt="Athlete self-checkin view — session RPE and energy">
+      <img src="athleteiq/athlete-view.png" alt="Athlete self-checkin view">
       <div class="screen-label">Athlete Check-in · Session Input</div>
     </div>
     <div class="screen-frame">
@@ -428,109 +474,109 @@
 </div>
 
 <!-- HOW IT WORKS -->
-<div class="section">
+<div class="section section-divider" style="padding-top:4rem;">
   <p class="section-label">Under the Hood</p>
   <h2>How It Works</h2>
   <div class="how-grid">
     <div class="how-card">
       <div class="how-num">01 · ACWR</div>
       <div class="how-title">Workload Ratio</div>
-      <p class="how-desc">Acute-to-Chronic Workload Ratio measures how hard an athlete trained this week against their 28-day baseline. A ratio above 1.3 signals overreach.</p>
+      <p class="how-desc">Acute-to-Chronic Workload Ratio measures how hard an athlete trained this week against their 28-day baseline. Above 1.3 signals overreach and injury risk.</p>
       <div class="formula">ACWR = acute(7d) ÷ (chronic(28d) ÷ 4)</div>
     </div>
     <div class="how-card">
       <div class="how-num">02 · Z-SCORE</div>
       <div class="how-title">Baseline Deviation</div>
-      <p class="how-desc">Each athlete's energy, mood, and sleep ratings are benchmarked against their personal historical baseline. Deviations from their own norm score higher than absolute thresholds.</p>
+      <p class="how-desc">Energy, mood, and sleep ratings are benchmarked against each athlete's personal baseline — deviations from their own norm score higher than fixed thresholds.</p>
       <div class="formula">z = (x − μ_athlete) ÷ σ_athlete</div>
     </div>
     <div class="how-card">
-      <div class="how-num">03 · DECEPTION</div>
-      <div class="how-title">Effort Mismatch Detection</div>
-      <p class="how-desc">If a coach's RPE rating and the athlete's own energy self-report diverge significantly, the system flags it. Athletes playing through pain or sandbagging are caught automatically.</p>
-      <div class="formula">|RPE_coach − (10 − energy_athlete)| ≥ 3</div>
+      <div class="how-num">03 · DETECT</div>
+      <div class="how-title">Effort Mismatch</div>
+      <p class="how-desc">If a coach's RPE rating and the athlete's self-reported energy diverge beyond the threshold, the system flags it. Athletes pushing through pain get caught automatically.</p>
+      <div class="formula">|RPE_coach − (10 − energy)| ≥ 3</div>
     </div>
   </div>
-  <p style="font-size:0.82rem;color:var(--ink-light);margin-top:1.5rem;">These three components feed into a composite score (max 100) weighted across 5 pillars: ACWR (40%), baseline z (30%), deception (15%), notes sentiment (10%), vitals (5%).</p>
+  <p style="font-size:0.82rem;color:var(--text-dim);margin-top:1.5rem;">Composite score (max 100) across 5 pillars — ACWR (40%), baseline z (30%), deception (15%), notes sentiment (10%), vitals (5%).</p>
 </div>
 
 <!-- CASE STUDY -->
-<div class="section" style="border-top:1px solid var(--rule);">
+<div class="section section-divider" style="padding-top:4rem;">
   <p class="section-label">Real Data</p>
   <h2>What the Platform Surfaces</h2>
   <div class="case-grid">
     <div class="case-card case-red">
       <div class="case-score case-score-red">78</div>
-      <div class="case-label case-label-red">RED ZONE · HIGH RISK</div>
-      <p class="case-detail case-detail-red">ACWR at 1.6 — well above the 1.3 threshold. Coach RPE logged 8/10; athlete self-reported 9/10 energy. Deception flag triggered. Sentiment in session notes classified as anxious. System flagged for coach review and sent an automated alert.</p>
+      <div class="case-zone zone-red">RED ZONE · HIGH RISK</div>
+      <p class="case-detail case-detail-red">ACWR at 1.6 — well above the 1.3 threshold. Coach RPE 8/10 but athlete self-reported 9/10 energy. Deception flag triggered. Notes sentiment classified as anxious. Coach alert sent automatically.</p>
     </div>
     <div class="case-card case-green">
       <div class="case-score case-score-green">10</div>
-      <div class="case-label case-label-green">GREEN ZONE · OPTIMAL</div>
-      <p class="case-detail case-detail-green">ACWR at 0.9 — well within safe range. Athlete energy, mood, and sleep all within 0.5 standard deviations of their personal baseline. No mismatch between coach and athlete ratings. Cleared for full-intensity training.</p>
+      <div class="case-zone zone-green">GREEN ZONE · OPTIMAL</div>
+      <p class="case-detail case-detail-green">ACWR at 0.9 — well within safe range. Energy, mood, and sleep all within 0.5 standard deviations of personal baseline. No coach/athlete mismatch. Cleared for full-intensity training.</p>
     </div>
   </div>
 </div>
 
 <!-- STACK -->
-<div class="section" style="border-top:1px solid var(--rule);">
+<div class="section section-divider" style="padding-top:4rem;">
   <p class="section-label">Technical Stack</p>
   <h2>Built With</h2>
-  <table class="stack-table">
-    <thead>
-      <tr>
-        <th>Layer</th>
-        <th>Technology</th>
-        <th>Detail</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Frontend</td>
-        <td><span class="stack-tag">React</span><span class="stack-tag">Tailwind CSS</span></td>
-        <td>Deployed on Vercel. Athlete + coach + academy portals.</td>
-      </tr>
-      <tr>
-        <td>Backend</td>
-        <td><span class="stack-tag">FastAPI</span><span class="stack-tag">Python 3.11</span></td>
-        <td>Deployed on Render. REST API with JWT auth.</td>
-      </tr>
-      <tr>
-        <td>Database</td>
-        <td><span class="stack-tag">PostgreSQL</span><span class="stack-tag">Supabase</span></td>
-        <td>Row-level security by academy_id. Multi-tenant.</td>
-      </tr>
-      <tr>
-        <td>LLM</td>
-        <td><span class="stack-tag">Groq</span><span class="stack-tag">compound-mini</span></td>
-        <td>Session notes sentiment, weekly AI report generation.</td>
-      </tr>
-      <tr>
-        <td>ML Model</td>
-        <td><span class="stack-tag">XGBoost</span></td>
-        <td>Parallel injury risk score alongside the heuristic engine.</td>
-      </tr>
-      <tr>
-        <td>Storage</td>
-        <td><span class="stack-tag">AWS S3</span></td>
-        <td>Weekly PDF reports stored per-athlete, per-academy.</td>
-      </tr>
-      <tr>
-        <td>Email</td>
-        <td><span class="stack-tag">AWS SES</span></td>
-        <td>Red-zone alerts to coach + parent when risk ≥ 70.</td>
-      </tr>
-      <tr>
-        <td>Auth</td>
-        <td><span class="stack-tag">bcrypt</span><span class="stack-tag">JWT</span></td>
-        <td>Role-based access: athlete / coach / academy admin.</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="stack-wrap">
+    <table class="stack-table">
+      <thead>
+        <tr>
+          <th>Layer</th><th>Technology</th><th>Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Frontend</td>
+          <td><span class="stack-tag">React</span><span class="stack-tag">Tailwind CSS</span></td>
+          <td>Deployed on Vercel. Athlete + coach + academy portals.</td>
+        </tr>
+        <tr>
+          <td>Backend</td>
+          <td><span class="stack-tag">FastAPI</span><span class="stack-tag">Python 3.11</span></td>
+          <td>REST API on Render with JWT auth and row-level multi-tenancy.</td>
+        </tr>
+        <tr>
+          <td>Database</td>
+          <td><span class="stack-tag">PostgreSQL</span><span class="stack-tag">Supabase</span></td>
+          <td>Row-level security by academy_id. Stats above are fetched live from this DB.</td>
+        </tr>
+        <tr>
+          <td>LLM</td>
+          <td><span class="stack-tag">Groq</span><span class="stack-tag">compound-mini</span></td>
+          <td>Session notes sentiment analysis and weekly AI report generation.</td>
+        </tr>
+        <tr>
+          <td>ML Model</td>
+          <td><span class="stack-tag">XGBoost</span></td>
+          <td>Parallel injury risk score alongside the heuristic composite engine.</td>
+        </tr>
+        <tr>
+          <td>Storage</td>
+          <td><span class="stack-tag">AWS S3</span></td>
+          <td>Weekly PDF reports stored per-athlete, per-academy.</td>
+        </tr>
+        <tr>
+          <td>Email</td>
+          <td><span class="stack-tag">AWS SES</span></td>
+          <td>Red-zone alerts to coach + parent when composite risk score ≥ 70.</td>
+        </tr>
+        <tr>
+          <td>Auth</td>
+          <td><span class="stack-tag">bcrypt</span><span class="stack-tag">JWT</span></td>
+          <td>Role-based access control: athlete / coach / academy admin.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <!-- PAPER -->
-<div class="section" style="border-top:1px solid var(--rule);">
+<div class="section section-divider" style="padding-top:4rem;">
   <p class="section-label">Research</p>
   <h2>Published Work</h2>
   <div class="citation-block">
@@ -538,27 +584,44 @@
     <div class="citation-title">Deployment Study: AI-Powered Injury Risk Monitoring for Grassroots Sports Academies in India</div>
     <p class="citation-meta">Jinesh Nanal · MIT-WPU · 2026</p>
   </div>
-  <p style="font-size:0.83rem;color:var(--ink-light);margin-top:1rem;line-height:1.65;">Peer-reviewed study of the AthleteIQ deployment — covering the composite risk engine design, real-world coach adoption patterns, and system performance across 20+ academies.</p>
+  <p style="font-size:0.83rem;color:var(--text-dim);margin-top:1rem;line-height:1.65;">Peer-reviewed deployment study covering the composite risk engine design, real-world coach adoption, and system performance across 20+ academies.</p>
 </div>
 
 <footer class="page-footer">
   <a href="index.html">← Jinesh Nanal Portfolio</a> &nbsp;·&nbsp;
-  <a href="https://athlete-iq-dun.vercel.app" target="_blank" rel="noopener">Live app</a> &nbsp;·&nbsp;
+  <a href="https://athlete-iq-dun.vercel.app" target="_blank" rel="noopener">Live App</a> &nbsp;·&nbsp;
   <a href="https://github.com/Jsn04/AthleteIQ" target="_blank" rel="noopener">GitHub</a>
   <br><br>
   AthleteIQ · Built by Jinesh Nanal · 2026
 </footer>
 
 <script>
-  fetch('https://athleteiq-9r76.onrender.com/auth/founding-status')
-    .then(r => r.json())
-    .then(d => {
-      const acad = document.getElementById('p-academies');
-      const ath = document.getElementById('p-athletes');
-      if (acad && d.total_academies != null) acad.textContent = d.total_academies;
-      if (ath && d.total_athletes != null) ath.textContent = d.total_athletes;
-    })
-    .catch(() => {});
+  const acadEl = document.getElementById('p-academies');
+  const athEl = document.getElementById('p-athletes');
+  const statusEl = document.getElementById('fetch-status');
+
+  function loadStats(attempt) {
+    fetch('https://athleteiq-9r76.onrender.com/auth/founding-status')
+      .then(r => { if (!r.ok) throw new Error('non-200'); return r.json(); })
+      .then(d => {
+        if (d.total_academies != null) acadEl.textContent = d.total_academies;
+        if (d.total_athletes != null) athEl.textContent = d.total_athletes;
+        statusEl.textContent = '— last fetched ' + new Date().toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'}) + ' · Supabase PostgreSQL';
+        statusEl.style.color = 'var(--supabase)';
+      })
+      .catch(() => {
+        if (attempt < 4) {
+          statusEl.textContent = '— backend waking up (Render cold start), retrying…';
+          setTimeout(() => loadStats(attempt + 1), 5000);
+        } else {
+          statusEl.textContent = '— backend unavailable; figures shown when app is warm';
+          acadEl.textContent = '—';
+          athEl.textContent = '—';
+        }
+      });
+  }
+
+  loadStats(1);
 </script>
 </body>
 </html>
