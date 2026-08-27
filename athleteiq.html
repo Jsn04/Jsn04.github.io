@@ -406,20 +406,20 @@
 <div class="proof-strip">
   <div class="proof-inner">
     <div class="proof-item">
-      <div class="proof-num indigo" id="p-academies"><span class="loading-spinner">…</span></div>
+      <div class="proof-num indigo" id="p-academies">—</div>
       <div class="proof-label">Academies</div>
     </div>
     <div class="proof-item">
-      <div class="proof-num indigo" id="p-athletes"><span class="loading-spinner">…</span></div>
+      <div class="proof-num indigo" id="p-athletes">—</div>
       <div class="proof-label">Athletes</div>
     </div>
     <div class="proof-item">
-      <div class="proof-num">69</div>
-      <div class="proof-label">Sessions logged</div>
+      <div class="proof-num indigo" id="p-checkins">—</div>
+      <div class="proof-label">Check-ins logged</div>
     </div>
     <div class="proof-item">
-      <div class="proof-num">5</div>
-      <div class="proof-label">Months live</div>
+      <div class="proof-num indigo" id="p-logs">—</div>
+      <div class="proof-label">Training logs</div>
     </div>
     <div class="proof-item">
       <div class="proof-num">0</div>
@@ -428,7 +428,7 @@
   </div>
   <div class="supabase-row">
     <span class="supabase-badge"><span class="supabase-dot"></span>LIVE FROM SUPABASE</span>
-    <span class="supabase-note" id="fetch-status">— fetching live database counts…</span>
+    <span class="supabase-note" id="fetch-status">— querying database directly…</span>
   </div>
 </div>
 
@@ -596,32 +596,34 @@
 </footer>
 
 <script>
-  const acadEl = document.getElementById('p-academies');
-  const athEl = document.getElementById('p-athletes');
-  const statusEl = document.getElementById('fetch-status');
+  const SUPA = 'https://zoahnwhvzyptdortdspo.supabase.co';
+  const KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpvYWhud2h2enlwdGRvcnRkc3BvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1MDk3NDksImV4cCI6MjA5MDA4NTc0OX0.h0BLCUXlGU1qBKxfVL9hCmrIVDiuZtylw0yXm57Ik4s';
+  const H    = { apikey: KEY, Authorization: `Bearer ${KEY}`, Prefer: 'count=exact' };
 
-  function loadStats(attempt) {
-    fetch('https://athleteiq-9r76.onrender.com/auth/founding-status')
-      .then(r => { if (!r.ok) throw new Error('non-200'); return r.json(); })
-      .then(d => {
-        if (d.total_academies != null) acadEl.textContent = d.total_academies;
-        if (d.total_athletes != null) athEl.textContent = d.total_athletes;
-        statusEl.textContent = '— last fetched ' + new Date().toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'}) + ' · Supabase PostgreSQL';
-        statusEl.style.color = 'var(--supabase)';
-      })
-      .catch(() => {
-        if (attempt < 4) {
-          statusEl.textContent = '— backend waking up (Render cold start), retrying…';
-          setTimeout(() => loadStats(attempt + 1), 5000);
-        } else {
-          statusEl.textContent = '— backend unavailable; figures shown when app is warm';
-          acadEl.textContent = '—';
-          athEl.textContent = '—';
-        }
-      });
+  async function getCount(table) {
+    const r = await fetch(`${SUPA}/rest/v1/${table}?select=*`, { method: 'HEAD', headers: H });
+    const cr = r.headers.get('Content-Range');
+    return cr ? parseInt(cr.split('/')[1]) : null;
   }
 
-  loadStats(1);
+  const statusEl = document.getElementById('fetch-status');
+
+  Promise.all([
+    getCount('academies'),
+    getCount('athletes'),
+    getCount('checkins'),
+    getCount('training_logs'),
+  ]).then(([acad, ath, chk, logs]) => {
+    if (acad != null) document.getElementById('p-academies').textContent = acad;
+    if (ath  != null) document.getElementById('p-athletes').textContent  = ath;
+    if (chk  != null) document.getElementById('p-checkins').textContent  = chk.toLocaleString();
+    if (logs != null) document.getElementById('p-logs').textContent      = logs.toLocaleString();
+    const t = new Date().toLocaleTimeString('en-IN', {hour:'2-digit', minute:'2-digit'});
+    statusEl.textContent = `— fetched directly from Supabase PostgreSQL at ${t}`;
+    statusEl.style.color = 'var(--supabase)';
+  }).catch(() => {
+    statusEl.textContent = '— unable to reach Supabase; check browser console';
+  });
 </script>
 </body>
 </html>

@@ -608,12 +608,12 @@
         <div class="aiq-metric-label">Athletes registered</div>
       </div>
       <div>
-        <div class="aiq-metric-num">69</div>
-        <div class="aiq-metric-label">Training sessions logged</div>
+        <div class="aiq-metric-num" id="m-checkins">—</div>
+        <div class="aiq-metric-label">Check-ins logged</div>
       </div>
       <div>
-        <div class="aiq-metric-num">78</div>
-        <div class="aiq-metric-label">Peak risk score detected</div>
+        <div class="aiq-metric-num" id="m-logs">—</div>
+        <div class="aiq-metric-label">Training logs</div>
       </div>
     </div>
     <div class="aiq-actions">
@@ -784,15 +784,27 @@
 </div>
 
 <script>
-  fetch('https://athleteiq-9r76.onrender.com/auth/founding-status')
-    .then(r => r.json())
-    .then(d => {
-      const acad = document.getElementById('m-academies');
-      const ath = document.getElementById('m-athletes');
-      if (acad && d.total_academies != null) acad.textContent = d.total_academies;
-      if (ath && d.total_athletes != null) ath.textContent = d.total_athletes;
-    })
-    .catch(() => {});
+  const SUPA = 'https://zoahnwhvzyptdortdspo.supabase.co';
+  const KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpvYWhud2h2enlwdGRvcnRkc3BvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1MDk3NDksImV4cCI6MjA5MDA4NTc0OX0.h0BLCUXlGU1qBKxfVL9hCmrIVDiuZtylw0yXm57Ik4s';
+  const H    = { apikey: KEY, Authorization: `Bearer ${KEY}`, Prefer: 'count=exact' };
+
+  async function getCount(table) {
+    const r = await fetch(`${SUPA}/rest/v1/${table}?select=*`, { method: 'HEAD', headers: H });
+    const cr = r.headers.get('Content-Range');
+    return cr ? parseInt(cr.split('/')[1]) : null;
+  }
+
+  Promise.all([
+    getCount('academies'),
+    getCount('athletes'),
+    getCount('checkins'),
+    getCount('training_logs'),
+  ]).then(([acad, ath, chk, logs]) => {
+    if (acad != null) document.getElementById('m-academies').textContent = acad;
+    if (ath  != null) document.getElementById('m-athletes').textContent  = ath;
+    if (chk  != null) document.getElementById('m-checkins').textContent  = chk.toLocaleString();
+    if (logs != null) document.getElementById('m-logs').textContent      = logs.toLocaleString();
+  }).catch(() => {});
 </script>
 </body>
 </html>
