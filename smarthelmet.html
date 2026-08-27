@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Helmet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #F5F0E8;
+    --ink: #1A1612;
+    --ink-light: #4A3F35;
+    --green: #2A4A1E;
+    --green-dark: #1B2E13;
+    --green-mid: #3A6328;
+    --terracotta: #C4622D;
+    --rule: #C8B89A;
+    --card-bg: #EDE8DE;
+    --tag-bg: #D9D2C3;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 18px; }
+  body { background: var(--parchment); color: var(--ink); font-family: 'Inter', sans-serif; font-size: 1rem; line-height: 1.65; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--parchment); border-bottom: 1px solid var(--rule);
+    padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between; height: 56px;
+  }
+  .nav-brand { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--green); font-weight: 500; text-decoration: none; letter-spacing: 0.08em; }
+  .nav-back { font-size: 0.82rem; color: var(--ink-light); text-decoration: none; letter-spacing: 0.03em; display: flex; align-items: center; gap: 0.4rem; }
+  .nav-back:hover { color: var(--green); }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2.5rem; }
+
+  .hero { padding: 4rem 0 3rem; border-bottom: 1px solid var(--rule); }
+  .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em; color: var(--terracotta); text-transform: uppercase; margin-bottom: 0.9rem; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4.5vw, 3.4rem); font-weight: 700; color: var(--ink); line-height: 1.1; margin-bottom: 0.5rem; }
+  .hero-sub { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--ink-light); font-style: italic; margin-bottom: 1.5rem; }
+  .hero-desc { font-size: 1rem; color: var(--ink-light); max-width: 740px; line-height: 1.7; margin-bottom: 2rem; }
+  .hero-rule { width: 60px; height: 3px; background: var(--green); margin-bottom: 2rem; }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+  .chip { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; padding: 0.3rem 0.7rem; border-radius: 2px; letter-spacing: 0.04em; font-weight: 500; }
+  .chip-green   { background: var(--green-dark); color: #C8D8B8; }
+  .chip-outline { border: 1px solid var(--rule); color: var(--ink-light); }
+  .chip-pending { background: #3A2A0A; color: #F0C060; }
+  .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn { display: inline-block; padding: 0.65rem 1.4rem; font-size: 0.85rem; font-weight: 600; text-decoration: none; border-radius: 2px; transition: all 0.2s; letter-spacing: 0.03em; }
+  .btn-primary { background: var(--green); color: #EAF2E3; }
+  .btn-primary:hover { background: var(--green-mid); }
+  .btn-dim { border: 1.5px solid var(--rule); color: var(--ink-light); cursor: default; opacity: 0.65; }
+
+  .section { padding: 3rem 0; border-bottom: 1px solid var(--rule); }
+  .section:last-child { border-bottom: none; }
+  .section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.15em; color: var(--terracotta); text-transform: uppercase; margin-bottom: 0.6rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 600; color: var(--green); margin-bottom: 1.25rem; }
+  .body-text { font-size: 0.95rem; color: var(--ink-light); line-height: 1.7; margin-bottom: 1rem; }
+
+  /* STATUS BANNER */
+  .status-banner { background: linear-gradient(135deg, #2A1A06 0%, #3A2A0A 100%); color: #F0C060; padding: 1.25rem 1.75rem; display: flex; align-items: center; gap: 1.2rem; margin-top: 1.5rem; }
+  .status-dot { width: 10px; height: 10px; border-radius: 50%; background: #F0C060; flex-shrink: 0; }
+  .status-text { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; letter-spacing: 0.06em; }
+
+  /* FIGURE */
+  .figure-wrap { margin-top: 1.75rem; border: 1px solid var(--rule); overflow: hidden; border-radius: 4px; }
+  .figure-wrap img { width: 100%; display: block; }
+  .figure-caption { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--ink-light); padding: 0.6rem 1rem; border-top: 1px solid var(--rule); background: var(--card-bg); letter-spacing: 0.02em; line-height: 1.6; }
+
+  /* LAYER CARDS */
+  .layer-stack { display: flex; flex-direction: column; gap: 2px; margin-top: 1.5rem; }
+  .layer-card { display: grid; grid-template-columns: 220px 1fr; align-items: stretch; }
+  .layer-label { padding: 1rem 1.2rem; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.04em; display: flex; align-items: center; }
+  .layer-modules { padding: 0.75rem 1.2rem; display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+  .layer-mod { font-size: 0.78rem; padding: 0.2rem 0.6rem; border-radius: 2px; }
+  .layer-4 .layer-label { background: #2A4A1E; color: #C8D8B8; }
+  .layer-4 .layer-modules { background: #EAF2E3; }
+  .layer-4 .layer-mod { background: #C0D8B0; color: #1B2E13; }
+  .layer-3 .layer-label { background: #3A4A1E; color: #D0D8A8; }
+  .layer-3 .layer-modules { background: #EEF2E0; }
+  .layer-3 .layer-mod { background: #C8D8A0; color: #2A3010; }
+  .layer-2 .layer-label { background: #5A4A1E; color: #E0D0A8; }
+  .layer-2 .layer-modules { background: #F5EED8; }
+  .layer-2 .layer-mod { background: #D8C890; color: #3A2A0A; }
+  .layer-1 .layer-label { background: #7A4A1E; color: #F0C898; }
+  .layer-1 .layer-modules { background: #FAF0E0; }
+  .layer-1 .layer-mod { background: #EAB870; color: #3A1A0A; }
+  .layer-0 .layer-label { background: #1A1612; color: #C8B89A; }
+  .layer-0 .layer-modules { background: var(--card-bg); }
+  .layer-0 .layer-mod { background: var(--tag-bg); color: var(--ink-light); font-size: 0.75rem; }
+
+  /* TWO-COL */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+  .info-card { background: var(--card-bg); padding: 1.4rem; border-top: 3px solid var(--rule); }
+  .info-card.green { border-color: var(--green); }
+  .info-card.terracotta { border-color: var(--terracotta); }
+  .info-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
+  .info-desc { font-size: 0.85rem; color: var(--ink-light); line-height: 1.6; }
+
+  /* TABLE */
+  .data-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; font-size: 0.85rem; }
+  .data-table th { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terracotta); text-align: left; padding: 0.55rem 0.9rem; border-bottom: 2px solid var(--rule); }
+  .data-table td { padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--rule); color: var(--ink-light); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--ink); font-weight: 500; white-space: nowrap; }
+  .data-table .total td { font-weight: 600; color: var(--ink); background: var(--card-bg); }
+  .pass { color: #2A6A1A; font-weight: 600; }
+  .highlight { background: rgba(42,74,30,0.06); }
+
+  /* ABLATION TABLE */
+  .abl-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; font-size: 0.82rem; }
+  .abl-table th { font-family: 'JetBrains Mono', monospace; font-size: 0.64rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--terracotta); text-align: center; padding: 0.5rem 0.7rem; border-bottom: 2px solid var(--rule); }
+  .abl-table th:first-child { text-align: left; }
+  .abl-table td { padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--rule); color: var(--ink-light); text-align: center; }
+  .abl-table td:first-child { text-align: left; font-size: 0.82rem; color: var(--ink); }
+  .abl-table tr:last-child td { border-bottom: none; }
+  .abl-table .best { color: #2A6A1A; font-weight: 600; }
+  .abl-table .full-col { background: rgba(42,74,30,0.06); }
+
+  /* SCENARIO TABLE */
+  .scenario-table { width: 100%; border-collapse: collapse; margin-top: 1.25rem; font-size: 0.82rem; }
+  .scenario-table th { font-family: 'JetBrains Mono', monospace; font-size: 0.64rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--terracotta); text-align: left; padding: 0.5rem 0.9rem; border-bottom: 2px solid var(--rule); }
+  .scenario-table td { padding: 0.5rem 0.9rem; border-bottom: 1px solid var(--rule); color: var(--ink-light); }
+  .scenario-table td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--ink); font-weight: 500; }
+  .scenario-table .pass-badge { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 0.64rem; padding: 0.15rem 0.5rem; background: #C8D8B8; color: #1B2E13; border-radius: 2px; letter-spacing: 0.06em; }
+
+  /* BLE PACKET */
+  .ble-packet { display: flex; margin-top: 1.5rem; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+  .ble-byte { flex: 1; text-align: center; padding: 0.9rem 0.4rem; border-right: 1px solid var(--rule); }
+  .ble-byte:last-child { border-right: none; }
+  .ble-byte.magic   { background: #2A4A1E; color: #C8D8B8; }
+  .ble-byte.type    { background: #3A4A1E; color: #D0D8A8; }
+  .ble-byte.seq     { background: var(--card-bg); flex: 2; }
+  .ble-byte.payload { background: var(--tag-bg); flex: 3; }
+  .ble-byte.chk     { background: #1B2E13; color: #9AB88A; }
+  .ble-field { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 600; display: block; margin-bottom: 0.3rem; }
+  .ble-bytes-label { font-size: 0.72rem; color: var(--ink-light); display: block; margin-bottom: 0.2rem; }
+  .ble-desc { font-size: 0.72rem; color: var(--ink-light); line-height: 1.4; }
+
+  /* LATENCY BARS */
+  .latency-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
+  .lat-card { background: var(--card-bg); padding: 1.2rem 1.4rem; }
+  .lat-metric { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--green); }
+  .lat-unit { font-size: 0.75rem; color: var(--ink-light); margin-left: 0.2rem; }
+  .lat-label { font-size: 0.82rem; color: var(--ink-light); margin-top: 0.2rem; }
+
+  footer { padding: 2.5rem; text-align: center; border-top: 1px solid var(--rule); }
+  .footer-note { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: #7A6E62; letter-spacing: 0.06em; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand">jsn04</a>
+  <a href="index.html#projects" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Back to Projects
+  </a>
+</nav>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">Research Project · IEEE INDICON 2025</div>
+    <h1 class="hero-title">A Smart Helmet for Offline Navigation Using Hybrid Dead-Reckoning and Vision-Based Road-Feature Route-Pointer Correction</h1>
+    <p class="hero-sub">Wearable prototype for GNSS-denied navigation on two-wheelers</p>
+    <div class="hero-rule"></div>
+    <p class="hero-desc">
+      GNSS fails in tunnels, flyovers, dense urban roads, and network-constrained areas. This paper presents a wearable smart-helmet system that maintains accurate navigation continuity when GPS goes dark. The core idea: treat road features detected by a forward-facing camera as semantic correction events for a Dead Reckoning route pointer, rather than building a full localisation system from scratch. The helmet is a systems-integration contribution, not an algorithmic novelty claim.
+    </p>
+    <div class="chip-row">
+      <span class="chip chip-pending">Submitted · IEEE INDICON 2025</span>
+      <span class="chip chip-green">LR-ASPP-MobileNetV3</span>
+      <span class="chip chip-green">Dead Reckoning</span>
+      <span class="chip chip-outline">ESP32 + BLE</span>
+      <span class="chip chip-outline">OpenStreetMap</span>
+      <span class="chip chip-outline">FastAPI</span>
+    </div>
+    <div class="status-banner">
+      <div class="status-dot"></div>
+      <span class="status-text">SUBMITTED TO IEEE INDICON 2025 &nbsp;&middot;&nbsp; AWAITING REVIEW RESULT &nbsp;&middot;&nbsp; DOUBLE-BLIND REVIEW IN PROGRESS</span>
+    </div>
+    <div class="btn-row" style="margin-top:1.5rem;">
+      <span class="btn btn-dim">Code withheld · double-blind review</span>
+    </div>
+  </div>
+
+  <!-- FIGURE 1 — SEGMENTATION OUTPUT -->
+  <div class="section">
+    <p class="section-label">Computer Vision Output</p>
+    <h2 class="section-title">Road Topology Detection in Practice</h2>
+    <p class="body-text">
+      The CV pipeline detects navigation-relevant road features from a forward-facing camera and emits structured events for turns, junctions, forks, and roundabout entries. At this T-junction the LR-ASPP-MobileNetV3 segmentation produces a 27-class IDD mask; the TinySceneCNN classifier confirms the topology at 0.99 confidence. Road coverage 31.4%. These events act as correction anchors that reset accumulated Dead Reckoning drift.
+    </p>
+    <div class="figure-wrap">
+      <img src="projects/smarthelmet.png" alt="T-Junction detection: green road overlay (left), 27-class IDD segmentation (right)">
+      <div class="figure-caption">Fig. 3 — T-junction detection output. Left: drivable-road overlay (green) on the live camera feed, road coverage 31.4%, confidence 0.99, scene: residential. Right: 27-class IDD semantic segmentation mask showing sky (red/salmon), road (dark blue), and vehicle (cyan). These outputs are fed to the navigation layer as a confirmed JUNCTION event, which snaps the route pointer and resets DR uncertainty.</div>
+    </div>
+  </div>
+
+  <!-- SYSTEM ARCHITECTURE -->
+  <div class="section">
+    <p class="section-label">Architecture</p>
+    <h2 class="section-title">ISA-95 Four-Layer System Design</h2>
+    <p class="body-text">
+      Following the layered-plant view that ISA-95 uses for industrial automation, the smart-helmet software is organised into four cooperating layers that separate what is being sensed from how a decision is presented to the rider. The layered contract enables independent evolution of each layer: the segmentation model can be swapped without touching the navigation decision engine, and the BLE packet layout can be validated in isolation from the CV stack.
+    </p>
+    <div class="figure-wrap" style="margin-top:1.5rem;">
+      <img src="projects/smarthelmet_arch.png" alt="ISA-95 inspired four-layer architecture diagram">
+      <div class="figure-caption">Fig. 1 — ISA-95-inspired four-layer architecture. Layer 0 is the physical process; Layer 1 acquires and actuates; Layer 2 interprets; Layer 3 decides; Layer 4 plans and logs. Signals flow upward as raw data becomes interpreted events; decisions flow downward as concise rider cues.</div>
+    </div>
+    <div class="layer-stack" style="margin-top:2rem;">
+      <div class="layer-card layer-4">
+        <div class="layer-label">Layer 4 — Planning &amp; Analytics</div>
+        <div class="layer-modules">
+          <span class="layer-mod">Route Planning Engine</span>
+          <span class="layer-mod">Offline Map Manager</span>
+          <span class="layer-mod">Field-Test Analytics</span>
+        </div>
+      </div>
+      <div class="layer-card layer-3">
+        <div class="layer-label">Layer 3 — Decision &amp; Control</div>
+        <div class="layer-modules">
+          <span class="layer-mod">Navigation Decision Engine</span>
+          <span class="layer-mod">Offline Nav Controller</span>
+          <span class="layer-mod">Accident Response</span>
+          <span class="layer-mod">Emergency / SOS Handler</span>
+        </div>
+      </div>
+      <div class="layer-card layer-2">
+        <div class="layer-label">Layer 2 — Real-Time Perception</div>
+        <div class="layer-modules">
+          <span class="layer-mod">Sensor Fusion Engine</span>
+          <span class="layer-mod">Map Matching</span>
+          <span class="layer-mod">Visual-Event Parser</span>
+          <span class="layer-mod">HUD / LED Controller</span>
+        </div>
+      </div>
+      <div class="layer-card layer-1">
+        <div class="layer-label">Layer 1 — Physical Sensing</div>
+        <div class="layer-modules">
+          <span class="layer-mod">IMU (6-axis)</span>
+          <span class="layer-mod">Forward Camera</span>
+          <span class="layer-mod">GPS / Magnetometer</span>
+          <span class="layer-mod">HUD / RGB LEDs</span>
+          <span class="layer-mod">ESP32 MCU / Flash</span>
+        </div>
+      </div>
+      <div class="layer-card layer-0">
+        <div class="layer-label">Layer 0 — Physical Process</div>
+        <div class="layer-modules">
+          <span class="layer-mod">Rider Motion</span>
+          <span class="layer-mod">Vehicle Speed</span>
+          <span class="layer-mod">Road Geometry</span>
+          <span class="layer-mod">Obstacles</span>
+          <span class="layer-mod">Environment</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="section">
+    <p class="section-label">Methods</p>
+    <h2 class="section-title">How Navigation Works Without GPS</h2>
+    <p class="body-text">
+      The system maintains a <em>route pointer</em> over cached OpenStreetMap data: a sequence like START &rarr; STRAIGHT &rarr; LEFT-TURN &rarr; T-JUNCTION &rarr; RIGHT-TURN &rarr; DESTINATION. Two complementary signals advance this pointer. Dead Reckoning propagates position using arc-length distance from IMU readings. The CV module fires correction events when it confirms the next expected road feature, snapping the pointer and resetting accumulated DR drift. The system has three explicit modes: ONLINE, OFFLINE, and DEGRADED, so the rider always knows which evidence stream is being trusted.
+    </p>
+    <div class="two-col">
+      <div class="info-card green">
+        <div class="info-name">Dead Reckoning</div>
+        <p class="info-desc">A complementary filter fuses accelerometer tilt estimates with gyroscope heading. Position propagates forward: v(t) = v(t-1) + (a - g sin&theta;)&Delta;t. An uncertainty term &sigma; grows linearly with cumulative travel and resets when a visual correction event is accepted. Moving-window smoother rejects heading spikes above a configured threshold.</p>
+      </div>
+      <div class="info-card green">
+        <div class="info-name">Computer Vision Module</div>
+        <p class="info-desc">LR-ASPP-MobileNetV3-Large (IDD dataset, 27 classes) produces a drivable-road mask per frame. A BEV transformation + skeleton graph extracts turn topology. TinySceneCNN classifies 8 scene types (straight, left-turn, right-turn, junction, T-intersection, roundabout, occluded, other). A temporal sliding-window voter requires consistent detections before firing a correction event.</p>
+      </div>
+      <div class="info-card terracotta">
+        <div class="info-name">Route-Aware Map Matching</div>
+        <p class="info-desc">Rather than nearest-neighbour map snapping, position is expressed as arc-length progress along the cached route polyline. This rules out physically implausible jumps to parallel roads in dense urban layouts. When a visual event arrives within the DR uncertainty window, the pointer snaps to the expected junction coordinates and &sigma; resets.</p>
+      </div>
+      <div class="info-card terracotta">
+        <div class="info-name">Mode Transitions</div>
+        <p class="info-desc">ONLINE uses live GPS. OFFLINE activates when GPS accuracy degrades: DR + CV + cached OSM take over. DEGRADED activates when DR uncertainty exceeds a threshold with no CV events arriving. All transitions are explicit and surfaced in the React Native mobile UI so the rider always knows the current guidance confidence.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLE PROTOCOL -->
+  <div class="section">
+    <p class="section-label">Hardware Protocol</p>
+    <h2 class="section-title">Compact 8-Byte BLE Packet</h2>
+    <p class="body-text">
+      Rider-critical state is transmitted as fixed-size 8-byte BLE packets between the ESP32 helmet controller and the mobile app. Constant-time parsing over a bounded payload, fits inside the BLE 4.x 20-byte MTU with headroom, and keeps helmet CPU work to interpreting a small typed message set on an ESP32-class MCU (nominal active-power 150-500 mW).
+    </p>
+    <div class="ble-packet">
+      <div class="ble-byte magic">
+        <span class="ble-field">Magic</span>
+        <span class="ble-bytes-label">1 byte</span>
+        <span class="ble-desc">Fixed 0xAB start-of-packet</span>
+      </div>
+      <div class="ble-byte type">
+        <span class="ble-field">Type</span>
+        <span class="ble-bytes-label">1 byte</span>
+        <span class="ble-desc">Nav instruction / GPS status / speed / crash / heartbeat</span>
+      </div>
+      <div class="ble-byte seq">
+        <span class="ble-field">Seq No.</span>
+        <span class="ble-bytes-label">2 bytes</span>
+        <span class="ble-desc">Rolling counter for ordering, ACKs, deduplication</span>
+      </div>
+      <div class="ble-byte payload">
+        <span class="ble-field">Payload</span>
+        <span class="ble-bytes-label">3 bytes</span>
+        <span class="ble-desc">Type-specific: distance, flags, severity, ...</span>
+      </div>
+      <div class="ble-byte chk">
+        <span class="ble-field">Checksum</span>
+        <span class="ble-bytes-label">1 byte</span>
+        <span class="ble-desc">XOR of preceding 7 bytes</span>
+      </div>
+    </div>
+    <p class="body-text" style="margin-top:1.25rem;">
+      The ESP32 emits six HUD/LED command states from received packets: LEFT_PREPARE and RIGHT_PREPARE (slow yellow blink on approach), LEFT_NOW and RIGHT_NOW (solid yellow plus green chase on execution), HAZARD (both-side fast blink on crash / off-route / GNSS blackout), and ARRIVED (both-side slow green blink at destination).
+    </p>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="section">
+    <p class="section-label">Experiments</p>
+    <h2 class="section-title">Evaluation Results</h2>
+
+    <p class="body-text">
+      Evaluation targets module correctness, integration readiness, and runtime suitability rather than large-scale benchmark reporting. The test suite covers 138 tests across three modules. The five failing tests are in the navigation API-service suite and represent unresolved expectations around degraded-mode transitions; they are reported honestly rather than suppressed.
+    </p>
+
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--green);margin:1.5rem 0 0.75rem;">Table II: Module-wise Unit Test Results</h3>
+    <table class="data-table">
+      <thead>
+        <tr><th>Module</th><th>Passed</th><th>Total</th><th>Pass Rate</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Communication</td><td class="pass">24</td><td>24</td><td class="pass">100%</td><td>Encoding, queue, ACK, retry, sync stable</td></tr>
+        <tr><td>Localisation</td><td class="pass">25</td><td>25</td><td class="pass">100%</td><td>DR, heading tracker, map-match, fusion stable</td></tr>
+        <tr><td>Navigation</td><td>84</td><td>89</td><td>94.4%</td><td>Core route logic passes; 5 API expectations open</td></tr>
+        <tr class="total"><td>Total</td><td>133</td><td>138</td><td>96.4%</td><td>5 failing tests tracked as known issues, not suppressed</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--green);margin:2rem 0 0.75rem;">Table III: Scenario Test Matrix (all passing)</h3>
+    <table class="scenario-table">
+      <thead>
+        <tr><th>TC</th><th>Scenario</th><th>Expected Outcome</th><th>Result</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>TC1</td><td>Encode/decode valid packet</td><td>Round-trip succeeds</td><td><span class="pass-badge">PASS</span></td></tr>
+        <tr><td>TC2</td><td>Corrupted checksum</td><td>Packet safely rejected</td><td><span class="pass-badge">PASS</span></td></tr>
+        <tr><td>TC3</td><td>Repeated sequence</td><td>Duplicate ignored</td><td><span class="pass-badge">PASS</span></td></tr>
+        <tr><td>TC4</td><td>DR update without valid IMU</td><td>No invalid position</td><td><span class="pass-badge">PASS</span></td></tr>
+        <tr><td>TC5</td><td>Heading spike over threshold</td><td>Rejected; smoothed heading kept</td><td><span class="pass-badge">PASS</span></td></tr>
+        <tr><td>TC6</td><td>Map-match far from route</td><td>No false segment returned</td><td><span class="pass-badge">PASS</span></td></tr>
+        <tr><td>TC7</td><td>Connectivity transition offline</td><td>Localisation state emitted</td><td><span class="pass-badge">PASS</span></td></tr>
+        <tr><td>TC8</td><td>Route-cache request after load</td><td>Cache available offline</td><td><span class="pass-badge">PASS</span></td></tr>
+        <tr><td>TC9</td><td>Helmet heartbeat</td><td>Sync state kept active</td><td><span class="pass-badge">PASS</span></td></tr>
+        <tr><td>TC10</td><td>Mobile demo step progression</td><td>Instruction/mode/position update</td><td><span class="pass-badge">PASS</span></td></tr>
+      </tbody>
+    </table>
+
+    <!-- Fig 2: Position error trace -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--green);margin:2rem 0 0.75rem;">Fig. 2: Single-Run Ablation Trace</h3>
+    <div class="figure-wrap">
+      <img src="projects/smarthelmet_trace.png" alt="Position error and DR uncertainty over time — single-run ablation trace">
+      <div class="figure-caption">Fig. 2 — Single-run trace from the complete-system ablation (seed 1000). GPS-denied window (~47.5 s, shaded). Dashed vertical lines: accepted visual JUNCTION events (at t=59 s and t=79 s), each snapping the DR estimate back to the map's expected junction coordinates and resetting DR uncertainty. Top: true position error grows monotonically during the GPS-denied window until each visual correction fires. Bottom: DR uncertainty &sigma; follows the same pattern, staying bounded under 6 m across the run.</div>
+    </div>
+
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--green);margin:2rem 0 0.75rem;">Table IV: Ablation Across Four Localisation Configurations (20 seeded runs)</h3>
+    <table class="abl-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>A: DR only</th>
+          <th>B: DR + Map Match</th>
+          <th>C: DR + CV</th>
+          <th class="full-col">D: Full System</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Peak true pos. error (m)</td><td>21.95</td><td>18.58</td><td>29.37</td><td class="best full-col">18.97</td>
+        </tr>
+        <tr>
+          <td>Std</td><td>2.51</td><td>2.00</td><td>3.02</td><td class="full-col">1.96</td>
+        </tr>
+        <tr>
+          <td>Max drift between corrections (m)</td><td>n/a</td><td>n/a</td><td>26.56</td><td class="best full-col">13.10</td>
+        </tr>
+        <tr>
+          <td>Peak DR uncertainty &sigma; (m)</td><td>14.38</td><td>14.38</td><td>6.51</td><td class="full-col">6.51</td>
+        </tr>
+        <tr>
+          <td>Turn detection rate</td><td>—</td><td>—</td><td>92.5%</td><td class="best full-col">92.5%</td>
+        </tr>
+        <tr>
+          <td>False corrections / min</td><td>—</td><td>—</td><td>0.56</td><td class="full-col">0.56</td>
+        </tr>
+        <tr>
+          <td>Recovery to first correction (s)</td><td>—</td><td>—</td><td>19.0</td><td class="full-col">19.0</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="body-text" style="margin-top:1rem;">
+      Key finding: map matching alone (B) gives a 15% peak-error reduction over pure DR (18.6 vs 21.9 m) but cannot correct longitudinal drift. Visual correction alone (C) has asymmetric risk: it works well on clean runs but fails worse than DR when a junction is missed. The full system (D) captures the strengths of both, cutting max drift between corrections by 51% versus CV alone and by 40% versus pure DR.
+    </p>
+  </div>
+
+  <!-- LATENCY / FOOTPRINT -->
+  <div class="section">
+    <p class="section-label">Performance</p>
+    <h2 class="section-title">System Footprint and Latency</h2>
+    <p class="body-text">
+      The perception stack is deliberately mobile-edge sized. CV inference runs on a laptop-class CPU with no GPU acceleration; all latencies are comfortably below the sub-second window a rider needs before a maneuver.
+    </p>
+    <div class="latency-grid">
+      <div class="lat-card">
+        <div class="lat-metric">75.2 <span class="lat-unit">ms mean</span></div>
+        <div class="lat-label">CV inference latency (p95: 85.4 ms), N=30 frames, CPU-only</div>
+      </div>
+      <div class="lat-card">
+        <div class="lat-metric">76.9 <span class="lat-unit">ms mean</span></div>
+        <div class="lat-label">End-to-end detect to instruction (p95: 86.8 ms)</div>
+      </div>
+      <div class="lat-card">
+        <div class="lat-metric">1.71 <span class="lat-unit">ms mean</span></div>
+        <div class="lat-label">Nav FSM visual-event round-trip (p95: 1.86 ms)</div>
+      </div>
+      <div class="lat-card">
+        <div class="lat-metric">39 <span class="lat-unit">MB</span></div>
+        <div class="lat-label">Segmentation model checkpoint (3.22M params). TinySceneCNN: 407 KB, 98,664 params.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECH STACK -->
+  <div class="section">
+    <p class="section-label">Stack</p>
+    <h2 class="section-title">Implementation</h2>
+    <table class="data-table">
+      <thead>
+        <tr><th>Component</th><th>Technology</th><th>Role</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Segmentation</td><td>LR-ASPP-MobileNetV3-Large</td><td>27-class IDD semantic segmentation. Produces drivable-road mask per frame; BEV + skeleton graph extracts turn topology.</td></tr>
+        <tr><td>Scene Classification</td><td>TinySceneCNN</td><td>8 scene classes (straight, left-turn, right-turn, junction, T-intersection, roundabout, occluded, other). 98,664 params, 407 KB checkpoint.</td></tr>
+        <tr><td>Dead Reckoning</td><td>Complementary filter (Python)</td><td>Fuses 6-axis IMU accelerometer + gyroscope. Propagates position between visual correction events. Uncertainty term &sigma; resets on accepted CV events.</td></tr>
+        <tr><td>Map Matching</td><td>OSRM / Google Routes + cached OSM</td><td>Routes decoded and cached locally as polylines. Arc-length progress matching rules out parallel-road jumps.</td></tr>
+        <tr><td>Mobile App</td><td>React Native</td><td>Connects to helmet via BLE. Runs navigation, DR, and route logic on cached OSM assets. Explicit ONLINE / OFFLINE / DEGRADED mode UI.</td></tr>
+        <tr><td>Navigation Server</td><td>Python FastAPI</td><td>Hosts CV inference, DR computation, and navigation endpoints. Round-trip 1.25/1.62 ms mean/p95.</td></tr>
+        <tr><td>Helmet Controller</td><td>ESP32 (C/C++)</td><td>Packages telemetry into 8-byte BLE frames. Drives LED matrix + HUD from 6 command states received from the mobile app.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<footer>
+  <p class="footer-note">Jinesh Nanal &nbsp;&middot;&nbsp; jsn04.github.io &nbsp;&middot;&nbsp; Submitted IEEE INDICON 2025 &nbsp;&middot;&nbsp; Result Pending</p>
+</footer>
+
+</body>
+</html>

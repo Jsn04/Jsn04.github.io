@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinguaNova</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #F5F0E8;
+    --ink: #1A1612;
+    --ink-light: #4A3F35;
+    --green: #2A4A1E;
+    --green-dark: #1B2E13;
+    --green-mid: #3A6328;
+    --terracotta: #C4622D;
+    --rule: #C8B89A;
+    --card-bg: #EDE8DE;
+    --tag-bg: #D9D2C3;
+    --blue: #1E3A5F;
+    --blue-light: #4A7AB5;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 18px; }
+  body { background: var(--parchment); color: var(--ink); font-family: 'Inter', sans-serif; font-size: 1rem; line-height: 1.65; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--parchment); border-bottom: 1px solid var(--rule);
+    padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between; height: 56px;
+  }
+  .nav-brand { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--green); font-weight: 500; text-decoration: none; letter-spacing: 0.08em; }
+  .nav-back { font-size: 0.82rem; color: var(--ink-light); text-decoration: none; letter-spacing: 0.03em; display: flex; align-items: center; gap: 0.4rem; }
+  .nav-back:hover { color: var(--green); }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2.5rem; }
+
+  .hero { padding: 4rem 0 3rem; border-bottom: 1px solid var(--rule); }
+  .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em; color: var(--terracotta); text-transform: uppercase; margin-bottom: 0.9rem; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 700; color: var(--ink); line-height: 1.1; margin-bottom: 0.5rem; }
+  .hero-sub { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--ink-light); font-style: italic; margin-bottom: 1.5rem; }
+  .hero-desc { font-size: 1rem; color: var(--ink-light); max-width: 740px; line-height: 1.7; margin-bottom: 2rem; }
+  .hero-rule { width: 60px; height: 3px; background: var(--green); margin-bottom: 2rem; }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+  .chip { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; padding: 0.3rem 0.7rem; border-radius: 2px; letter-spacing: 0.04em; font-weight: 500; }
+  .chip-green { background: var(--green-dark); color: #C8D8B8; }
+  .chip-outline { border: 1px solid var(--rule); color: var(--ink-light); }
+  .chip-award { background: #3A2A0A; color: #F0C060; }
+  .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn { display: inline-block; padding: 0.65rem 1.4rem; font-size: 0.85rem; font-weight: 600; text-decoration: none; border-radius: 2px; transition: all 0.2s; letter-spacing: 0.03em; }
+  .btn-primary { background: var(--green); color: #EAF2E3; }
+  .btn-primary:hover { background: var(--green-mid); }
+  .btn-outline { border: 1.5px solid var(--green); color: var(--green); }
+  .btn-outline:hover { background: var(--green); color: #EAF2E3; }
+
+  .section { padding: 3rem 0; border-bottom: 1px solid var(--rule); }
+  .section:last-child { border-bottom: none; }
+  .section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.15em; color: var(--terracotta); text-transform: uppercase; margin-bottom: 0.6rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 600; color: var(--green); margin-bottom: 1.25rem; }
+  .body-text { font-size: 0.95rem; color: var(--ink-light); line-height: 1.7; margin-bottom: 1rem; }
+
+  /* FEATURE GRID */
+  .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 1.5rem; }
+  .feature-card { background: var(--card-bg); padding: 1.6rem; border-top: 3px solid var(--rule); }
+  .feature-card.roleplay { border-color: var(--green); }
+  .feature-card.vocab    { border-color: var(--terracotta); }
+  .feature-card.story    { border-color: var(--blue); }
+  .feature-card.translate{ border-color: #7A8C6E; }
+  .feature-icon { font-size: 1.6rem; margin-bottom: 0.75rem; }
+  .feature-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
+  .feature-desc { font-size: 0.85rem; color: var(--ink-light); line-height: 1.6; }
+
+  /* ROLEPLAY SCENARIOS */
+  .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem; }
+  .scenario-card { background: var(--card-bg); padding: 1.2rem 1.4rem; border-left: 3px solid var(--rule); }
+  .scenario-card:hover { border-color: var(--green); }
+  .scenario-name { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; letter-spacing: 0.03em; }
+  .scenario-desc { font-size: 0.8rem; color: var(--ink-light); line-height: 1.5; }
+
+  /* ARCHITECTURE SVG */
+  .arch-wrap { margin-top: 1.75rem; background: var(--card-bg); border: 1px solid var(--rule); padding: 2rem; overflow-x: auto; }
+  .arch-wrap svg { display: block; margin: 0 auto; }
+
+  /* TECH TABLE */
+  .tech-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; font-size: 0.88rem; }
+  .tech-table th { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terracotta); text-align: left; padding: 0.6rem 1rem; border-bottom: 2px solid var(--rule); }
+  .tech-table td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--rule); color: var(--ink-light); vertical-align: top; }
+  .tech-table tr:last-child td { border-bottom: none; }
+  .tech-table td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--ink); font-weight: 500; white-space: nowrap; }
+
+  /* CODE SNIPPET */
+  .code-block { background: #1A1612; color: #C8D8B8; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; padding: 1.25rem 1.5rem; border-radius: 4px; margin-top: 1rem; overflow-x: auto; line-height: 1.65; }
+  .code-comment { color: #5A7A4A; }
+  .code-keyword { color: #C4622D; }
+  .code-string  { color: #A8C888; }
+
+  /* HACKATHON BANNER */
+  .award-banner { background: linear-gradient(135deg, #2A1A06 0%, #3A2A0A 100%); color: #F0C060; padding: 1.75rem 2rem; display: flex; align-items: center; gap: 1.5rem; margin-top: 1.5rem; }
+  .award-trophy { font-size: 2.4rem; flex-shrink: 0; }
+  .award-title  { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .award-sub    { font-size: 0.85rem; color: #C8A040; line-height: 1.5; }
+
+  footer { padding: 2.5rem; text-align: center; border-top: 1px solid var(--rule); }
+  .footer-note { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: #7A6E62; letter-spacing: 0.06em; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand">jsn04</a>
+  <a href="index.html#projects" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Back to Projects
+  </a>
+</nav>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">Hackathon Project · 2024</div>
+    <h1 class="hero-title">LinguaNova</h1>
+    <p class="hero-sub">AI-powered language learning through immersive roleplay and visual vocabulary</p>
+    <div class="hero-rule"></div>
+    <p class="hero-desc">
+      Built in 48 hours at the RenAIssance Hackathon. LinguaNova makes language learning feel less like studying and more like living: you practice by roleplaying real-world scenarios in your target language, from ordering at a restaurant to a job interview, while the app translates your responses in real time and adjusts to your level. It won 3rd Prize out of the full hackathon field.
+    </p>
+    <div class="chip-row">
+      <span class="chip chip-award">3rd Prize · RenAIssance Hackathon</span>
+      <span class="chip chip-green">Google Gemini</span>
+      <span class="chip chip-green">WorqHat API</span>
+      <span class="chip chip-outline">Python</span>
+      <span class="chip chip-outline">48-hour build</span>
+    </div>
+    <div class="btn-row">
+      <a href="https://github.com/Jsn04/LinguaNova" target="_blank" class="btn btn-primary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;margin-right:0.4em;"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        View on GitHub
+      </a>
+    </div>
+  </div>
+
+  <!-- HACKATHON CONTEXT -->
+  <div class="section">
+    <p class="section-label">Background</p>
+    <h2 class="section-title">The Problem We Solved</h2>
+    <p class="body-text">
+      Most language apps are built around repetition: vocabulary flashcards, fill-in-the-blank exercises, recorded audio clips. They teach words in isolation. But real fluency comes from context: understanding what to say when a doctor asks about your symptoms, or when a landlord asks about your rental history. That gap is what LinguaNova was built to close.
+    </p>
+    <p class="body-text">
+      The key insight was to simulate environments rather than teach vocabulary. Instead of "here is the word for reservation," the app drops you into a conversation with an AI restaurant server and lets you figure it out. Real-time translation means you can fall back to your native language mid-sentence, and the AI keeps the conversation coherent.
+    </p>
+    <div class="award-banner">
+      <div class="award-trophy">🏆</div>
+      <div>
+        <div class="award-title">3rd Prize — RenAIssance Hackathon</div>
+        <div class="award-sub">Competed against full field of teams. Built end-to-end in 48 hours: AI conversations, image vocabulary, translation pipeline, and scenario scripts for 10 real-world domains.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOUR FEATURES -->
+  <div class="section">
+    <p class="section-label">Core Features</p>
+    <h2 class="section-title">How It Works</h2>
+    <div class="feature-grid">
+      <div class="feature-card roleplay">
+        <div class="feature-icon">🎭</div>
+        <div class="feature-name">Immersive Roleplay</div>
+        <p class="feature-desc">
+          Google Gemini plays a context-specific character: a restaurant server, a bank clerk, a doctor. The model is given a detailed persona and scenario constraints, then maintains a coherent conversation across multiple turns. Temperature is kept low (0.5) so responses stay practical and on-topic rather than creative.
+        </p>
+      </div>
+      <div class="feature-card vocab">
+        <div class="feature-icon">🖼️</div>
+        <div class="feature-name">Image-Based Vocabulary</div>
+        <p class="feature-desc">
+          WorqHat's image AI generates visual representations of words and phrases in context. Instead of seeing "apple = manzana," you see an image of someone buying apples at a market with the vocabulary labeled. Visual anchors make recall significantly stronger than text-only repetition.
+        </p>
+      </div>
+      <div class="feature-card story">
+        <div class="feature-icon">📖</div>
+        <div class="feature-name">Story Mode</div>
+        <p class="feature-desc">
+          Adaptive narratives that branch based on user choices. Difficulty scales with performance: beginners get shorter sentences and common vocabulary, advanced learners get idiomatic expressions and complex grammar. The story always stays coherent even as the learner makes different choices.
+        </p>
+      </div>
+      <div class="feature-card translate">
+        <div class="feature-icon">🌍</div>
+        <div class="feature-name">Real-Time Translation</div>
+        <p class="feature-desc">
+          Google Cloud Translate handles bidirectional translation in every roleplay session. User input in any language is translated to English before being sent to Gemini, and the AI response is translated back to the learner's chosen language. Both the original and translated text are shown so learners can compare.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROLEPLAY SCENARIOS -->
+  <div class="section">
+    <p class="section-label">Roleplay Scenarios</p>
+    <h2 class="section-title">Ten Real-World Domains</h2>
+    <p class="body-text">
+      Each scenario has its own Python module with a domain-specific system prompt, vocabulary context, and example interactions. The AI character stays in role throughout the session. All 10 were built within the 48-hour hackathon window.
+    </p>
+    <div class="scenario-grid">
+      <div class="scenario-card">
+        <div class="scenario-name">Restaurant</div>
+        <div class="scenario-desc">Practice ordering food, asking about dietary options, reading menus, and handling the bill with a friendly server.</div>
+      </div>
+      <div class="scenario-card">
+        <div class="scenario-name">Banking</div>
+        <div class="scenario-desc">Navigate account inquiries, transfers, and financial terminology with a bank representative.</div>
+      </div>
+      <div class="scenario-card">
+        <div class="scenario-name">Doctor</div>
+        <div class="scenario-desc">Describe symptoms, understand medical instructions, and ask about prescriptions in a clinical setting.</div>
+      </div>
+      <div class="scenario-card">
+        <div class="scenario-name">Emergency</div>
+        <div class="scenario-desc">High-stakes scenario for practicing urgent communication: calling for help, explaining an accident, giving location.</div>
+      </div>
+      <div class="scenario-card">
+        <div class="scenario-name">Job Interview</div>
+        <div class="scenario-desc">Practice professional vocabulary, answering behavioral questions, and describing your experience.</div>
+      </div>
+      <div class="scenario-card">
+        <div class="scenario-name">Grocery</div>
+        <div class="scenario-desc">Ask for items, understand prices, navigate a store, and interact with a shopkeeper.</div>
+      </div>
+      <div class="scenario-card">
+        <div class="scenario-name">Housing</div>
+        <div class="scenario-desc">Discuss rental terms, ask about amenities, and negotiate with a landlord or property manager.</div>
+      </div>
+      <div class="scenario-card">
+        <div class="scenario-name">Transport</div>
+        <div class="scenario-desc">Book tickets, ask for directions, understand schedules, and navigate public transit.</div>
+      </div>
+      <div class="scenario-card">
+        <div class="scenario-name">Events</div>
+        <div class="scenario-desc">Buy tickets, ask about events, RSVP, and communicate in social and cultural settings.</div>
+      </div>
+      <div class="scenario-card">
+        <div class="scenario-name">Parent-Teacher Meeting</div>
+        <div class="scenario-desc">Navigate a formal school meeting, discuss student progress, and use academic vocabulary.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW A SESSION WORKS -->
+  <div class="section">
+    <p class="section-label">Technical Detail</p>
+    <h2 class="section-title">How a Roleplay Session Runs</h2>
+    <p class="body-text">
+      Each scenario module follows the same structure. Gemini is initialized with a domain-specific system prompt that defines the AI character's role, available topics, tone, and example interactions. A persistent chat history object maintains conversation context across turns. The user's input is first translated to English via Google Cloud Translate, sent to Gemini, and the response is translated back to the learner's chosen language before display.
+    </p>
+    <div class="code-block"><span class="code-comment"># Simplified session flow from Roleplay/restaurent.py</span>
+model = setup_gemini()          <span class="code-comment"># gemini-1.0-pro, temp=0.5, max_tokens=200</span>
+chat  = model.start_chat(history=[])
+chat.send_message(domain_context)  <span class="code-comment"># inject persona + topic constraints</span>
+
+<span class="code-keyword">while</span> user_continues:
+    user_input     = input(<span class="code-string">"You: "</span>)
+    english_input  = translate(user_input, <span class="code-string">'en'</span>)
+    response       = chat.send_message(<span class="code-string">f"Customer: {english_input}"</span>)
+    translated_out = translate(response.text, preferred_language)
+    print(translated_out)
+    print(<span class="code-string">f"(English: {response.text})"</span>)  <span class="code-comment"># always show both</span></div>
+    <p class="body-text" style="margin-top:1rem;">
+      The dual-display approach (target language + English) is intentional: learners can verify they understood the meaning while still being exposed to the foreign language form. Response length is capped at 200 tokens so the AI stays concise rather than generating long explanations mid-conversation.
+    </p>
+  </div>
+
+  <!-- ARCHITECTURE -->
+  <div class="section">
+    <p class="section-label">Architecture</p>
+    <h2 class="section-title">System Overview</h2>
+    <div class="arch-wrap">
+      <svg width="860" height="320" viewBox="0 0 860 320" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace">
+
+        <!-- User -->
+        <rect x="30" y="120" width="140" height="56" rx="4" fill="#2A4A1E" stroke="#3A6328" stroke-width="1.5"/>
+        <text x="100" y="144" text-anchor="middle" font-size="11" fill="#C8D8B8" font-weight="500">User Input</text>
+        <text x="100" y="162" text-anchor="middle" font-size="10" fill="#7A9A6A">(any language)</text>
+
+        <!-- Arrow 1 -->
+        <line x1="170" y1="148" x2="218" y2="148" stroke="#C8B89A" stroke-width="1.5"/>
+        <polygon points="218,143 228,148 218,153" fill="#C8B89A"/>
+
+        <!-- Google Translate IN -->
+        <rect x="228" y="108" width="140" height="80" rx="4" fill="#EDE8DE" stroke="#C8B89A" stroke-width="1.5"/>
+        <text x="298" y="132" text-anchor="middle" font-size="10" fill="#C4622D" letter-spacing="0.08em">TRANSLATE IN</text>
+        <text x="298" y="151" text-anchor="middle" font-size="11" fill="#1A1612" font-weight="500">Google Cloud</text>
+        <text x="298" y="168" text-anchor="middle" font-size="10" fill="#4A3F35">Translate v2</text>
+        <text x="298" y="183" text-anchor="middle" font-size="9" fill="#7A6E62">(any → English)</text>
+
+        <!-- Arrow 2 -->
+        <line x1="368" y1="148" x2="416" y2="148" stroke="#C8B89A" stroke-width="1.5"/>
+        <polygon points="416,143 426,148 416,153" fill="#C8B89A"/>
+
+        <!-- Gemini -->
+        <rect x="426" y="80" width="160" height="136" rx="4" fill="#1B2E13" stroke="#3A6328" stroke-width="2"/>
+        <text x="506" y="108" text-anchor="middle" font-size="10" fill="#C4622D" letter-spacing="0.08em">GEMINI</text>
+        <text x="506" y="128" text-anchor="middle" font-size="12" fill="#C8D8B8" font-weight="600">gemini-1.0-pro</text>
+        <text x="506" y="148" text-anchor="middle" font-size="10" fill="#7A9A6A">temp=0.5, top_k=20</text>
+        <text x="506" y="165" text-anchor="middle" font-size="10" fill="#7A9A6A">max_tokens=200</text>
+        <text x="506" y="185" text-anchor="middle" font-size="10" fill="#5A7A4A">domain system prompt</text>
+        <text x="506" y="201" text-anchor="middle" font-size="10" fill="#5A7A4A">+ chat history</text>
+
+        <!-- Arrow 3 -->
+        <line x1="586" y1="148" x2="634" y2="148" stroke="#C8B89A" stroke-width="1.5"/>
+        <polygon points="634,143 644,148 634,153" fill="#C8B89A"/>
+
+        <!-- Google Translate OUT -->
+        <rect x="644" y="108" width="140" height="80" rx="4" fill="#EDE8DE" stroke="#C8B89A" stroke-width="1.5"/>
+        <text x="714" y="132" text-anchor="middle" font-size="10" fill="#C4622D" letter-spacing="0.08em">TRANSLATE OUT</text>
+        <text x="714" y="151" text-anchor="middle" font-size="11" fill="#1A1612" font-weight="500">Google Cloud</text>
+        <text x="714" y="168" text-anchor="middle" font-size="10" fill="#4A3F35">Translate v2</text>
+        <text x="714" y="183" text-anchor="middle" font-size="9" fill="#7A6E62">(English → target)</text>
+
+        <!-- Arrow 4 -->
+        <line x1="784" y1="148" x2="806" y2="148" stroke="#C8B89A" stroke-width="1.5"/>
+        <polygon points="806,143 816,148 806,153" fill="#C8B89A"/>
+
+        <!-- Output -->
+        <rect x="816" y="120" width="30" height="56" rx="4" fill="#2A4A1E" stroke="#3A6328" stroke-width="1.5"/>
+        <text x="831" y="155" text-anchor="middle" font-size="9" fill="#C8D8B8" writing-mode="vertical-rl">OUT</text>
+
+        <!-- WorqHat box below -->
+        <rect x="228" y="232" width="140" height="60" rx="4" fill="#EDE8DE" stroke="#C4622D" stroke-width="1.5"/>
+        <text x="298" y="256" text-anchor="middle" font-size="10" fill="#C4622D" letter-spacing="0.08em">VOCAB MODULE</text>
+        <text x="298" y="274" text-anchor="middle" font-size="11" fill="#1A1612" font-weight="500">WorqHat API</text>
+        <text x="298" y="289" text-anchor="middle" font-size="9" fill="#4A3F35">image generation</text>
+
+        <!-- Dashed link from user to WorqHat -->
+        <line x1="100" y1="176" x2="100" y2="262" stroke="#C8B89A" stroke-width="1" stroke-dasharray="4,3"/>
+        <line x1="100" y1="262" x2="228" y2="262" stroke="#C8B89A" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="155" y="285" text-anchor="middle" font-size="9" fill="#7A6E62" font-style="italic">vocab mode</text>
+
+      </svg>
+    </div>
+    <p class="body-text" style="margin-top:1rem;">
+      The translation layer wraps every Gemini call, making the roleplay language-agnostic. The user sets their preferred language once at session start, and all subsequent responses arrive in that language with the English version shown alongside for reference.
+    </p>
+  </div>
+
+  <!-- TECH STACK -->
+  <div class="section">
+    <p class="section-label">Stack</p>
+    <h2 class="section-title">Technologies Used</h2>
+    <table class="tech-table">
+      <thead>
+        <tr><th>Component</th><th>Technology</th><th>Role</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Conversation AI</td>
+          <td>Google Gemini 1.0 Pro</td>
+          <td>Powers all roleplay scenarios. Domain-specific system prompts define the AI character's role, tone, and topic scope. Chat history maintained across turns for coherent multi-turn dialogue.</td>
+        </tr>
+        <tr>
+          <td>Translation</td>
+          <td>Google Cloud Translate v2</td>
+          <td>Bidirectional translation for every user input and AI response. Allows learners to converse in any language while Gemini operates in English internally.</td>
+        </tr>
+        <tr>
+          <td>Visual Vocabulary</td>
+          <td>WorqHat API</td>
+          <td>Generates contextual images tied to vocabulary words. Learners see words in scene rather than in isolation, which improves retention through visual association.</td>
+        </tr>
+        <tr>
+          <td>Backend</td>
+          <td>Python 3.8+</td>
+          <td>All scenario scripts are Python modules. google-generativeai and google-cloud-translate SDK handle API calls. Response cleaning pipeline removes role labels and extraneous formatting from Gemini output.</td>
+        </tr>
+        <tr>
+          <td>Frontend</td>
+          <td>React (Vite)</td>
+          <td>Web interface for the vocab and story modes. The CLI-based roleplay scripts also ship alongside it, keeping each scenario self-contained and runnable standalone.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- DESIGN DECISIONS -->
+  <div class="section">
+    <p class="section-label">Engineering Notes</p>
+    <h2 class="section-title">Key Design Decisions</h2>
+
+    <p class="body-text"><strong>Low temperature (0.5):</strong> Language learning apps need predictable, correct responses. A high-temperature Gemini might produce creative but grammatically unusual sentences, which is counterproductive when the user is trying to learn proper usage. temp=0.5 with top_k=20 keeps the model grounded in common, natural phrasing.</p>
+
+    <p class="body-text"><strong>Response cleaning:</strong> Raw Gemini output sometimes includes role labels ("Server:", "Guide:") or asterisk-marked actions. The <code>clean_response()</code> function strips these with regex before display, so the user only sees the actual dialogue.</p>
+
+    <p class="body-text"><strong>Dual display:</strong> Showing both the translated response and the English original is deliberate. Learners can check their comprehension while still being immersed in the target language. It also surfaces translation artifacts when the target language is unusual or the sentence structure differs significantly.</p>
+
+    <p class="body-text"><strong>Scenario-as-module pattern:</strong> Each of the 10 domains is its own Python file with its own system prompt, context, and main function. This made parallel development possible during the hackathon: different team members could work on different scenarios without merge conflicts, and each module is independently testable.</p>
+  </div>
+
+</div>
+
+<footer>
+  <p class="footer-note">Jinesh Nanal &middot; jsn04.github.io &middot; Built in 48 hrs at RenAIssance Hackathon</p>
+</footer>
+
+</body>
+</html>
