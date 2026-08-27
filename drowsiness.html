@@ -35,11 +35,12 @@
 
   .container { max-width: 1100px; margin: 0 auto; padding: 0 2.5rem; }
 
+  /* HERO */
   .hero { padding: 4rem 0 3rem; border-bottom: 1px solid var(--rule); }
   .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em; color: var(--terracotta); text-transform: uppercase; margin-bottom: 0.9rem; }
-  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 700; color: var(--ink); line-height: 1.15; margin-bottom: 0.5rem; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; color: var(--ink); line-height: 1.15; margin-bottom: 0.5rem; }
   .hero-rule { width: 60px; height: 3px; background: var(--green); margin: 1.25rem 0; }
-  .hero-desc { font-size: 1rem; color: var(--ink-light); max-width: 740px; line-height: 1.7; margin-bottom: 2rem; }
+  .hero-desc { font-size: 1rem; color: var(--ink-light); max-width: 760px; line-height: 1.7; margin-bottom: 2rem; }
   .chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
   .chip { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; padding: 0.3rem 0.7rem; border-radius: 2px; letter-spacing: 0.04em; font-weight: 500; }
   .chip-green { background: var(--green-dark); color: #C8D8B8; }
@@ -51,33 +52,58 @@
   .btn-outline { border: 1.5px solid var(--green); color: var(--green); }
   .btn-outline:hover { background: var(--green); color: #EAF2E3; }
 
+  /* SECTIONS */
   .section { padding: 3rem 0; border-bottom: 1px solid var(--rule); }
-  .section:last-child { border-bottom: none; }
+  .section:last-of-type { border-bottom: none; }
   .section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.15em; color: var(--terracotta); text-transform: uppercase; margin-bottom: 0.6rem; }
   .section-title { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 600; color: var(--green); margin-bottom: 1.25rem; }
-  .body-text { font-size: 0.95rem; color: var(--ink-light); line-height: 1.7; margin-bottom: 1rem; }
+  .body-text { font-size: 0.95rem; color: var(--ink-light); line-height: 1.72; margin-bottom: 1rem; }
+  .body-text:last-child { margin-bottom: 0; }
 
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem; }
+  /* DATASET IMAGE */
+  .dataset-img { width: 100%; border-radius: 4px; margin-top: 1.5rem; display: block; border: 1px solid var(--rule); }
+  .fig-caption { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--ink-light); margin-top: 0.6rem; text-align: center; letter-spacing: 0.04em; }
+
+  /* TABLES */
+  .table-wrap { overflow-x: auto; margin-top: 1.5rem; }
+  .table-caption { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--ink-light); margin-bottom: 0.6rem; letter-spacing: 0.05em; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  th { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terracotta); text-align: left; padding: 0.6rem 1rem; border-bottom: 2px solid var(--ink); background: var(--card-bg); }
+  td { padding: 0.65rem 1rem; border-bottom: 1px solid rgba(200,184,154,0.5); color: var(--ink-light); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr.highlight td { font-weight: 600; color: var(--ink); background: rgba(42,74,30,0.06); }
+  td.num { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
+  td.good { color: var(--green); font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
+  td.warn { color: var(--terracotta); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
+
+  /* PROTOCOL CARDS */
+  .protocol-steps { display: flex; flex-direction: column; gap: 1px; margin-top: 1.5rem; border-radius: 4px; overflow: hidden; }
+  .protocol-step { display: grid; grid-template-columns: 44px 1fr; gap: 1rem; padding: 1.1rem 1.25rem; background: var(--card-bg); align-items: start; }
+  .p-num { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--terracotta); font-weight: 600; padding-top: 3px; }
+  .p-title { font-weight: 600; font-size: 0.92rem; color: var(--ink); margin-bottom: 0.3rem; }
+  .p-desc { font-size: 0.85rem; color: var(--ink-light); line-height: 1.62; }
+
+  /* ARCHITECTURE SVG */
+  .arch-wrap { margin-top: 1.5rem; background: var(--card-bg); border-radius: 4px; padding: 2rem 1.5rem; overflow-x: auto; }
+
+  /* STAT TILES */
+  .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--rule); border-radius: 4px; overflow: hidden; margin-top: 1.5rem; }
+  .stat-tile { background: var(--card-bg); padding: 1.25rem; text-align: center; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 700; color: var(--green); line-height: 1; margin-bottom: 0.35rem; }
+  .stat-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--ink-light); letter-spacing: 0.06em; }
+
+  /* TWO COL */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
   .info-card { background: var(--card-bg); padding: 1.4rem; border-left: 3px solid var(--rule); }
   .info-card.green { border-color: var(--green); }
   .info-card.terra { border-color: var(--terracotta); }
-  .card-label { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 0.5rem; }
+  .card-label { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 0.4rem; }
   .info-card.green .card-label { color: var(--green); }
-  .card-title { font-weight: 600; font-size: 0.95rem; color: var(--ink); margin-bottom: 0.5rem; }
+  .card-title { font-weight: 600; font-size: 0.92rem; color: var(--ink); margin-bottom: 0.4rem; }
   .card-body { font-size: 0.85rem; color: var(--ink-light); line-height: 1.65; }
 
-  .result-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--rule); border-radius: 3px; overflow: hidden; margin-top: 1.5rem; }
-  .result-tile { background: var(--card-bg); padding: 1.25rem; text-align: center; }
-  .result-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--green); line-height: 1; margin-bottom: 0.35rem; }
-  .result-label { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--ink-light); letter-spacing: 0.06em; }
-
-  .pipeline-steps { display: flex; flex-direction: column; gap: 1px; margin-top: 1.5rem; border-radius: 3px; overflow: hidden; }
-  .pipeline-step { display: grid; grid-template-columns: 36px 1fr; gap: 1rem; padding: 1rem 1.25rem; background: var(--card-bg); align-items: start; }
-  .step-num { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--terracotta); font-weight: 600; }
-  .step-content-title { font-weight: 600; font-size: 0.9rem; color: var(--ink); margin-bottom: 0.3rem; }
-  .step-content-desc { font-size: 0.85rem; color: var(--ink-light); line-height: 1.6; }
-
-  .paper-block { background: var(--card-bg); border-left: 3px solid var(--green); padding: 1.5rem; margin-top: 1.5rem; border-radius: 0 3px 3px 0; }
+  /* PAPER BLOCK */
+  .paper-block { background: var(--card-bg); border-left: 3px solid var(--green); padding: 1.5rem; border-radius: 0 3px 3px 0; margin-top: 1.5rem; }
   .paper-venue { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; color: var(--terracotta); margin-bottom: 0.5rem; }
   .paper-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 600; color: var(--ink); margin-bottom: 0.6rem; line-height: 1.4; }
   .paper-desc { font-size: 0.88rem; color: var(--ink-light); line-height: 1.65; }
@@ -90,7 +116,8 @@
     nav { padding: 0 1.25rem; }
     .container { padding: 0 1.25rem; }
     .two-col { grid-template-columns: 1fr; }
-    .result-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat-row { grid-template-columns: repeat(2, 1fr); }
+    .protocol-step { grid-template-columns: 36px 1fr; }
   }
 </style>
 </head>
@@ -98,113 +125,328 @@
 
 <nav>
   <a class="nav-brand" href="/">JINESH NANAL</a>
-  <a class="nav-back" href="/">← Back to portfolio</a>
+  <a class="nav-back" href="/">Back to portfolio</a>
 </nav>
 
 <div class="container">
 
+  <!-- HERO -->
   <div class="hero">
-    <p class="hero-eyebrow">Project · Computer Vision · IEEE MAI 2026</p>
-    <h1 class="hero-title">Driver Drowsiness Detection</h1>
+    <p class="hero-eyebrow">Research · Computer Vision · IEEE MAI 2026</p>
+    <h1 class="hero-title">Subject-Disjoint Cross-Dataset Evaluation of CNN and CNN-LSTM Models for Visual Driver Drowsiness Detection</h1>
     <div class="hero-rule"></div>
-    <p class="hero-desc">Cross-dataset evaluation of CNN and CNN-LSTM models for visual driver drowsiness detection. The core research question: can models trained on one dataset actually generalise to another? The answer, under subject-disjoint splits that prevent identity leakage, is not as clean as within-dataset numbers suggest. This work validated that finding and proposed a stricter evaluation protocol for the field.</p>
+    <p class="hero-desc">Most drowsiness detection benchmarks evaluate on the same subjects the model trained on. This paper builds a three-protocol evaluation framework that tightens generalization conditions step by step, culminating in a subject-disjoint cross-dataset setup where the model is tested on six drivers it has never seen, on a benchmark it was never trained on. The result: a 59.77 percentage point domain-shift gap that standard protocols simply cannot see.</p>
     <div class="chip-row">
       <span class="chip chip-green">Accepted · IEEE MAI 2026 · Springer LNEE</span>
-      <span class="chip chip-outline">CNN · CNN-LSTM · OpenCV</span>
-      <span class="chip chip-outline">Python · PyTorch · dlib</span>
-      <span class="chip chip-outline">Cross-Dataset Evaluation</span>
+      <span class="chip chip-outline">CNN · CNN-LSTM · PyTorch</span>
+      <span class="chip chip-outline">CEW · MRL Eye Dataset</span>
+      <span class="chip chip-outline">Cross-Dataset Generalization</span>
     </div>
     <div class="btn-row">
-      <a href="https://www.researchgate.net/publication/413662371_Subject-Disjoint_Cross-Dataset_Evaluation_of_CNN_and_CNN-LSTM_Models_for_Visual_Driver_Drowsiness_Detection" class="btn btn-primary" target="_blank" rel="noopener">Full Paper (ResearchGate) ↗</a>
-      <a href="https://github.com/Jsn04/Dl_project" class="btn btn-outline" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="https://www.researchgate.net/publication/413662371_Subject-Disjoint_Cross-Dataset_Evaluation_of_CNN_and_CNN-LSTM_Models_for_Visual_Driver_Drowsiness_Detection" class="btn btn-primary" target="_blank" rel="noopener">Full Paper (ResearchGate)</a>
+      <a href="https://github.com/Jsn04/Dl_project" class="btn btn-outline" target="_blank" rel="noopener">GitHub + Checkpoints</a>
     </div>
   </div>
 
-  <!-- THE PROBLEM -->
+  <!-- DATASET -->
   <div class="section">
-    <p class="section-label">Motivation</p>
-    <h2 class="section-title">The Evaluation Problem</h2>
-    <p class="body-text">Most drowsiness detection papers report accuracy on within-dataset splits. The problem: the same driver appears in both train and test. The model can learn identity cues — the shape of a specific person's face, blinking pattern — instead of learning generalised drowsiness indicators. This inflates reported performance significantly.</p>
-    <p class="body-text">Subject-disjoint evaluation is the stricter test: train and test splits contain different people entirely. This forces the model to learn features that transfer across individuals. The accuracy gap between in-subject and cross-subject evaluation is the real measure of whether a model is practically useful.</p>
+    <p class="section-label">Data</p>
+    <h2 class="section-title">Datasets</h2>
+    <p class="body-text">Two complementary benchmarks are used, chosen specifically because CEW lacks subject identifiers (making subject-disjoint splits impossible) while MRL provides them for all 37 subjects.</p>
+
     <div class="two-col">
       <div class="info-card green">
-        <div class="card-label">Standard eval (weak)</div>
-        <div class="card-title">Within-dataset split</div>
-        <p class="card-body">Same subjects in train and test. Model can learn identity cues. Reports high accuracy but doesn't demonstrate generalisation. Most published numbers are this.</p>
+        <div class="card-label">Training source</div>
+        <div class="card-title">CEW (Closed Eyes in the Wild)</div>
+        <p class="card-body">10,039 labelled eye images (open / closed) across varied appearance, illumination, and demographics. No subject identifiers, so only image-level partitioning is possible. Used for Protocol P1 (in-domain baseline) and pre-training for P2 and P3. Split: 5,807 train / 4,232 test, resized to 64x64.</p>
       </div>
       <div class="info-card terra">
-        <div class="card-label">This paper's eval (strict)</div>
-        <div class="card-title">Subject-disjoint split</div>
-        <p class="card-body">Different subjects in train and test. Identity leakage is impossible. Accuracy drops — but it reflects real-world deployment performance more honestly.</p>
+        <div class="card-label">Test / generalization target</div>
+        <div class="card-title">MRL Eye Dataset</div>
+        <p class="card-body">84,898 labelled eye images from 37 distinct subjects, captured under varied lighting (visible and infrared), with and without eyewear. Subject IDs (s0001 to s0037) make strict subject-disjoint partitioning possible. Split: 25 training subjects (53,062 images), 6 validation subjects (7,162 images), 6 held-out test subjects (24,674 images).</p>
       </div>
+    </div>
+
+    <img src="projects/drowsiness.png" alt="MRL Eye Dataset samples: open eyes (rows 1-2) and closed/drowsy eyes (rows 3-4)" class="dataset-img">
+    <p class="fig-caption">Fig. 1 from the paper. MRL Eye Dataset samples spanning open and closed eye-states across multiple subjects and illumination conditions.</p>
+  </div>
+
+  <!-- THREE-PROTOCOL FRAMEWORK -->
+  <div class="section">
+    <p class="section-label">Methodology</p>
+    <h2 class="section-title">Three-Protocol Evaluation Framework</h2>
+    <p class="body-text">Existing drowsiness work mostly uses Protocol P1 by default because CEW has no subject identifiers. P1 numbers look good but tell you nothing about deployment. P2 and P3 reveal what actually happens on unseen subjects and unseen benchmarks.</p>
+
+    <div class="protocol-steps">
+      <div class="protocol-step">
+        <div class="p-num">P1</div>
+        <div>
+          <div class="p-title">In-domain baseline (image-level CEW split)</div>
+          <p class="p-desc">Training and test partitions come from CEW at the image level. Five-frame sequences built within each partition for the CNN-LSTM. This is what most prior work does by default. The numbers here are a calibrated reference point, not a deployment estimate. CNN: 96.50% / CNN-LSTM: 99.95%.</p>
+        </div>
+      </div>
+      <div class="protocol-step">
+        <div class="p-num">P2</div>
+        <div>
+          <div class="p-title">Zero-shot cross-dataset transfer (CEW to MRL)</div>
+          <p class="p-desc">CEW-trained weights tested directly on the six MRL test subjects with no further training. This quantifies the raw domain-shift gap that real deployment must overcome. CNN drops to 36.73% / CNN-LSTM to 60.64% -- a 59.77 and 39.31 percentage-point collapse from P1.</p>
+        </div>
+      </div>
+      <div class="protocol-step">
+        <div class="p-num">P3</div>
+        <div>
+          <div class="p-title">Subject-disjoint cross-dataset fine-tuning (proposed default)</div>
+          <p class="p-desc">CEW-trained weights fine-tuned for six epochs on MRL training subjects (lr=1e-4), validated on MRL validation subjects, tested on six held-out subjects the model never saw. No sequence ever crosses a subject or class boundary. This is proposed as the standard reporting protocol going forward. CNN: 94.72% / CNN-LSTM: 93.26% on 24,674 held-out test images.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-wrap" style="margin-top:2rem;">
+      <div class="table-caption">Table 1. Proposed subject-disjoint evaluation standard for visual driver-drowsiness detection.</div>
+      <table>
+        <thead>
+          <tr><th>Requirement</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Subject-disjoint split</td><td>Train, val, and test partitions share no human subject.</td></tr>
+          <tr><td>Cross-dataset eval</td><td>Report on a benchmark distinct from training source.</td></tr>
+          <tr><td>Drowsy-class recall</td><td>Reported alongside aggregate accuracy.</td></tr>
+          <tr><td>Per-subject metrics</td><td>Per-subject accuracy disclosed, not only aggregates.</td></tr>
+          <tr><td>Operating-point sweep</td><td>Threshold-vs-recall tradeoff reported for safety budget.</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
-  <!-- PIPELINE -->
+  <!-- ARCHITECTURES -->
   <div class="section">
-    <p class="section-label">Method</p>
-    <h2 class="section-title">Detection Pipeline</h2>
-    <div class="pipeline-steps">
-      <div class="pipeline-step">
-        <div class="step-num">01</div>
-        <div>
-          <div class="step-content-title">Face + landmark detection</div>
-          <p class="step-content-desc">dlib 68-point facial landmark detector localises eye regions frame-by-frame. Eye Aspect Ratio (EAR) computed from the landmark coordinates as a baseline signal.</p>
-        </div>
+    <p class="section-label">Models</p>
+    <h2 class="section-title">Reference Architectures</h2>
+    <p class="body-text">Two architectures that span the dominant design space: a per-frame CNN and a temporal CNN-LSTM. They share a convolutional backbone so the only variable is whether temporal context is added.</p>
+
+    <div class="two-col">
+      <div class="info-card green">
+        <div class="card-label">Per-frame baseline</div>
+        <div class="card-title">CNN</div>
+        <p class="card-body">Four 3x3 convolutional blocks (channels 32, 64, 128, 256) with batch normalisation, ReLU, max-pooling, and 2D dropout. Followed by a three-layer fully-connected classifier (512, 128, 2) with dropout 0.5 / 0.25. Lightweight and deployment-friendly. Runs at dashcam frame rates on a Raspberry Pi 4 or Jetson Nano. 2.75M parameters.</p>
       </div>
-      <div class="pipeline-step">
-        <div class="step-num">02</div>
-        <div>
-          <div class="step-content-title">Eye region extraction</div>
-          <p class="step-content-desc">Cropped and normalised eye patches extracted per frame. Consistent sizing and contrast normalisation applied before feeding into the neural models.</p>
-        </div>
+      <div class="info-card terra">
+        <div class="card-label">Temporal extension</div>
+        <div class="card-title">CNN-LSTM</div>
+        <p class="card-body">The CNN backbone (without classifier head) applied to five consecutive frames. Per-frame 4096-d features projected to 512-d and processed by a two-layer LSTM (256 hidden, 0.5 inter-layer dropout). The final hidden state feeds a two-layer classifier (128, 2). Designed to distinguish transient blinks from sustained drowsy closure. 4.03M parameters.</p>
       </div>
-      <div class="pipeline-step">
-        <div class="step-num">03</div>
-        <div>
-          <div class="step-content-title">CNN — spatial features</div>
-          <p class="step-content-desc">Convolutional network trained on the eye patch to detect closed/drowsy states from a single frame. Strong at per-frame classification, blind to temporal patterns.</p>
-        </div>
-      </div>
-      <div class="pipeline-step">
-        <div class="step-num">04</div>
-        <div>
-          <div class="step-content-title">CNN-LSTM — temporal modelling</div>
-          <p class="step-content-desc">CNN feature extractor feeds an LSTM layer that models blink patterns and gradual eyelid closure over a window of frames. Captures the temporal signature of drowsiness that single-frame models miss.</p>
-        </div>
-      </div>
-      <div class="pipeline-step">
-        <div class="step-num">05</div>
-        <div>
-          <div class="step-content-title">Cross-dataset evaluation</div>
-          <p class="step-content-desc">Both models trained on one dataset (with subject-disjoint train/val), tested on a second dataset with entirely different subjects and recording conditions. Performance delta quantifies the generalisation gap.</p>
-        </div>
-      </div>
+    </div>
+
+    <!-- Architecture Flowchart SVG -->
+    <div class="arch-wrap">
+      <p style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--ink-light);margin-bottom:1.25rem;letter-spacing:0.06em;">Fig. 2 (recreated). Shared CNN backbone feeding two heads: per-frame CNN classifier (top path) and temporal CNN-LSTM (bottom path).</p>
+      <svg viewBox="0 0 860 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:860px;display:block;">
+        <defs>
+          <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0 0, 7 2.5, 0 5" fill="#C8B89A"/></marker>
+          <marker id="ag" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0 0, 7 2.5, 0 5" fill="#2A4A1E"/></marker>
+          <marker id="at" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0 0, 7 2.5, 0 5" fill="#C4622D"/></marker>
+        </defs>
+
+        <!-- Input -->
+        <rect x="8" y="108" width="72" height="44" rx="3" fill="#D9D2C3" stroke="#C8B89A" stroke-width="1.5"/>
+        <text x="44" y="127" text-anchor="middle" font-family="monospace" font-size="8" fill="#4A3F35">Eye patch</text>
+        <text x="44" y="141" text-anchor="middle" font-family="monospace" font-size="8" fill="#4A3F35">64x64</text>
+
+        <!-- Arrow to backbone -->
+        <line x1="80" y1="130" x2="100" y2="130" stroke="#C8B89A" stroke-width="1.5" marker-end="url(#a)"/>
+
+        <!-- Conv blocks -->
+        <rect x="100" y="100" width="56" height="60" rx="3" fill="#2A4A1E" opacity="0.2" stroke="#2A4A1E" stroke-width="1.5"/>
+        <text x="128" y="124" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#2A4A1E" font-weight="bold">Conv 1</text>
+        <text x="128" y="137" text-anchor="middle" font-family="monospace" font-size="7" fill="#4A3F35">32 ch</text>
+        <text x="128" y="150" text-anchor="middle" font-family="monospace" font-size="7" fill="#4A3F35">BN+ReLU</text>
+
+        <line x1="156" y1="130" x2="172" y2="130" stroke="#C8B89A" stroke-width="1.5" marker-end="url(#a)"/>
+
+        <rect x="172" y="100" width="56" height="60" rx="3" fill="#2A4A1E" opacity="0.2" stroke="#2A4A1E" stroke-width="1.5"/>
+        <text x="200" y="124" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#2A4A1E" font-weight="bold">Conv 2</text>
+        <text x="200" y="137" text-anchor="middle" font-family="monospace" font-size="7" fill="#4A3F35">64 ch</text>
+        <text x="200" y="150" text-anchor="middle" font-family="monospace" font-size="7" fill="#4A3F35">BN+ReLU</text>
+
+        <line x1="228" y1="130" x2="244" y2="130" stroke="#C8B89A" stroke-width="1.5" marker-end="url(#a)"/>
+
+        <rect x="244" y="100" width="56" height="60" rx="3" fill="#2A4A1E" opacity="0.2" stroke="#2A4A1E" stroke-width="1.5"/>
+        <text x="272" y="124" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#2A4A1E" font-weight="bold">Conv 3</text>
+        <text x="272" y="137" text-anchor="middle" font-family="monospace" font-size="7" fill="#4A3F35">128 ch</text>
+        <text x="272" y="150" text-anchor="middle" font-family="monospace" font-size="7" fill="#4A3F35">BN+ReLU</text>
+
+        <line x1="300" y1="130" x2="316" y2="130" stroke="#C8B89A" stroke-width="1.5" marker-end="url(#a)"/>
+
+        <rect x="316" y="100" width="56" height="60" rx="3" fill="#2A4A1E" opacity="0.2" stroke="#2A4A1E" stroke-width="1.5"/>
+        <text x="344" y="124" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#2A4A1E" font-weight="bold">Conv 4</text>
+        <text x="344" y="137" text-anchor="middle" font-family="monospace" font-size="7" fill="#4A3F35">256 ch</text>
+        <text x="344" y="150" text-anchor="middle" font-family="monospace" font-size="7" fill="#4A3F35">Flatten</text>
+
+        <!-- Shared backbone label -->
+        <rect x="96" y="88" width="280" height="76" rx="3" fill="none" stroke="#2A4A1E" stroke-width="1" stroke-dasharray="5,3"/>
+        <text x="236" y="82" text-anchor="middle" font-family="monospace" font-size="8" fill="#2A4A1E" letter-spacing="0.08em">SHARED CNN BACKBONE</text>
+
+        <!-- Fork point -->
+        <line x1="372" y1="130" x2="396" y2="130" stroke="#C8B89A" stroke-width="1.5"/>
+        <circle cx="396" cy="130" r="4" fill="#C8B89A"/>
+
+        <!-- --- CNN PATH (top) --- -->
+        <line x1="396" y1="130" x2="396" y2="68" stroke="#2A4A1E" stroke-width="1.5"/>
+        <line x1="396" y1="68" x2="420" y2="68" stroke="#2A4A1E" stroke-width="1.5" marker-end="url(#ag)"/>
+
+        <rect x="420" y="48" width="70" height="40" rx="3" fill="#2A4A1E" opacity="0.15" stroke="#2A4A1E" stroke-width="1.5"/>
+        <text x="455" y="65" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#2A4A1E" font-weight="bold">FC 512</text>
+        <text x="455" y="78" text-anchor="middle" font-family="monospace" font-size="7" fill="#4A3F35">dropout 0.5</text>
+
+        <line x1="490" y1="68" x2="510" y2="68" stroke="#2A4A1E" stroke-width="1.5" marker-end="url(#ag)"/>
+
+        <rect x="510" y="48" width="70" height="40" rx="3" fill="#2A4A1E" opacity="0.15" stroke="#2A4A1E" stroke-width="1.5"/>
+        <text x="545" y="65" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#2A4A1E" font-weight="bold">FC 128</text>
+        <text x="545" y="78" text-anchor="middle" font-family="monospace" font-size="7" fill="#4A3F35">dropout 0.25</text>
+
+        <line x1="580" y1="68" x2="600" y2="68" stroke="#2A4A1E" stroke-width="1.5" marker-end="url(#ag)"/>
+
+        <rect x="600" y="48" width="72" height="40" rx="3" fill="#2A4A1E" stroke="#2A4A1E" stroke-width="1.5"/>
+        <text x="636" y="65" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#C8D8B8" font-weight="bold">Softmax</text>
+        <text x="636" y="78" text-anchor="middle" font-family="monospace" font-size="7" fill="#9AB88A">2 classes</text>
+
+        <text x="730" y="68" font-family="monospace" font-size="8" fill="#2A4A1E" font-weight="bold">CNN (per-frame)</text>
+
+        <!-- --- CNN-LSTM PATH (bottom) --- -->
+        <line x1="396" y1="130" x2="396" y2="192" stroke="#C4622D" stroke-width="1.5"/>
+        <line x1="396" y1="192" x2="420" y2="192" stroke="#C4622D" stroke-width="1.5" marker-end="url(#at)"/>
+
+        <rect x="420" y="172" width="80" height="40" rx="3" fill="#C4622D" opacity="0.12" stroke="#C4622D" stroke-width="1.5"/>
+        <text x="460" y="189" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#C4622D" font-weight="bold">Proj 512-d</text>
+        <text x="460" y="202" text-anchor="middle" font-family="monospace" font-size="7" fill="#4A3F35">x5 frames</text>
+
+        <line x1="500" y1="192" x2="520" y2="192" stroke="#C4622D" stroke-width="1.5" marker-end="url(#at)"/>
+
+        <rect x="520" y="172" width="80" height="40" rx="3" fill="#C4622D" opacity="0.12" stroke="#C4622D" stroke-width="1.5"/>
+        <text x="560" y="189" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#C4622D" font-weight="bold">LSTM x2</text>
+        <text x="560" y="202" text-anchor="middle" font-family="monospace" font-size="7" fill="#4A3F35">256 hidden</text>
+
+        <line x1="600" y1="192" x2="620" y2="192" stroke="#C4622D" stroke-width="1.5" marker-end="url(#at)"/>
+
+        <rect x="620" y="172" width="72" height="40" rx="3" fill="#C4622D" stroke="#C4622D" stroke-width="1.5"/>
+        <text x="656" y="189" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#FFF5EE" font-weight="bold">Softmax</text>
+        <text x="656" y="202" text-anchor="middle" font-family="monospace" font-size="7" fill="#F5C5A8">2 classes</text>
+
+        <text x="710" y="196" font-family="monospace" font-size="8" fill="#C4622D" font-weight="bold">CNN-LSTM (5-frame)</text>
+
+        <!-- Legend -->
+        <rect x="8" y="230" width="10" height="10" fill="#2A4A1E" opacity="0.2" stroke="#2A4A1E" stroke-width="1"/>
+        <text x="22" y="239" font-family="monospace" font-size="7.5" fill="#4A3F35">Conv/shared backbone</text>
+        <rect x="160" y="230" width="10" height="10" fill="#C4622D" opacity="0.12" stroke="#C4622D" stroke-width="1"/>
+        <text x="174" y="239" font-family="monospace" font-size="7.5" fill="#4A3F35">LSTM (temporal)</text>
+        <rect x="310" y="230" width="10" height="10" fill="#2A4A1E" stroke="#2A4A1E" stroke-width="1"/>
+        <text x="324" y="239" font-family="monospace" font-size="7.5" fill="#4A3F35">Fully-connected classifier</text>
+        <line x1="490" y1="235" x2="510" y2="235" stroke="#C8B89A" stroke-width="2"/>
+        <text x="514" y="239" font-family="monospace" font-size="7.5" fill="#4A3F35">Input/reshape</text>
+      </svg>
     </div>
   </div>
 
   <!-- RESULTS -->
   <div class="section">
     <p class="section-label">Results</p>
-    <h2 class="section-title">Key Findings</h2>
-    <p class="body-text">CNN-LSTM consistently outperformed the pure CNN under cross-subject and cross-dataset conditions, confirming that temporal modelling captures generalisation-relevant features that spatial-only models do not. The accuracy gap between in-subject and cross-subject evaluation was substantial — validating the core concern about published benchmarks.</p>
-    <div class="result-grid">
-      <div class="result-tile">
-        <div class="result-num">2</div>
-        <div class="result-label">Datasets evaluated</div>
+    <h2 class="section-title">Experimental Results</h2>
+
+    <div class="stat-row">
+      <div class="stat-tile">
+        <div class="stat-num">94.72%</div>
+        <div class="stat-label">CNN accuracy (P3)</div>
       </div>
-      <div class="result-tile">
-        <div class="result-num">2</div>
-        <div class="result-label">Architectures compared</div>
+      <div class="stat-tile">
+        <div class="stat-num">93.26%</div>
+        <div class="stat-label">CNN-LSTM accuracy (P3)</div>
       </div>
-      <div class="result-tile">
-        <div class="result-num">CNN-LSTM</div>
-        <div class="result-label">Better cross-domain model</div>
+      <div class="stat-tile">
+        <div class="stat-num">24,674</div>
+        <div class="stat-label">Held-out test images</div>
       </div>
-      <div class="result-tile">
-        <div class="result-num">S-D</div>
-        <div class="result-label">Subject-disjoint splits used</div>
+      <div class="stat-tile">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Unseen test subjects</div>
       </div>
+    </div>
+
+    <!-- Table 3 -->
+    <div class="table-wrap" style="margin-top:2rem;">
+      <div class="table-caption">Table 3. In-domain baseline on CEW (Protocol P1). Upper-bound reference, not a deployment estimate.</div>
+      <table>
+        <thead><tr><th>Model</th><th>Accuracy</th><th>F1</th><th>ROC-AUC</th></tr></thead>
+        <tbody>
+          <tr><td>CNN</td><td class="num">96.50%</td><td class="num">0.9650</td><td class="num">0.9932</td></tr>
+          <tr><td>CNN-LSTM</td><td class="num">99.95%</td><td class="num">0.9995</td><td class="num">1.0000</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Table 4 -->
+    <div class="table-wrap" style="margin-top:1.75rem;">
+      <div class="table-caption">Table 4. Zero-shot cross-dataset transfer: CEW-trained weights tested directly on MRL test subjects (Protocol P2). This is the raw domain-shift gap.</div>
+      <table>
+        <thead><tr><th>Model</th><th>Accuracy</th><th>F1</th><th>ROC-AUC</th><th>vs. P1</th></tr></thead>
+        <tbody>
+          <tr><td>CNN</td><td class="warn">36.73%</td><td class="num">0.295</td><td class="num">0.662</td><td class="warn">-59.77 pp</td></tr>
+          <tr><td>CNN-LSTM</td><td class="warn">60.64%</td><td class="num">0.606</td><td class="num">0.865</td><td class="warn">-39.31 pp</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Table 5 -->
+    <div class="table-wrap" style="margin-top:1.75rem;">
+      <div class="table-caption">Table 5. Subject-disjoint fine-tuned performance on MRL (Protocol P3). The headline result of the paper.</div>
+      <table>
+        <thead><tr><th>Model</th><th>Accuracy</th><th>F1</th><th>ROC-AUC</th><th>Per-subj. mean +/- std</th></tr></thead>
+        <tbody>
+          <tr><td>CNN</td><td class="good">94.72%</td><td class="num">0.941</td><td class="num">0.979</td><td class="num">96.62 +/- 2.64%</td></tr>
+          <tr><td>CNN-LSTM</td><td class="good">93.26%</td><td class="num">0.922</td><td class="num">0.987</td><td class="num">95.96 +/- 6.81%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Table 6 -->
+    <div class="table-wrap" style="margin-top:1.75rem;">
+      <div class="table-caption">Table 6. Per-subject accuracy on six MRL held-out test subjects (Protocol P3). Aggregate metrics hide the s0036 outlier.</div>
+      <table>
+        <thead><tr><th>Subject</th><th>CNN</th><th>CNN-LSTM</th></tr></thead>
+        <tbody>
+          <tr><td>s0032</td><td class="num">96.5%</td><td class="num">98.9%</td></tr>
+          <tr><td>s0033</td><td class="num">98.2%</td><td class="num">99.3%</td></tr>
+          <tr><td>s0034</td><td class="num">98.1%</td><td class="num">100.0%</td></tr>
+          <tr><td>s0035</td><td class="num">99.8%</td><td class="num">100.0%</td></tr>
+          <tr><td style="color:var(--terracotta);font-weight:600;">s0036 (outlier)</td><td class="warn">93.3%</td><td class="warn">82.6%</td></tr>
+          <tr><td>s0037</td><td class="num">93.7%</td><td class="num">95.0%</td></tr>
+          <tr class="highlight"><td>Mean +/- std</td><td class="num">96.62 +/- 2.64%</td><td class="num">95.96 +/- 6.81%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Table 7 -->
+    <div class="table-wrap" style="margin-top:1.75rem;">
+      <div class="table-caption">Table 7. Class-conditional recall (Protocol P3). Missing a drowsy driver is far worse than a false alert -- this asymmetry is the safety-critical finding.</div>
+      <table>
+        <thead><tr><th>Model</th><th>Recall (Alert)</th><th>Recall (Drowsy)</th></tr></thead>
+        <tbody>
+          <tr><td>CNN</td><td class="num">97.48%</td><td class="warn">89.47%</td></tr>
+          <tr><td>CNN-LSTM</td><td class="num">98.91%</td><td class="warn">82.48%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="body-text" style="margin-top:1rem;">The CNN-LSTM misses 1,485 of 8,478 drowsy frames (17.52%) at the default threshold. This asymmetry is what motivates the threshold sweep and Monte-Carlo dropout abstention: dropping the CNN-LSTM threshold from 0.50 to 0.08 pushes drowsy recall from 82.48% to 91.14% at only 2.13% false-alert rate.</p>
+
+    <!-- Table 8 -->
+    <div class="table-wrap" style="margin-top:1.75rem;">
+      <div class="table-caption">Table 8. Leave-one-subject-out cross-validation across all 37 MRL subjects. 95% bootstrap confidence intervals in brackets.</div>
+      <table>
+        <thead><tr><th>Model</th><th>Accuracy [95% CI]</th><th>F1</th><th>ROC-AUC</th><th>Drowsy recall</th></tr></thead>
+        <tbody>
+          <tr><td>CNN</td><td class="num">96.96 +/- 3.73% [95.64, 97.99]</td><td class="num">0.90</td><td class="num">0.98</td><td class="num">93.08 +/- 8.33</td></tr>
+          <tr><td>CNN-LSTM</td><td class="num">98.03 +/- 2.98% [96.96, 98.90]</td><td class="num">0.93</td><td class="num">1.00</td><td class="num">96.78 +/- 5.87</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -215,12 +457,12 @@
     <div class="paper-block">
       <div class="paper-venue">IEEE MAI 2026 · Springer Lecture Notes in Electrical Engineering</div>
       <div class="paper-title">Subject-Disjoint Cross-Dataset Evaluation of CNN and CNN-LSTM Models for Visual Driver Drowsiness Detection</div>
-      <p class="paper-desc">First first-author acceptance. Proposes subject-disjoint cross-dataset evaluation as the correct protocol for measuring real-world generalisability of drowsiness detection systems. Demonstrates that CNN-LSTM temporal models are more robust under this stricter regime.</p>
+      <p class="paper-desc">Jinesh Nanal, Swara Pathak, Ishan Joshi, Siddhant Goyal. Dr. Vishwanath Karad MIT World Peace University, Pune, India. Code and checkpoints released publicly so results can be reproduced and extended. Addresses UN SDG 3 and 11 (road safety and sustainable cities).</p>
     </div>
     <div class="btn-row" style="margin-top:1.5rem;">
-      <a href="https://www.researchgate.net/publication/413662371_Subject-Disjoint_Cross-Dataset_Evaluation_of_CNN_and_CNN-LSTM_Models_for_Visual_Driver_Drowsiness_Detection" class="btn btn-primary" target="_blank" rel="noopener">Read full paper ↗</a>
-      <a href="https://github.com/Jsn04/Dl_project" class="btn btn-outline" target="_blank" rel="noopener">GitHub ↗</a>
-      <a href="/" class="btn btn-outline">← Portfolio</a>
+      <a href="https://www.researchgate.net/publication/413662371_Subject-Disjoint_Cross-Dataset_Evaluation_of_CNN_and_CNN-LSTM_Models_for_Visual_Driver_Drowsiness_Detection" class="btn btn-primary" target="_blank" rel="noopener">Read full paper</a>
+      <a href="https://github.com/Jsn04/Dl_project" class="btn btn-outline" target="_blank" rel="noopener">GitHub + Checkpoints</a>
+      <a href="/" class="btn btn-outline">Back to portfolio</a>
     </div>
   </div>
 
