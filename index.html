@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jinesh Nanal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #F5F0E8;
+    --ink: #1A1612;
+    --ink-light: #4A3F35;
+    --green: #2A4A1E;
+    --green-dark: #1B2E13;
+    --green-mid: #3A6328;
+    --terracotta: #C4622D;
+    --terracotta-light: #E8845A;
+    --rule: #C8B89A;
+    --card-bg: #EDE8DE;
+    --tag-bg: #D9D2C3;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--parchment);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+  .nav-brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--green);
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 0.08em;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.82rem;
+    color: var(--ink-light);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--green); }
+
+  /* SECTIONS */
+  section { max-width: 900px; margin: 0 auto; padding: 5rem 2rem; }
+  section + section { border-top: 1px solid var(--rule); }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--terracotta);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--green);
+    margin-bottom: 2rem;
+    line-height: 1.2;
+  }
+
+  /* HERO */
+  #hero {
+    padding-top: 7rem;
+    padding-bottom: 5rem;
+    max-width: 900px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--terracotta);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-rule {
+    width: 80px;
+    height: 3px;
+    background: var(--green);
+    margin-bottom: 1.75rem;
+  }
+
+  .hero-bio {
+    font-size: 1.05rem;
+    color: var(--ink-light);
+    max-width: 600px;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .hero-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .chip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 2px;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+  }
+  .chip-green {
+    background: var(--green-dark);
+    color: #C8D8B8;
+  }
+  .chip-terracotta {
+    background: var(--terracotta);
+    color: #FFF5EE;
+  }
+  .chip-outline {
+    border: 1px solid var(--rule);
+    color: var(--ink-light);
+    background: transparent;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-block;
+    padding: 0.7rem 1.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+  .btn-primary {
+    background: var(--green);
+    color: #EAF2E3;
+  }
+  .btn-primary:hover { background: var(--green-mid); }
+  .btn-outline {
+    border: 1.5px solid var(--green);
+    color: var(--green);
+    background: transparent;
+  }
+  .btn-outline:hover { background: var(--green); color: #EAF2E3; }
+
+  /* ATHLETEIQ FEATURE BLOCK */
+  #athleteiq-feature {
+    background: var(--green-dark);
+    color: #C8D8B8;
+    padding: 0;
+  }
+  #athleteiq-feature .inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+  .aiq-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: #7FAD6B;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .aiq-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #EAF2E3;
+    margin-bottom: 1rem;
+  }
+  .aiq-desc {
+    font-size: 0.95rem;
+    color: #9AB88A;
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+  .aiq-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .aiq-metric-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #EAF2E3;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .aiq-metric-label {
+    font-size: 0.78rem;
+    color: #7FAD6B;
+    letter-spacing: 0.05em;
+  }
+  .aiq-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .btn-aiq {
+    display: inline-block;
+    padding: 0.65rem 1.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 2px;
+    letter-spacing: 0.03em;
+    transition: all 0.2s;
+  }
+  .btn-aiq-solid {
+    background: #4A7C3F;
+    color: #EAF2E3;
+  }
+  .btn-aiq-solid:hover { background: #5A9450; }
+  .btn-aiq-ghost {
+    border: 1px solid #4A7C3F;
+    color: #9AB88A;
+    background: transparent;
+  }
+  .btn-aiq-ghost:hover { background: #4A7C3F; color: #EAF2E3; }
+
+  /* EXPERIENCE */
+  .exp-list { display: flex; flex-direction: column; gap: 2.5rem; }
+  .exp-item {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 1.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-meta { color: var(--ink-light); }
+  .exp-company {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--green);
+    margin-bottom: 0.2rem;
+  }
+  .exp-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--terracotta);
+    letter-spacing: 0.05em;
+  }
+  .exp-role {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    color: var(--ink);
+  }
+  .exp-desc {
+    font-size: 0.88rem;
+    color: var(--ink-light);
+    line-height: 1.65;
+    margin-bottom: 0.75rem;
+  }
+  .exp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.2rem 0.5rem;
+    background: var(--tag-bg);
+    color: var(--ink-light);
+    border-radius: 1px;
+    letter-spacing: 0.04em;
+  }
+
+  /* RESEARCH */
+  .papers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(390px, 1fr));
+    gap: 1.25rem;
+  }
+  .paper-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-left: 3px solid var(--rule);
+    position: relative;
+  }
+  .paper-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 1px;
+    margin-bottom: 0.75rem;
+    display: inline-block;
+    font-weight: 500;
+  }
+  .badge-accepted { background: #2A4A1E; color: #C8D8B8; }
+  .badge-submitted { background: var(--tag-bg); color: var(--ink-light); }
+  .paper-venue {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--terracotta);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+  }
+  .paper-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+  }
+  .paper-topic {
+    font-size: 0.8rem;
+    color: var(--ink-light);
+    line-height: 1.55;
+  }
+
+  /* RECOGNITION */
+  .recognition-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  .rec-category {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--terracotta);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .rec-list { list-style: none; }
+  .rec-list li {
+    font-size: 0.88rem;
+    color: var(--ink-light);
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(200,184,154,0.4);
+    line-height: 1.5;
+  }
+  .rec-list li:last-child { border-bottom: none; }
+  .rec-highlight {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* CONTACT */
+  #contact {
+    background: var(--ink);
+    padding: 0;
+  }
+  #contact .inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+  .contact-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--parchment);
+    margin-bottom: 1rem;
+  }
+  .contact-sub {
+    font-size: 0.9rem;
+    color: #9A8E82;
+    margin-bottom: 2rem;
+    max-width: 480px;
+    line-height: 1.65;
+  }
+  .contact-links {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .contact-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: #C8B89A;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #4A3F35;
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .contact-link:hover { color: var(--parchment); border-color: var(--parchment); }
+
+  .footer-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: #4A3F35;
+    margin-top: 3rem;
+    letter-spacing: 0.08em;
+  }
+
+  @media (max-width: 640px) {
+    .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
+    .recognition-grid { grid-template-columns: 1fr; }
+    .papers-grid { grid-template-columns: 1fr; }
+    .hero-name { font-size: 2.6rem; }
+    nav { padding: 0 1rem; }
+    .nav-links { gap: 1rem; }
+    section { padding: 3.5rem 1.25rem; }
+    #athleteiq-feature .inner { padding: 3rem 1.25rem; }
+    #contact .inner { padding: 3rem 1.25rem; }
+    #hero { padding-left: 1.25rem; padding-right: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="/">JINESH NANAL</a>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#recognition">Recognition</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <p class="hero-eyebrow">Software Engineer · Researcher · Athlete</p>
+  <h1 class="hero-name">Jinesh Nanal</h1>
+  <div class="hero-rule"></div>
+  <p class="hero-bio">
+    I build AI systems that work in the real world — not just in notebooks. Currently running AthleteIQ, a deployed injury-risk platform used by real coaches across India, while publishing research on secure and reliable ML. Team India inline skating athlete, 9× national champion.
+  </p>
+  <div class="hero-chips">
+    <span class="chip chip-green">4 IEEE Papers</span>
+    <span class="chip chip-terracotta">~370 Athletes · Live Platform</span>
+    <span class="chip chip-outline">NVIDIA · Quadro</span>
+    <span class="chip chip-outline">GRE 329 · Quant 168</span>
+    <span class="chip chip-outline">9× National Champion</span>
+  </div>
+  <div class="hero-cta">
+    <a href="athleteiq.html" class="btn btn-primary">AthleteIQ Product →</a>
+    <a href="https://github.com/Jsn04" class="btn btn-outline" target="_blank" rel="noopener">GitHub</a>
+    <a href="#contact" class="btn btn-outline">Contact</a>
+  </div>
+</section>
+
+<!-- ATHLETEIQ FEATURE -->
+<div id="athleteiq-feature">
+  <div class="inner">
+    <p class="aiq-label">Featured Project · Live in Production</p>
+    <h2 class="aiq-title" style="color:#EAF2E3;margin-bottom:0.75rem;">AthleteIQ</h2>
+    <p class="aiq-desc">AI-powered injury risk monitoring platform for grassroots sports academies across India. Coaches get a composite readiness score for every athlete each session — no wearables required.</p>
+    <div class="aiq-metrics">
+      <div>
+        <div class="aiq-metric-num" id="m-academies">—</div>
+        <div class="aiq-metric-label">Academies</div>
+      </div>
+      <div>
+        <div class="aiq-metric-num" id="m-athletes">—</div>
+        <div class="aiq-metric-label">Athletes registered</div>
+      </div>
+      <div>
+        <div class="aiq-metric-num">69</div>
+        <div class="aiq-metric-label">Training sessions logged</div>
+      </div>
+      <div>
+        <div class="aiq-metric-num">78</div>
+        <div class="aiq-metric-label">Peak risk score detected</div>
+      </div>
+    </div>
+    <div class="aiq-actions">
+      <a href="athleteiq.html" class="btn-aiq btn-aiq-solid">Full product page →</a>
+      <a href="https://athlete-iq-dun.vercel.app" class="btn-aiq btn-aiq-ghost" target="_blank" rel="noopener">Live app ↗</a>
+      <a href="https://github.com/Jsn04/AthleteIQ" class="btn-aiq btn-aiq-ghost" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label">Work Experience</p>
+  <h2>Where I've Worked</h2>
+  <div class="exp-list">
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-company">Gruve AI</div>
+        <div class="exp-date">2026</div>
+      </div>
+      <div>
+        <div class="exp-role">AI Engineer</div>
+        <p class="exp-desc">Working on production AI systems at a US-based AI startup. Building and deploying LLM-powered pipelines, fine-tuning models for specific enterprise use cases, and owning the full lifecycle from research to production inference. Collaborating with a small team on novel approaches to applied generative AI.</p>
+        <div class="exp-tags">
+          <span class="tag">LLMs</span>
+          <span class="tag">Python</span>
+          <span class="tag">MLOps</span>
+          <span class="tag">Production AI</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-company">AthleteIQ</div>
+        <div class="exp-date">Jan 2026 – Present</div>
+      </div>
+      <div>
+        <div class="exp-role">Founder & Engineer</div>
+        <p class="exp-desc">Founded and built a full-stack AI platform monitoring injury risk for sports academies across India. Designed the composite risk engine (ACWR, baseline z-score, deception detection), built the FastAPI backend, React frontend, and XGBoost ML pipeline entirely solo. Currently live with 20+ coaches and ~370 athletes, with no external engineering help.</p>
+        <div class="exp-tags">
+          <span class="tag">FastAPI</span>
+          <span class="tag">React</span>
+          <span class="tag">XGBoost</span>
+          <span class="tag">Supabase</span>
+          <span class="tag">Groq</span>
+          <span class="tag">AWS S3/SES</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-company">NVIDIA</div>
+        <div class="exp-date">Jul – Dec 2025</div>
+      </div>
+      <div>
+        <div class="exp-role">AI/ML Intern · Quadro</div>
+        <p class="exp-desc">Worked within the Quadro team on ML-driven tooling for professional GPU workflows. Researched and prototyped models for distribution-shift detection in production inference pipelines, where a model's input distribution drifts post-training — a problem that surfaces silently and erodes reliability without being immediately visible in standard metrics.</p>
+        <div class="exp-tags">
+          <span class="tag">PyTorch</span>
+          <span class="tag">CUDA</span>
+          <span class="tag">Distribution Shift</span>
+          <span class="tag">ML Reliability</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-company">Persistent Systems</div>
+        <div class="exp-date">Oct 2024 – Apr 2025</div>
+      </div>
+      <div>
+        <div class="exp-role">AI/ML Intern</div>
+        <p class="exp-desc">Built and evaluated ML pipelines for enterprise clients. Worked on data preprocessing, feature engineering, and model evaluation across classification and time-series forecasting tasks. Contributed to internal tooling used by the Persistent AI practice team for accelerating client proof-of-concepts.</p>
+        <div class="exp-tags">
+          <span class="tag">Scikit-learn</span>
+          <span class="tag">Pandas</span>
+          <span class="tag">ML Pipelines</span>
+          <span class="tag">Time Series</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <p class="section-label">Publications</p>
+  <h2>Research</h2>
+  <div class="papers-grid">
+
+    <div class="paper-card">
+      <span class="paper-badge badge-accepted">ACCEPTED</span>
+      <div class="paper-venue">IEEE MAI 2026 · Springer LNEE</div>
+      <div class="paper-title">Predicting Drowsiness Levels in Undergraduate Students Using Facial Landmark Detection</div>
+      <p class="paper-topic">Computer vision pipeline for real-time drowsiness detection using facial landmarks. Validated on student populations; targeting classroom monitoring applications.</p>
+    </div>
+
+    <div class="paper-card">
+      <span class="paper-badge badge-submitted">SUBMITTED</span>
+      <div class="paper-venue">IEEE INDISCON 2026</div>
+      <div class="paper-title">Deployment Study: AI-Powered Injury Risk Monitoring for Grassroots Sports Academies</div>
+      <p class="paper-topic">Full deployment study of AthleteIQ — the composite risk engine, coach adoption data, and real-world performance across 20+ academies. Under review.</p>
+    </div>
+
+    <div class="paper-card">
+      <span class="paper-badge badge-submitted">SUBMITTED</span>
+      <div class="paper-venue">IEEE DELCON 2026</div>
+      <div class="paper-title">Reversible PII-Redacting LLM Proxy for DPDP Compliance</div>
+      <p class="paper-topic">A proxy layer that redacts and re-hydrates personally identifiable information around LLM calls. Compliant with India's Digital Personal Data Protection Act 2023 by design.</p>
+    </div>
+
+    <div class="paper-card">
+      <span class="paper-badge badge-submitted">SUBMITTED</span>
+      <div class="paper-venue">AISec @ ACM CCS 2026</div>
+      <div class="paper-title">Cross-Corpus Robustness of Prompt-Injection Detection</div>
+      <p class="paper-topic">Benchmarks prompt-injection classifiers under cross-corpus transfer — detectors trained on one attack corpus collapse on others. Proposes a distributional robustness frame as a defence.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- RECOGNITION -->
+<section id="recognition">
+  <p class="section-label">Awards & Recognition</p>
+  <h2>Recognition</h2>
+  <div class="recognition-grid">
+    <div>
+      <p class="rec-category">Sport</p>
+      <ul class="rec-list">
+        <li><span class="rec-highlight">Shiv Chhatrapati Award</span> — Maharashtra's highest sports honour</li>
+        <li><span class="rec-highlight">World Games 2024</span> — Silver &amp; Bronze medals, inline skating</li>
+        <li><span class="rec-highlight">World Ranked 6th / 7th</span> — inline skating (active)</li>
+        <li><span class="rec-highlight">Asian Games 2023</span> — 7th place, Team India representative</li>
+        <li><span class="rec-highlight">9× National Champion</span> — inline skating (gold medals)</li>
+        <li><span class="rec-highlight">Best Sportsperson 2023</span> — MIT-WPU institutional award</li>
+      </ul>
+    </div>
+    <div>
+      <p class="rec-category">Academic &amp; Technical</p>
+      <ul class="rec-list">
+        <li><span class="rec-highlight">Best Outgoing Student</span> — MIT-WPU Computer Science, 2025</li>
+        <li><span class="rec-highlight">Best Incoming Student</span> — MIT-WPU, 2021</li>
+        <li><span class="rec-highlight">GRE 329</span> — Quant 168 / 170</li>
+        <li><span class="rec-highlight">4 IEEE Papers</span> — 1 accepted, 3 under review</li>
+        <li><span class="rec-highlight">RenAIssance Hackathon 2024</span> — 3rd place out of 150+ teams</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div id="contact">
+  <div class="inner">
+    <h2 class="contact-title">Let's Talk</h2>
+    <p class="contact-sub">Open to research collaborations, engineering roles, and conversations about AI reliability, sports science, or building things that actually get used.</p>
+    <div class="contact-links">
+      <a href="mailto:jineshnanal04@gmail.com" class="contact-link">jineshnanal04@gmail.com</a>
+      <a href="https://github.com/Jsn04" class="contact-link" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/jinesh-nanal" class="contact-link" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+    <p class="footer-note">Jinesh Nanal · Pune, India · 2026</p>
+  </div>
+</div>
+
+<script>
+  fetch('https://athleteiq-9r76.onrender.com/auth/founding-status')
+    .then(r => r.json())
+    .then(d => {
+      const acad = document.getElementById('m-academies');
+      const ath = document.getElementById('m-athletes');
+      if (acad && d.total_academies != null) acad.textContent = d.total_academies;
+      if (ath && d.total_athletes != null) ath.textContent = d.total_athletes;
+    })
+    .catch(() => {});
+</script>
+</body>
+</html>
