@@ -365,6 +365,28 @@
     line-height: 1.55;
   }
 
+  /* PAPER LINKS */
+  .paper-links {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-top: 0.75rem;
+  }
+  .paper-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    padding: 0.22rem 0.55rem;
+    border-radius: 1px;
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    border: 1px solid var(--rule);
+    color: var(--ink-light);
+    transition: all 0.2s;
+  }
+  .paper-link:hover { border-color: var(--green); color: var(--green); }
+  .paper-link-rg { border-color: #40BA7B; color: #40BA7B; }
+  .paper-link-rg:hover { background: #40BA7B; color: white; }
+
   /* RECOGNITION */
   .recognition-grid {
     display: grid;
@@ -521,7 +543,7 @@
   </p>
   <div class="hero-chips">
     <span class="chip chip-green">4 IEEE Papers</span>
-    <span class="chip chip-terracotta">~370 Athletes · Live Platform</span>
+    <span class="chip chip-terracotta">595 Athletes · Live Platform</span>
     <span class="chip chip-outline">NVIDIA · Quadro</span>
     <span class="chip chip-outline">GRE 329 · Quant 168</span>
     <span class="chip chip-outline">9× National Champion</span>
@@ -712,8 +734,12 @@
     <div class="paper-card">
       <span class="paper-badge badge-accepted">ACCEPTED</span>
       <div class="paper-venue">IEEE MAI 2026 · Springer LNEE</div>
-      <div class="paper-title">Predicting Drowsiness Levels in Undergraduate Students Using Facial Landmark Detection</div>
-      <p class="paper-topic">Computer vision pipeline for real-time drowsiness detection using facial landmarks. Validated on student populations; targeting classroom monitoring applications.</p>
+      <div class="paper-title">Subject-Disjoint Cross-Dataset Evaluation of CNN and CNN-LSTM Models for Visual Driver Drowsiness Detection</div>
+      <p class="paper-topic">Cross-dataset evaluation of CNN and CNN-LSTM models for driver drowsiness detection. Validates generalization across subject-disjoint splits — a stricter test than within-dataset evaluation.</p>
+      <div class="paper-links">
+        <a href="https://www.researchgate.net/profile/Jinesh-Nanal/publications" class="paper-link paper-link-rg" target="_blank" rel="noopener">ResearchGate ↗</a>
+        <a href="https://github.com/Jsn04/Dl_project" class="paper-link" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
     </div>
 
     <div class="paper-card">
@@ -721,6 +747,9 @@
       <div class="paper-venue">IEEE INDISCON 2026</div>
       <div class="paper-title">Deployment Study: AI-Powered Injury Risk Monitoring for Grassroots Sports Academies</div>
       <p class="paper-topic">Full deployment study of AthleteIQ — the composite risk engine, coach adoption data, and real-world performance across 20+ academies. Under review.</p>
+      <div class="paper-links">
+        <a href="https://github.com/Jsn04/AthleteIQ" class="paper-link" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
     </div>
 
     <div class="paper-card">
@@ -728,6 +757,9 @@
       <div class="paper-venue">IEEE DELCON 2026</div>
       <div class="paper-title">Reversible PII-Redacting LLM Proxy for DPDP Compliance</div>
       <p class="paper-topic">A proxy layer that redacts and re-hydrates personally identifiable information around LLM calls. Compliant with India's Digital Personal Data Protection Act 2023 by design.</p>
+      <div class="paper-links">
+        <a href="https://github.com/Jsn04/dpdp-llm-proxy" class="paper-link" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
     </div>
 
     <div class="paper-card">
@@ -735,6 +767,9 @@
       <div class="paper-venue">AISec @ ACM CCS 2026</div>
       <div class="paper-title">Cross-Corpus Robustness of Prompt-Injection Detection</div>
       <p class="paper-topic">Benchmarks prompt-injection classifiers under cross-corpus transfer — detectors trained on one attack corpus collapse on others. Proposes a distributional robustness frame as a defence.</p>
+      <div class="paper-links">
+        <span class="paper-link" style="cursor:default;opacity:0.5;">Code withheld · double-blind review</span>
+      </div>
     </div>
 
   </div>
@@ -786,12 +821,18 @@
 <script>
   const SUPA = 'https://zoahnwhvzyptdortdspo.supabase.co';
   const KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpvYWhud2h2enlwdGRvcnRkc3BvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1MDk3NDksImV4cCI6MjA5MDA4NTc0OX0.h0BLCUXlGU1qBKxfVL9hCmrIVDiuZtylw0yXm57Ik4s';
-  const H    = { apikey: KEY, Authorization: `Bearer ${KEY}`, Prefer: 'count=exact' };
+  const H    = { apikey: KEY, Authorization: `Bearer ${KEY}`, Prefer: 'count=exact', Range: '0-0' };
 
   async function getCount(table) {
-    const r = await fetch(`${SUPA}/rest/v1/${table}?select=*`, { method: 'HEAD', headers: H });
+    const r = await fetch(`${SUPA}/rest/v1/${table}?select=id&limit=1`, { headers: H });
     const cr = r.headers.get('Content-Range');
-    return cr ? parseInt(cr.split('/')[1]) : null;
+    if (cr) {
+      const parts = cr.split('/');
+      return parts[1] && parts[1] !== '*' ? parseInt(parts[1]) : null;
+    }
+    // fallback: count returned array length from a larger fetch
+    const data = await r.json().catch(() => null);
+    return Array.isArray(data) ? data.length : null;
   }
 
   Promise.all([

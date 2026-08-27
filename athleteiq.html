@@ -598,12 +598,16 @@
 <script>
   const SUPA = 'https://zoahnwhvzyptdortdspo.supabase.co';
   const KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpvYWhud2h2enlwdGRvcnRkc3BvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1MDk3NDksImV4cCI6MjA5MDA4NTc0OX0.h0BLCUXlGU1qBKxfVL9hCmrIVDiuZtylw0yXm57Ik4s';
-  const H    = { apikey: KEY, Authorization: `Bearer ${KEY}`, Prefer: 'count=exact' };
+  const H    = { apikey: KEY, Authorization: `Bearer ${KEY}`, Prefer: 'count=exact', Range: '0-0' };
 
   async function getCount(table) {
-    const r = await fetch(`${SUPA}/rest/v1/${table}?select=*`, { method: 'HEAD', headers: H });
+    const r = await fetch(`${SUPA}/rest/v1/${table}?select=id&limit=1`, { headers: H });
     const cr = r.headers.get('Content-Range');
-    return cr ? parseInt(cr.split('/')[1]) : null;
+    if (cr) {
+      const parts = cr.split('/');
+      return parts[1] && parts[1] !== '*' ? parseInt(parts[1]) : null;
+    }
+    return null;
   }
 
   const statusEl = document.getElementById('fetch-status');
