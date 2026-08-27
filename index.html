@@ -39,7 +39,7 @@
     z-index: 100;
     background: var(--parchment);
     border-bottom: 1px solid var(--rule);
-    padding: 0 2rem;
+    padding: 0 4rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -69,7 +69,7 @@
   .nav-links a:hover { color: var(--green); }
 
   /* SECTIONS */
-  section { max-width: 900px; margin: 0 auto; padding: 5rem 2rem; }
+  section { max-width: 1200px; margin: 0 auto; padding: 5rem 4rem; }
   section + section { border-top: 1px solid var(--rule); }
 
   .section-label {
@@ -94,10 +94,10 @@
   #hero {
     padding-top: 7rem;
     padding-bottom: 5rem;
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
   }
 
   .hero-eyebrow {
@@ -128,7 +128,7 @@
   .hero-bio {
     font-size: 1.05rem;
     color: var(--ink-light);
-    max-width: 600px;
+    max-width: 720px;
     line-height: 1.7;
     margin-bottom: 2rem;
   }
@@ -195,9 +195,9 @@
     padding: 0;
   }
   #athleteiq-feature .inner {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 4rem 2rem;
+    padding: 4rem 4rem;
   }
   .aiq-label {
     font-family: 'JetBrains Mono', monospace;
@@ -223,9 +223,10 @@
   }
   .aiq-metrics {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(4, auto);
+    gap: 3rem;
     margin-bottom: 2.5rem;
+    justify-content: start;
   }
   .aiq-metric-num {
     font-family: 'Playfair Display', serif;
@@ -271,8 +272,8 @@
   .exp-list { display: flex; flex-direction: column; gap: 2.5rem; }
   .exp-item {
     display: grid;
-    grid-template-columns: 160px 1fr;
-    gap: 1.5rem;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem;
     padding-bottom: 2.5rem;
     border-bottom: 1px solid var(--rule);
   }
@@ -321,8 +322,8 @@
   /* RESEARCH */
   .papers-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(390px, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
   .paper-card {
     background: var(--card-bg);
@@ -399,9 +400,9 @@
     padding: 0;
   }
   #contact .inner {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 4rem 2rem;
+    padding: 4rem 4rem;
   }
   .contact-title {
     font-family: 'Playfair Display', serif;
@@ -442,17 +443,18 @@
     letter-spacing: 0.08em;
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 768px) {
     .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
     .recognition-grid { grid-template-columns: 1fr; }
     .papers-grid { grid-template-columns: 1fr; }
+    .aiq-metrics { grid-template-columns: repeat(2, auto); gap: 2rem; }
     .hero-name { font-size: 2.6rem; }
-    nav { padding: 0 1rem; }
+    nav { padding: 0 1.5rem; }
     .nav-links { gap: 1rem; }
-    section { padding: 3.5rem 1.25rem; }
-    #athleteiq-feature .inner { padding: 3rem 1.25rem; }
-    #contact .inner { padding: 3rem 1.25rem; }
-    #hero { padding-left: 1.25rem; padding-right: 1.25rem; }
+    section { padding: 3.5rem 1.5rem; }
+    #athleteiq-feature .inner { padding: 3rem 1.5rem; }
+    #contact .inner { padding: 3rem 1.5rem; }
+    #hero { padding-left: 1.5rem; padding-right: 1.5rem; padding-top: 4rem; }
   }
 </style>
 </head>
