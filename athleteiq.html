@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AthleteIQ — AI Injury Risk Platform</title>
+<title>AthleteIQ: AI Injury Risk Platform</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -390,7 +390,7 @@
       Deployed · Production · India
     </div>
     <h1 class="hero-title">
-      AI Injury Risk<br>Monitoring — <span class="accent">Live</span>
+      AI Injury Risk<br>Monitoring · <span class="accent">Live</span>
     </h1>
     <p class="hero-sub">
       A full-stack platform that gives every coach a composite readiness score for every athlete, every session. Built entirely solo. No wearables. No hardware. Running in real academies today.
@@ -428,7 +428,7 @@
   </div>
   <div class="supabase-row">
     <span class="supabase-badge"><span class="supabase-dot"></span>LIVE FROM SUPABASE</span>
-    <span class="supabase-note" id="fetch-status">— querying database directly…</span>
+    <span class="supabase-note" id="fetch-status">Querying database directly…</span>
   </div>
 </div>
 
@@ -441,7 +441,7 @@
       <source src="athleteiq/athleteiq-web.mp4" type="video/mp4">
     </video>
   </div>
-  <p class="video-note">Screen recording of the live coach dashboard — real data, real athletes.</p>
+  <p class="video-note">Screen recording of the live coach dashboard: real data, real athletes.</p>
 </div>
 
 <!-- SCREENSHOTS -->
@@ -453,7 +453,7 @@
       <div class="screen-bar">
         <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
       </div>
-      <img src="athleteiq/coach-dashboard.png" alt="Coach dashboard — athlete roster with risk scores">
+      <img src="athleteiq/coach-dashboard.png" alt="Coach dashboard, athlete roster with risk scores">
       <div class="screen-label">Coach Dashboard · Athlete Roster</div>
     </div>
     <div class="screen-frame">
@@ -467,7 +467,7 @@
       <div class="screen-bar">
         <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
       </div>
-      <img src="athleteiq/risk-score.png" alt="Risk score breakdown — 78/100 red zone">
+      <img src="athleteiq/risk-score.png" alt="Risk score breakdown, 78/100 red zone">
       <div class="screen-label">Risk Score Breakdown · 78/100 Red Zone</div>
     </div>
   </div>
@@ -487,7 +487,7 @@
     <div class="how-card">
       <div class="how-num">02 · Z-SCORE</div>
       <div class="how-title">Baseline Deviation</div>
-      <p class="how-desc">Energy, mood, and sleep ratings are benchmarked against each athlete's personal baseline — deviations from their own norm score higher than fixed thresholds.</p>
+      <p class="how-desc">Energy, mood, and sleep ratings are benchmarked against each athlete's personal baseline. Deviations from their own norm score higher than fixed thresholds.</p>
       <div class="formula">z = (x − μ_athlete) ÷ σ_athlete</div>
     </div>
     <div class="how-card">
@@ -497,7 +497,7 @@
       <div class="formula">|RPE_coach − (10 − energy)| ≥ 3</div>
     </div>
   </div>
-  <p style="font-size:0.82rem;color:var(--text-dim);margin-top:1.5rem;">Composite score (max 100) across 5 pillars — ACWR (40%), baseline z (30%), deception (15%), notes sentiment (10%), vitals (5%).</p>
+  <p style="font-size:0.82rem;color:var(--text-dim);margin-top:1.5rem;">Composite score (max 100) across 5 pillars: ACWR (40%), baseline z (30%), deception (15%), notes sentiment (10%), vitals (5%).</p>
 </div>
 
 <!-- CASE STUDY -->
@@ -508,12 +508,12 @@
     <div class="case-card case-red">
       <div class="case-score case-score-red">78</div>
       <div class="case-zone zone-red">RED ZONE · HIGH RISK</div>
-      <p class="case-detail case-detail-red">ACWR at 1.6 — well above the 1.3 threshold. Coach RPE 8/10 but athlete self-reported 9/10 energy. Deception flag triggered. Notes sentiment classified as anxious. Coach alert sent automatically.</p>
+      <p class="case-detail case-detail-red">ACWR at 1.6, well above the 1.3 threshold. Coach RPE 8/10 but athlete self-reported 9/10 energy. Deception flag triggered. Notes sentiment classified as anxious. Coach alert sent automatically.</p>
     </div>
     <div class="case-card case-green">
       <div class="case-score case-score-green">10</div>
       <div class="case-zone zone-green">GREEN ZONE · OPTIMAL</div>
-      <p class="case-detail case-detail-green">ACWR at 0.9 — well within safe range. Energy, mood, and sleep all within 0.5 standard deviations of personal baseline. No coach/athlete mismatch. Cleared for full-intensity training.</p>
+      <p class="case-detail case-detail-green">ACWR at 0.9, well within safe range. Energy, mood, and sleep all within 0.5 standard deviations of personal baseline. No coach/athlete mismatch. Cleared for full-intensity training.</p>
     </div>
   </div>
 </div>
@@ -623,10 +623,10 @@
     if (chk  != null) document.getElementById('p-checkins').textContent  = chk.toLocaleString();
     if (logs != null) document.getElementById('p-logs').textContent      = logs.toLocaleString();
     const t = new Date().toLocaleTimeString('en-IN', {hour:'2-digit', minute:'2-digit'});
-    statusEl.textContent = `— fetched directly from Supabase PostgreSQL at ${t}`;
+    statusEl.textContent = `Fetched directly from Supabase PostgreSQL at ${t}`;
     statusEl.style.color = 'var(--supabase)';
   }).catch(() => {
-    statusEl.textContent = '— unable to reach Supabase; check browser console';
+    statusEl.textContent = 'Unable to reach Supabase; check browser console';
   });
 </script>
 </body>

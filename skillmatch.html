@@ -147,9 +147,9 @@
   <div class="hero">
     <p class="hero-eyebrow">Project · Hiring Intelligence</p>
     <h1 class="hero-title">SkillMatch v2</h1>
-    <p class="hero-sub">A matching layer across your own bench and the open market, ranked by fit — not keywords.</p>
+    <p class="hero-sub">A matching layer across your own bench and the open market, ranked by fit, not keywords.</p>
     <div class="hero-rule"></div>
-    <p class="hero-desc">SkillMatch started as an internal staffing tool: describe a project, get your own engineers ranked by fit. v2 extends it into a two-sided hiring marketplace — same matching engine, same explainable scores, but now open to external engineers and companies too. The differentiator is the bridge: when your bench can't cover a project, one click sends the same search to the external pool. No job board has that because no job board also owns your bench.</p>
+    <p class="hero-desc">SkillMatch started as an internal staffing tool: describe a project, get your own engineers ranked by fit. v2 extends it into a two-sided hiring marketplace: same matching engine, same explainable scores, but now open to external engineers and companies too. The differentiator is the bridge: when your bench can't cover a project, one click sends the same search to the external pool. No job board has that because no job board also owns your bench.</p>
     <div class="chip-row">
       <span class="chip chip-green">Two-sided Marketplace</span>
       <span class="chip chip-green">Semantic Skill Matching</span>
@@ -170,7 +170,7 @@
     <div class="user-grid">
       <div class="user-card manager">
         <div class="user-name">Internal Manager</div>
-        <p class="user-desc">Staffs their company's bench to projects via k-NN. When the bench falls short, bridges to the external pool with one click — same search, different pool.</p>
+        <p class="user-desc">Staffs their company's bench to projects via k-NN. When the bench falls short, bridges to the external pool with one click, same search, different pool.</p>
       </div>
       <div class="user-card company">
         <div class="user-name">External Company</div>
@@ -187,7 +187,7 @@
   <div class="section">
     <p class="section-label">Core Algorithm</p>
     <h2 class="section-title">Two Matching Engines</h2>
-    <p class="body-text">Internal and external hiring are fundamentally different problems. The two engines reflect that — but they share the same scoring function so a match always means the same thing on both sides.</p>
+    <p class="body-text">Internal and external hiring are fundamentally different problems. The two engines reflect that, but they share the same scoring function so a match always means the same thing on both sides.</p>
     <div class="engine-layout">
       <div class="engine-card internal">
         <div class="engine-name">Internal · recommender.py</div>
@@ -196,8 +196,8 @@
       </div>
       <div class="engine-card external">
         <div class="engine-name">External · openings.py score()</div>
-        <div class="engine-title">Weighted sum out of 100 — explainable</div>
-        <p class="engine-desc">External strangers' self-ratings are worthless, so the external engine judges by real candidate evidence. Runs both directions from the same function — a company ranking engineers and an engineer ranking openings never disagree on what a good match is.</p>
+        <div class="engine-title">Weighted sum out of 100, explainable</div>
+        <p class="engine-desc">External strangers' self-ratings are worthless, so the external engine judges by real candidate evidence. Runs both directions from the same function, so a company ranking engineers and an engineer ranking openings never disagree on what a good match is.</p>
         <div class="score-row">
           <div class="score-item"><span class="score-label">Skills overlap</span><div class="score-bar-wrap"><div class="score-bar" style="width:50%"></div></div><span class="score-val">50</span></div>
           <div class="score-item"><span class="score-label">Discipline</span><div class="score-bar-wrap"><div class="score-bar" style="width:15%"></div></div><span class="score-val">15</span></div>
@@ -213,7 +213,7 @@
   <div class="section">
     <p class="section-label">ML</p>
     <h2 class="section-title">Semantic Skill Matching</h2>
-    <p class="body-text">The original scorer used exact string matching — React ≠ React.js, Postgres ≠ PostgreSQL, k8s ≠ Kubernetes. A perfect candidate could rank near the bottom on spelling alone. <code style="font-family:monospace;font-size:0.85em;background:var(--card-bg);padding:0.1em 0.4em;border-radius:2px;">matching_ai.py</code> fixes this in three layers, most-reliable-first.</p>
+    <p class="body-text">The original scorer used exact string matching: React ≠ React.js, Postgres ≠ PostgreSQL, k8s ≠ Kubernetes. A perfect candidate could rank near the bottom on spelling alone. <code style="font-family:monospace;font-size:0.85em;background:var(--card-bg);padding:0.1em 0.4em;border-radius:2px;">matching_ai.py</code> fixes this in three layers, most-reliable-first.</p>
     <div class="ai-layers">
       <div class="ai-layer">
         <div class="ai-layer-num">1</div>
@@ -223,15 +223,15 @@
       <div class="ai-layer">
         <div class="ai-layer-num">2</div>
         <div class="ai-layer-name">Exclusivity groups</div>
-        <div class="ai-layer-desc">The false-friend guard. A general embedding model rates MySQL/MongoDB, React/Angular, AWS/Azure as "similar" — they're alternatives, not the same skill. Two members of the same exclusivity group (databases, clouds, frontend frameworks, languages) never match, regardless of embedding similarity.</div>
+        <div class="ai-layer-desc">The false-friend guard. A general embedding model rates MySQL/MongoDB, React/Angular, AWS/Azure as "similar" when they're alternatives, not the same skill. Two members of the same exclusivity group (databases, clouds, frontend frameworks, languages) never match, regardless of embedding similarity.</div>
       </div>
       <div class="ai-layer">
         <div class="ai-layer-num">3</div>
         <div class="ai-layer-name">Embedding model</div>
-        <div class="ai-layer-desc">BAAI/bge-small-en-v1.5 via fastembed (ONNX, local, no external API). Safety net for the long tail above a tuned 0.80 similarity threshold. Model baked into the Docker image — runs fully offline, no candidate data leaves the box. Validated at 42/42 on a labeled set (23 synonyms that must match, 19 false-friends that must not).</div>
+        <div class="ai-layer-desc">BAAI/bge-small-en-v1.5 via fastembed (ONNX, local, no external API). Safety net for the long tail above a tuned 0.80 similarity threshold. Model baked into the Docker image, runs fully offline, no candidate data leaves the box. Validated at 42/42 on a labeled set (23 synonyms that must match, 19 false-friends that must not).</div>
       </div>
     </div>
-    <p class="body-text" style="margin-top:1.25rem;">Real before/after: an engineer who wrote "Postgres/AWS/k8s" jumped 83%→100% on a role asking for "PostgreSQL/AWS/Kubernetes". Engineers who already matched exactly were unchanged — matches never get worse. Behind a kill-switch: <code style="font-family:monospace;font-size:0.85em;background:var(--card-bg);padding:0.1em 0.3em;border-radius:2px;">SEMANTIC_MATCHING=off</code> falls back to exact matching instantly.</p>
+    <p class="body-text" style="margin-top:1.25rem;">Real before/after: an engineer who wrote "Postgres/AWS/k8s" jumped 83%→100% on a role asking for "PostgreSQL/AWS/Kubernetes". Engineers who already matched exactly were unchanged, matches never get worse. Behind a kill-switch: <code style="font-family:monospace;font-size:0.85em;background:var(--card-bg);padding:0.1em 0.3em;border-radius:2px;">SEMANTIC_MATCHING=off</code> falls back to exact matching instantly.</p>
   </div>
 
   <!-- ARCHITECTURE -->
@@ -301,7 +301,7 @@
     <table class="stack-table">
       <thead><tr><th>Layer</th><th>Technology</th></tr></thead>
       <tbody>
-        <tr><td>Frontend</td><td>React 18 (Vite), plain CSS — no component library</td></tr>
+        <tr><td>Frontend</td><td>React 18 (Vite), plain CSS, no component library</td></tr>
         <tr><td>Backend</td><td>Python, FastAPI, Uvicorn</td></tr>
         <tr><td>Database</td><td>PostgreSQL 15, ThreadedConnectionPool, db_cursor() context manager</td></tr>
         <tr><td>Auth</td><td>JWT (PyJWT), PBKDF2 + per-user salt, constant-time comparison, role-scoped tokens</td></tr>
@@ -319,8 +319,8 @@
     <h2 class="section-title">Security Model</h2>
     <ul class="security-list">
       <li><strong>Hard role separation:</strong> engineer token → company endpoint = 403; company token → engineer endpoint = 403; internal-manager token → any marketplace endpoint = 403. Enforced by <code style="font-family:monospace;font-size:0.85em;">require_company</code> / <code style="font-family:monospace;font-size:0.85em;">require_engineer</code> / <code style="font-family:monospace;font-size:0.85em;">current_user</code> guards. Verified end-to-end.</li>
-      <li><strong>Contact locked until mutual:</strong> before both sides express interest, a company sees the engineer's profile but email = "" and the resume endpoint returns 403. Cross-company isolation verified — Company B cannot see Company A's unlocked contacts.</li>
-      <li><strong>Bridge org security:</strong> a manager's org gets a company identity auto-provisioned on first post, derived from their email domain. Login-disabled (sentinel password hash) and never attached to a pre-existing company account — prevents anyone hijacking an org's openings by registering first.</li>
+      <li><strong>Contact locked until mutual:</strong> before both sides express interest, a company sees the engineer's profile but email = "" and the resume endpoint returns 403. Cross-company isolation verified: Company B cannot see Company A's unlocked contacts.</li>
+      <li><strong>Bridge org security:</strong> a manager's org gets a company identity auto-provisioned on first post, derived from their email domain. Login-disabled (sentinel password hash) and never attached to a pre-existing company account, which prevents anyone hijacking an org's openings by registering first.</li>
       <li><strong>Passwords:</strong> PBKDF2 + per-user salt, constant-time comparison. CORS locked to configured origins. SECRET_KEY refuses to boot outside dev if unset.</li>
     </ul>
   </div>
@@ -331,9 +331,9 @@
     <h2 class="section-title">Current State</h2>
     <div class="status-box">
       <div class="status-box-title">Honest Assessment</div>
-      <p>Backend is thoroughly tested — every flow driven through the API: matching, interest, connect, bridge, chat, notifications, all security gates. This part is genuinely verified.</p>
+      <p>Backend is thoroughly tested, every flow driven through the API: matching, interest, connect, bridge, chat, notifications, all security gates. This part is genuinely verified.</p>
       <p style="margin-top:0.75rem;">Frontend is built to production standard (error handling, toasts, skeletons), but much of it is eyeball-unverified. Recent screenshots confirmed chat, notifications, and the company openings screen look right; the rest compiles and the API responds correctly.</p>
-      <p style="margin-top:0.75rem;">Not built yet: monetization, learned ranking from outcomes (needs interaction data), resume parsing (the next planned AI piece — extract skills from the uploaded PDF so engineers don't hand-type and the matcher has evidence).</p>
+      <p style="margin-top:0.75rem;">Not built yet: monetization, learned ranking from outcomes (needs interaction data), resume parsing (the next planned AI piece: extract skills from the uploaded PDF so engineers don't hand-type and the matcher has evidence).</p>
     </div>
     <div class="btn-row" style="margin-top:1.5rem;">
       <a href="/" class="btn btn-outline">← Back to portfolio</a>
