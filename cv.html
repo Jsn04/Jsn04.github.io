@@ -48,30 +48,13 @@
 
   .container { max-width: 1100px; margin: 0 auto; padding: 0 2.5rem; }
 
-  .head { padding: 3rem 0 1.5rem; }
-  .head-eyebrow {
-    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
-    letter-spacing: 0.18em; color: var(--terracotta);
-    text-transform: uppercase; margin-bottom: 0.75rem;
-  }
+  .head { padding: 2.5rem 0 1.25rem; }
   h1 {
     font-family: 'Playfair Display', serif;
     font-size: clamp(2.2rem, 5vw, 3.2rem);
     font-weight: 700; color: var(--ink); line-height: 1.1; margin-bottom: 0.75rem;
   }
-  .head-rule { width: 60px; height: 3px; background: var(--green); margin-bottom: 1.5rem; }
-  .head-desc { font-size: 0.98rem; color: var(--ink-light); max-width: 720px; line-height: 1.7; }
 
-  .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1.75rem 0 2rem; }
-  .btn {
-    display: inline-block; padding: 0.65rem 1.4rem; font-size: 0.85rem;
-    font-weight: 600; text-decoration: none; border-radius: 2px;
-    transition: all 0.2s; letter-spacing: 0.03em;
-  }
-  .btn-primary { background: var(--green); color: #EAF2E3; }
-  .btn-primary:hover { background: var(--green-mid); }
-  .btn-outline { border: 1.5px solid var(--green); color: var(--green); }
-  .btn-outline:hover { background: var(--green); color: #EAF2E3; }
 
   /* PDF VIEWER */
   .pdf-frame {
@@ -79,7 +62,7 @@
     border-radius: 4px;
     overflow: hidden;
     background: var(--card-bg);
-    margin-bottom: 1rem;
+    margin-bottom: 3rem;
     box-shadow: 0 4px 24px rgba(26,22,18,0.10);
   }
   .pdf-frame embed, .pdf-frame iframe {
@@ -88,11 +71,6 @@
   .pdf-fallback {
     padding: 3rem 2rem; text-align: center;
     font-size: 0.9rem; color: var(--ink-light);
-  }
-  .pdf-note {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.68rem; color: var(--ink-light);
-    letter-spacing: 0.04em; opacity: 0.75; margin-bottom: 3rem;
   }
 
   footer {
@@ -132,19 +110,7 @@
 <div class="container">
 
   <div class="head">
-    <div class="head-eyebrow">Curriculum Vitae</div>
     <h1>CV</h1>
-    <div class="head-rule"></div>
-    <p class="head-desc">
-      One page covering my work at AthleteIQ and NVIDIA, five first-author papers, and competitive
-      inline skating for Team India. Publication and project entries link through to the detailed
-      pages on this site.
-    </p>
-    <div class="btn-row">
-      <a href="Jinesh_Nanal_CV.pdf" class="btn btn-primary" download>Download PDF</a>
-      <a href="Jinesh_Nanal_CV.pdf" class="btn btn-outline" target="_blank" rel="noopener">Open in New Tab</a>
-      <a href="index.html" class="btn btn-outline">Back to Home</a>
-    </div>
   </div>
 
   <div class="pdf-frame">
@@ -155,7 +121,6 @@
       </div>
     </iframe>
   </div>
-  <p class="pdf-note">Last updated August 2026</p>
 
 </div>
 
