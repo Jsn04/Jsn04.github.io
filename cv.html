@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV · Jinesh Nanal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #F5F0E8;
+    --ink: #1A1612;
+    --ink-light: #4A3F35;
+    --green: #2A4A1E;
+    --green-dark: #1B2E13;
+    --green-mid: #3A6328;
+    --terracotta: #C4622D;
+    --rule: #C8B89A;
+    --card-bg: #EDE8DE;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 17px; }
+  body {
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--parchment); border-bottom: 1px solid var(--rule);
+    padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between; height: 56px;
+  }
+  .nav-brand {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+    color: var(--green); font-weight: 500; text-decoration: none; letter-spacing: 0.08em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.82rem; color: var(--ink-light); text-decoration: none;
+    letter-spacing: 0.04em; font-weight: 500; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--green); }
+  .nav-links a.active { color: var(--green); }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2.5rem; }
+
+  .head { padding: 3rem 0 1.5rem; }
+  .head-eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.18em; color: var(--terracotta);
+    text-transform: uppercase; margin-bottom: 0.75rem;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 700; color: var(--ink); line-height: 1.1; margin-bottom: 0.75rem;
+  }
+  .head-rule { width: 60px; height: 3px; background: var(--green); margin-bottom: 1.5rem; }
+  .head-desc { font-size: 0.98rem; color: var(--ink-light); max-width: 720px; line-height: 1.7; }
+
+  .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1.75rem 0 2rem; }
+  .btn {
+    display: inline-block; padding: 0.65rem 1.4rem; font-size: 0.85rem;
+    font-weight: 600; text-decoration: none; border-radius: 2px;
+    transition: all 0.2s; letter-spacing: 0.03em;
+  }
+  .btn-primary { background: var(--green); color: #EAF2E3; }
+  .btn-primary:hover { background: var(--green-mid); }
+  .btn-outline { border: 1.5px solid var(--green); color: var(--green); }
+  .btn-outline:hover { background: var(--green); color: #EAF2E3; }
+
+  /* PDF VIEWER */
+  .pdf-frame {
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--card-bg);
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 24px rgba(26,22,18,0.10);
+  }
+  .pdf-frame embed, .pdf-frame iframe {
+    display: block; width: 100%; height: 1180px; border: 0;
+  }
+  .pdf-fallback {
+    padding: 3rem 2rem; text-align: center;
+    font-size: 0.9rem; color: var(--ink-light);
+  }
+  .pdf-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem; color: var(--ink-light);
+    letter-spacing: 0.04em; opacity: 0.75; margin-bottom: 3rem;
+  }
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 2rem 2.5rem 3rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .footer-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem; color: #7A6E62; letter-spacing: 0.08em;
+  }
+
+  @media (max-width: 780px) {
+    nav { padding: 0 1.25rem; height: auto; flex-direction: column;
+          align-items: flex-start; gap: 0.5rem; padding-top: 0.75rem; padding-bottom: 0.75rem; }
+    .nav-links { gap: 1rem; flex-wrap: wrap; }
+    .container { padding: 0 1.25rem; }
+    .pdf-frame embed, .pdf-frame iframe { height: 640px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">JINESH NANAL</a>
+  <ul class="nav-links">
+    <li><a href="index.html#news">News</a></li>
+    <li><a href="index.html#experience">Experience</a></li>
+    <li><a href="index.html#research">Research</a></li>
+    <li><a href="index.html#projects">Projects</a></li>
+    <li><a href="index.html#recognition">Recognition</a></li>
+    <li><a href="cv.html" class="active">CV</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+
+  <div class="head">
+    <div class="head-eyebrow">Curriculum Vitae</div>
+    <h1>CV</h1>
+    <div class="head-rule"></div>
+    <p class="head-desc">
+      One page covering my work at AthleteIQ and NVIDIA, five first-author papers, and competitive
+      inline skating for Team India. Publication and project entries link through to the detailed
+      pages on this site.
+    </p>
+    <div class="btn-row">
+      <a href="Jinesh_Nanal_CV.pdf" class="btn btn-primary" download>Download PDF</a>
+      <a href="Jinesh_Nanal_CV.pdf" class="btn btn-outline" target="_blank" rel="noopener">Open in New Tab</a>
+      <a href="index.html" class="btn btn-outline">Back to Home</a>
+    </div>
+  </div>
+
+  <div class="pdf-frame">
+    <iframe src="Jinesh_Nanal_CV.pdf#view=FitH" title="Jinesh Nanal CV">
+      <div class="pdf-fallback">
+        Your browser cannot display PDFs inline.
+        <a href="Jinesh_Nanal_CV.pdf">Download the CV instead</a>.
+      </div>
+    </iframe>
+  </div>
+  <p class="pdf-note">Last updated August 2026</p>
+
+</div>
+
+<footer>
+  <p class="footer-note">Jinesh Nanal &nbsp;&middot;&nbsp; Pune, India &nbsp;&middot;&nbsp; 2026</p>
+</footer>
+
+</body>
+</html>

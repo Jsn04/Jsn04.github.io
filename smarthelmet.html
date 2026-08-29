@@ -164,14 +164,15 @@
   <!-- HERO -->
   <div class="hero">
     <div class="hero-eyebrow">Research Project · IEEE INDICON 2025</div>
-    <h1 class="hero-title">A Smart Helmet for Offline Navigation Using Hybrid Dead-Reckoning and Vision-Based Road-Feature Route-Pointer Correction</h1>
+    <h1 class="hero-title">A Smart Helmet for Two-Wheeler Navigation under GNSS Denial: Route-Aware Dead Reckoning and Road-Scene Segmentation</h1>
     <p class="hero-sub">Wearable prototype for GNSS-denied navigation on two-wheelers</p>
     <div class="hero-rule"></div>
     <p class="hero-desc">
-      GNSS fails in tunnels, flyovers, dense urban roads, and network-constrained areas. This paper presents a wearable smart-helmet system that maintains accurate navigation continuity when GPS goes dark. The core idea: treat road features detected by a forward-facing camera as semantic correction events for a Dead Reckoning route pointer, rather than building a full localisation system from scratch. The helmet is a systems-integration contribution, not an algorithmic novelty claim.
+      GNSS fails in tunnels, flyovers, dense urban roads, and network-constrained areas, exactly where a missed turn costs the most. This paper presents a wearable smart-helmet system that maintains navigation continuity when GPS goes dark. The core idea: treat road features detected by a forward-facing camera as semantic correction events for a Dead Reckoning route pointer, rather than building a full localisation system from scratch. Validation runs on recorded road data rather than simulation. Across 47 paired GNSS blackouts drawn from an instrumented 2.76 km ride through live Pune traffic, the complete system cuts peak position error by 19.7% against unaided dead reckoning. The helmet is a systems-integration contribution, not an algorithmic novelty claim.
     </p>
     <div class="chip-row">
       <span class="chip chip-pending">Submitted · IEEE INDICON 2025</span>
+      <span class="chip chip-green">2.76 km Road Validation</span>
       <span class="chip chip-green">LR-ASPP-MobileNetV3</span>
       <span class="chip chip-green">Dead Reckoning</span>
       <span class="chip chip-outline">ESP32 + BLE</span>
@@ -333,7 +334,7 @@
     <h2 class="section-title">Evaluation Results</h2>
 
     <p class="body-text">
-      Evaluation targets module correctness, integration readiness, and runtime suitability rather than large-scale benchmark reporting. The test suite covers 138 tests across three modules. The five failing tests are in the navigation API-service suite and represent unresolved expectations around degraded-mode transitions; they are reported honestly rather than suppressed.
+      Every localisation result comes from an instrumented two-wheeler ride in live Pune traffic, replayed through the deployed module code. Every perception result comes from annotated imagery the model has never seen. Alongside that, the test suite covers 138 tests across three modules. The five failing tests sit in the navigation API-service suite and represent unresolved expectations around degraded-mode transitions; they are reported honestly rather than suppressed.
     </p>
 
     <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--green);margin:1.5rem 0 0.75rem;">Table II: Module-wise Unit Test Results</h3>
@@ -372,46 +373,51 @@
     <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--green);margin:2rem 0 0.75rem;">Fig. 2: Single-Run Ablation Trace</h3>
     <div class="figure-wrap">
       <img src="projects/smarthelmet_trace.png" alt="Position error and DR uncertainty over time, single-run ablation trace">
-      <div class="figure-caption">Fig. 2: Single-run trace from the complete-system ablation (seed 1000). GPS-denied window (~47.5 s, shaded). Dashed vertical lines: accepted visual JUNCTION events (at t=59 s and t=79 s), each snapping the DR estimate back to the map's expected junction coordinates and resetting DR uncertainty. Top: true position error grows monotonically during the GPS-denied window until each visual correction fires. Bottom: DR uncertainty &sigma; follows the same pattern, staying bounded under 6 m across the run.</div>
+      <div class="figure-caption">Fig. 2: Position error against GNSS ground truth during a representative 60 s blackout from the instrumented ride. Unaided dead reckoning (A) diverges to 254 m; the complete system (D) remains within 72 m, with accepted junction events (dashed) at 11 s and 15 s re-anchoring the route pointer.</div>
     </div>
 
-    <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--green);margin:2rem 0 0.75rem;">Table IV: Ablation Across Four Localisation Configurations (20 seeded runs)</h3>
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--green);margin:2rem 0 0.75rem;">Table IV: Ablation on the Instrumented Road Ride (47 paired 60 s GNSS blackouts)</h3>
     <table class="abl-table">
       <thead>
         <tr>
           <th>Metric</th>
           <th>A: DR only</th>
-          <th>B: DR + Map Match</th>
-          <th>C: DR + CV</th>
+          <th>B: + Map Match</th>
+          <th>C: + CV</th>
           <th class="full-col">D: Full System</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Peak true pos. error (m)</td><td>21.95</td><td>18.58</td><td>29.37</td><td class="best full-col">18.97</td>
+          <td>Peak pos. error (m)</td><td>135.9 ±88.6</td><td>116.0 ±89.7</td><td>138.2 ±91.7</td><td class="best full-col">109.1 ±88.5</td>
         </tr>
         <tr>
-          <td>Std</td><td>2.51</td><td>2.00</td><td>3.02</td><td class="full-col">1.96</td>
+          <td>Mean pos. error (m)</td><td>69.5 ±41.5</td><td>58.0 ±45.2</td><td>70.6 ±44.9</td><td class="best full-col">55.5 ±45.0</td>
         </tr>
         <tr>
-          <td>Max drift between corrections (m)</td><td>n/a</td><td>n/a</td><td>26.56</td><td class="best full-col">13.10</td>
-        </tr>
-        <tr>
-          <td>Peak DR uncertainty &sigma; (m)</td><td>14.38</td><td>14.38</td><td>6.51</td><td class="full-col">6.51</td>
-        </tr>
-        <tr>
-          <td>Turn detection rate</td><td>—</td><td>—</td><td>92.5%</td><td class="best full-col">92.5%</td>
-        </tr>
-        <tr>
-          <td>False corrections / min</td><td>—</td><td>—</td><td>0.56</td><td class="full-col">0.56</td>
-        </tr>
-        <tr>
-          <td>Recovery to first correction (s)</td><td>—</td><td>—</td><td>19.0</td><td class="full-col">19.0</td>
+          <td>Next junction correct</td><td>23.4%</td><td class="best">36.2%</td><td>29.8%</td><td class="best full-col">36.2%</td>
         </tr>
       </tbody>
     </table>
     <p class="body-text" style="margin-top:1rem;">
-      Key finding: map matching alone (B) gives a 15% peak-error reduction over pure DR (18.6 vs 21.9 m) but cannot correct longitudinal drift. Visual correction alone (C) has asymmetric risk: it works well on clean runs but fails worse than DR when a junction is missed. The full system (D) captures the strengths of both, cutting max drift between corrections by 51% versus CV alone and by 40% versus pure DR.
+      Values are mean &plusmn; s.d. across windows. Because all four configurations are evaluated on identical windows, the statistically meaningful comparisons are the paired contrasts. Three findings emerge. <strong>First</strong>, junction correction alone (C) confers no measurable benefit over unaided DR: +1.7% peak error, p=0.26. Visual events without route context do not bound drift, because a single missed junction leaves DR advancing freely through subsequent segments. <strong>Second</strong>, the complete system (D) reduces peak position error by <strong>19.7%</strong> against unaided DR (95% CI [-43.3, -10.4], p=0.002) and by <strong>21.1%</strong> against junction correction alone (p=0.006), improving on 70% and 62% of windows respectively. <strong>Third</strong>, most of that gain is attributable to route context rather than to the event channel: the separation between D and map matching alone is -5.9% and not resolvable at this sample size (p=0.40). The event channel is therefore reported as a secondary contributor whose isolated benefit this recording cannot establish.
+    </p>
+
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--green);margin:2rem 0 0.75rem;">Table V: Cross-Domain Road Segmentation on BDD100K (299 unseen images)</h3>
+    <table class="data-table">
+      <thead>
+        <tr><th>Metric</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Road IoU (micro)</td><td>0.856</td></tr>
+        <tr><td>Precision / recall (micro)</td><td>0.904 / 0.942</td></tr>
+        <tr><td>F1 (micro)</td><td>0.922</td></tr>
+        <tr><td>Pixel accuracy</td><td>0.959</td></tr>
+        <tr><td>Per-image IoU</td><td>0.830 &plusmn; 0.177</td></tr>
+      </tbody>
+    </table>
+    <p class="body-text" style="margin-top:1rem;">
+      The drivable-road mask bounds what every downstream perception stage can recover, so it is scored against a corpus the model has never seen, captured in a different country and road environment from its IDD training data. Over 299 validation images the deployed checkpoint reaches <strong>0.856 micro road IoU</strong>. Recall (0.942) exceeding precision (0.904) indicates mild over-segmentation under domain shift, which is the conservative direction here: a marginally wide mask still preserves the centreline geometry the topology stage extracts, whereas a truncated mask would destroy it.
     </p>
   </div>
 
@@ -460,6 +466,21 @@
         <tr><td>Helmet Controller</td><td>ESP32 (C/C++)</td><td>Packages telemetry into 8-byte BLE frames. Drives LED matrix + HUD from 6 command states received from the mobile app.</td></tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- LIMITATIONS -->
+  <div class="section">
+    <p class="section-label">Scope</p>
+    <h2 class="section-title">What This Evaluation Does Not Show</h2>
+    <p class="body-text">
+      Two scope limits bound the evaluation. Perception is validated on public annotated corpora, IDD for training and BDD100K for the cross-domain test, rather than on helmet-camera footage, so the road-scene classifier that would trigger junction events in deployment is not itself benchmarked here. The ablation replays the recorded ride through the deployed module code rather than executing live on the assembled unit.
+    </p>
+    <p class="body-text">
+      Three caveats bound the numbers. GNSS ground truth is itself uncertain (median 14.2 m). Speed is held constant through each blackout for want of a wheel-speed sensor, which inflates absolute error. And blackouts are synthesised from a tracked ride rather than measured in a tunnel. Absolute magnitudes are therefore conservative; the paired contrasts, which share those conditions exactly, are the load-bearing result. The five open navigation-suite failures indicate the route-state machine is not yet feature-complete for all edge cases, and are tracked as known issues rather than masked.
+    </p>
+    <p class="body-text">
+      Dead-reckoning error also grows with travel time even under route-aware matching, so visual events remain the primary mechanism for operational usefulness. CV confidence drops under glare, night and heavy occlusion, making confidence handling a first-class signal. Crash detection is threshold-oriented and framed as an SOS trigger, not a certified diagnostic.
+    </p>
   </div>
 
 </div>
