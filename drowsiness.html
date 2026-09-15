@@ -63,6 +63,10 @@
   /* DATASET IMAGE */
   .dataset-img { width: 100%; border-radius: 4px; margin-top: 1.5rem; display: block; border: 1px solid var(--rule); }
   .fig-caption { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--ink-light); margin-top: 0.6rem; text-align: center; letter-spacing: 0.04em; }
+  .cert-line { display: flex; align-items: center; gap: 1rem; margin-top: 1.25rem; flex-wrap: wrap; }
+  .cert-thumb { display: block; width: 116px; border: 1px solid var(--rule); border-radius: 2px; flex-shrink: 0; transition: border-color 0.2s ease; }
+  .cert-thumb:hover { border-color: var(--green-mid); }
+  .cert-note { font-size: 0.82rem; color: var(--ink-light); line-height: 1.6; }
 
   /* TABLES */
   .table-wrap { overflow-x: auto; margin-top: 1.5rem; }
@@ -458,6 +462,16 @@
       <div class="paper-venue">IEEE MAI 2026 · Springer Lecture Notes in Electrical Engineering</div>
       <div class="paper-title">Subject-Disjoint Cross-Dataset Evaluation of CNN and CNN-LSTM Models for Visual Driver Drowsiness Detection</div>
       <p class="paper-desc">Jinesh Nanal, Swara Pathak, Ishan Joshi, Siddhant Goyal. Dr. Vishwanath Karad MIT World Peace University, Pune, India. Code and checkpoints released publicly so results can be reproduced and extended. Addresses UN SDG 3 and 11 (road safety and sustainable cities).</p>
+    </div>
+
+    <div class="cert-line">
+      <a href="projects/mai2026-certificate.png" target="_blank" rel="noopener" title="View presentation certificate">
+        <img src="projects/mai2026-certificate.png" alt="MAI-2026 certificate of participation" class="cert-thumb">
+      </a>
+      <p class="cert-note">
+        Presented at the 6th International Conference on Machine Vision &amp; Augmented Intelligence,<br>
+        SVNIT Surat, 11&ndash;13 September 2026.
+      </p>
     </div>
     <div class="btn-row" style="margin-top:1.5rem;">
       <a href="https://www.researchgate.net/publication/413662371_Subject-Disjoint_Cross-Dataset_Evaluation_of_CNN_and_CNN-LSTM_Models_for_Visual_Driver_Drowsiness_Detection" class="btn btn-primary" target="_blank" rel="noopener">Read full paper</a>
